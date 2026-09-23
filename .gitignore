@@ -1,0 +1,8 @@
+# 上游镜像与下载产物：由 update.sh 拉取，不入库
+/microduck/
+/microduck_rl/
+/policies/official/
+
+# Python 杂物
+__pycache__/
+*.pyc
