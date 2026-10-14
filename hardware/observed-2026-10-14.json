@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-14",
+  "overall_state": "S0_PARTIAL_PHOTO_AND_USER_REPORTED_NO_ELECTRICAL_ACCEPTANCE",
+  "real_energized_test_in_this_review": false,
+  "evidence_types": [
+    "user_statement",
+    "physical_board_photos",
+    "user_supplied_vendor_imu_guide_screenshots_v1.2",
+    "public_upstream_documentation"
+  ],
+  "radxa": {
+    "manufacturer": "Radxa",
+    "model": "ZERO 3W",
+    "soc": "RK3566",
+    "pcb_silkscreen": "ZERO 3W V1.12",
+    "memory_gb": 2,
+    "memory_evidence": "user_reported",
+    "emmc": false,
+    "emmc_evidence": "user_reported",
+    "header": "40-pin installed",
+    "header_evidence": "photo",
+    "boot_verified": false,
+    "bootloader_known": false,
+    "power_port_note": "back-side silkscreen 5V IN / USB OTG; not the USB3.0 data connector"
+  },
+  "storage": {
+    "medium": "microSD",
+    "brand": "SanDisk",
+    "family": "Ultra A1",
+    "capacity_gb": 32,
+    "capacity_evidence": "photo",
+    "os_flashing_verified": false
+  },
+  "actuators": {
+    "manufacturer": "FEETECH",
+    "model": "HD-1910-C001",
+    "planned_count": 15,
+    "physically_recounted": false,
+    "ids_set": "user reports initial configuration",
+    "id_list_verified": false,
+    "calibration_action": "user reports midpoint calibration at 2048",
+    "calibration_correct_for_mechanical_zero": "UNKNOWN",
+    "mechanical_joint_map_verified": false,
+    "known_4096_counts_per_rev": true
+  },
+  "adapter": {
+    "model": "FE-URT2-C001",
+    "type": "USB Feetech TTL bus adapter",
+    "has_successful_user_reported_servo_session": true,
+    "readback_documentation_needed": true
+  },
+  "hat": {
+    "manufacturer_silkscreen": "Pollen Robotics",
+    "model": "elec_RPI_Robot_HAT",
+    "assembly_label": "ASE01187-C1",
+    "label_evidence": "photo 3, board front",
+    "design_reference": "pollen-robotics/elec_RPI_Robot_HAT production/_old/ASE01187-C1_elec_RPI_Robot_HAT_SCH.pdf",
+    "supplied_by": "fanhao375 microduck-replica author, user reported",
+    "photo_observed_connector_designators": [
+      "J13",
+      "J14",
+      "J3",
+      "J11",
+      "J1 Speak"
+    ],
+    "hat_landed_on_radxa": false,
+    "electrical_polarity_measured": false,
+    "verified_input_voltage": false,
+    "verified_5v_output": false,
+    "battery_path": "according to upstream HAT README, +BATT/motor bus port used as HAT supply; actual board connection unverified"
+  },
+  "power": {
+    "bench_supply_available": true,
+    "bench_current_limit_available": "UNKNOWN",
+    "battery_manufacturer": "Viltrox",
+    "battery_type": "NP-F550 / F550",
+    "battery_output_measured": false,
+    "battery_dock_known": false,
+    "mechanical_power_cutoff_implemented": false
+  },
+  "imu": {
+    "source": "Taobao user-provided purchase link (seller not verified)",
+    "title": "Microduck IMU-DXL six-axis bus attitude module",
+    "exact_pcb_revision": "UNKNOWN",
+    "exact_mcu_sensor": "UNKNOWN",
+    "firmware_version": "UNKNOWN",
+    "guide_title": "MicroDuck IMU 舵机总线通信协议",
+    "guide_version": "1.2",
+    "guide_date": "2026-09-28",
+    "guide_pin_order_view": "from printed face of guide: DATA / VCC / GND, for both parallel three-pin ports; real device pinout not measured",
+    "guide_pin_pitch": "UNKNOWN",
+    "vcc_allowed_range": "UNKNOWN",
+    "transport": "one-wire half-duplex TTL 1Mbps 8N1",
+    "auto_select_protocols": [
+      "FEETECH SCS/STS",
+      "DYNAMIXEL Protocol 2.0"
+    ],
+    "device_id": 200,
+    "feetech_pose_address": 56,
+    "feetech_pose_length": 15,
+    "core_payload_length": 12,
+    "feetech_sample_counter_offset": 12,
+    "feetech_status_offset": 13,
+    "feetech_reserved_offset": 14,
+    "gyro_doc_conversion": "degrees_per_second = signed_int16_raw / 16.4",
+    "quaternion_doc": "float16_le XYZ, reconstruct nonnegative W; coordinate frame is board component-face frame",
+    "feetech_identity_address0_bytes5": "UNCONFIRMED",
+    "status_bit0_not_ready": "DOCUMENTED",
+    "status_bits1_to7": "UNCONFIRMED",
+    "sensor_integration_tested": false,
+    "verified_kissqy_ft6_compatible": false
+  },
+  "known_blockers": [
+    "No bench multimeter readings and matched C1 connector pin-by-pin signoff",
+    "No HAT power or bus voltage/current readings",
+    "IMU VCC absolute limits and board pin pitch unknown",
+    "IMU ID200 FT6 identity [06,00,00,00,F2] unverified",
+    "Third-party IMU gyro conversion /16.4 deg/s per raw may differ from kissqy decoder 0.0175 deg/s per raw",
+    "Calibration performed at 2048 but physical reference pose at the time is unknown",
+    "Radxa PCB V1.12 known community bootloader image-specific caveat; no boot result yet"
+  ]
+}

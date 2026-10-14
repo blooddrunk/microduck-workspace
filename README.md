@@ -4,8 +4,10 @@
 
 ## 现在先做什么
 
-**当前阶段：S0 → S1（机械已装、初步连线；HAT / IMU / 电源未最终接入）。**
+**当前阶段：S0 实物型号已部分确认 → S1 独立主板启动。** 已有 ZERO 3W V1.12、官方 C1 HAT、HD-1910-C001、FE-URT2-C001、第三方 ID200 IMU；HAT/IMU/电源未完成电气验收。
 不要直接整机通电、使能全部舵机或运行行走 Policy。
+
+**2026-10-14 新的实物针对性入口：[07 · 已有硬件第一轮实操](docs/07_MY_HARDWARE_FIRST_STEPS.md) → [09 · 2048 校零复核](docs/09_HD1910_ZERO_REVIEW.md) → [08 · 第三方 IMU 双协议审查](docs/08_VENDOR_IMU_COMPATIBILITY.md)。** 新的可核实硬件记录：[JSON](hardware/observed-2026-10-14.json) · [照片审查](records/2026-10-14_hardware-photo-review.md)。
 
 1. [00 · 实物盘点与安全闸门](docs/00_START_HERE.md)：先确认每块板的具体版本、引脚、额定电压和电源拓扑。
 2. [01 · ZERO 3W 单板刷机与 SSH](docs/01_BOARD_BOOT.md)：**只给 Radxa USB-C 供 5V**，先独立启动。
