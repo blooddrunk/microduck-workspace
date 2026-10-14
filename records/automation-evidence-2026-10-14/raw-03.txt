@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "scripts/validate_servos.py",
+    "tests/fixtures/servos_simulated.json",
+    "--mapping",
+    "tests/fixtures/mapping_simulated.json",
+    "--output",
+    "/home/jelinenaro/research/microduck/.evidence/acceptance-s0-s2-release/simulated"
+  ],
+  "time_utc": "2026-10-14T03:48:27.981303+00:00",
+  "returncode": 0,
+  "stdout": "PASS: /home/jelinenaro/research/microduck/.evidence/acceptance-s0-s2-release/simulated/summary.json\n",
+  "stderr": "",
+  "error": null
+}

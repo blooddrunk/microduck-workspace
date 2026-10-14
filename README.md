@@ -27,7 +27,9 @@
 | 原有官方同步 | `./update.sh` | 同步本机的官方仓库与 HF Policy；会移动本地依赖版本 |
 | 新增社区上游追踪 | `python3 scripts/sync_upstreams.py check` | 只检查远端 SHA；默认不合并、不运行第三方代码 |
 
-先执行 `python3 scripts/verify_workspace.py` 验证本仓库文档与清单；上游同步工具用法见 [来源说明](docs/05_EVIDENCE_AND_SOURCES.md)。
+S0–S2 新工具：[自动化教程与三张现场验收卡](docs/06_S0_S2_AUTOMATION.md) · [空白舵机台账](templates/hd1910_inventory.csv) · [独立映射模板](templates/hd1910_mapping.json)。`diagnose_radxa.py` 仅采集；`validate_servos.py` 仅静态检查；均不写串口/寄存器。原始证据默认本地保存，分享前人工脱敏。
+
+在 **Linux/WSL 开发电脑仓库根目录**执行 `python3 scripts/run_checks.py --output .evidence/acceptance-first` 保存测试与上游查询结果；预期软件检查 PASS，模拟夹具不代表实机。也可单独执行 `python3 scripts/verify_workspace.py` 验证本仓库文档与清单；上游同步工具用法见 [来源说明](docs/05_EVIDENCE_AND_SOURCES.md)。
 
 保留原有学习笔记：[快速上手](notes/00_快速上手.md) · [2026-10-12 官方同步记录](notes/01_同步记录_2026-10-12.md)。
 这些记录是**历史实测**，不代表 2026-10-14 已重新测试过本机环境。
@@ -41,3 +43,5 @@
 - AI、CI、Coding Agent 可以做代码、文档、协议模拟和日志分析，**不能代替万用表测量/断电检查/现场急停**。
 
 本工作区以“自动审查优先、必须人手操作时逐项说明、每个阶段形成可复核证据”为原则。
+
+本轮结果与限制：[2026-10-14 S0–S2 自动准备记录](records/2026-10-14_s0-s2-automation.md)。硬件阶段保持 S0 进行中，S1/S2 未验收。

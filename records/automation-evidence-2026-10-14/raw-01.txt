@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "tests",
+    "-v"
+  ],
+  "time_utc": "2026-10-14T03:48:18.004975+00:00",
+  "returncode": 0,
+  "stdout": "BLOCKED: /tmp/tmppmo91c_p/bundle/summary.json\nFAIL: /tmp/tmpbb_0y4_b/bundle/summary.json\nFAIL: /tmp/tmp_2y6nhk9/result/summary.json\n",
+  "stderr": "test_command_failures_and_warnings (test_s0_s2.DiagnosticTests.test_command_failures_and_warnings) ... ok\ntest_commands_are_read_only (test_s0_s2.DiagnosticTests.test_commands_are_read_only) ... ok\ntest_host_run_never_qualifies_hardware (test_s0_s2.DiagnosticTests.test_host_run_never_qualifies_hardware) ... ok\ntest_occupancy_snapshot_and_no_nodes (test_s0_s2.DiagnosticTests.test_occupancy_snapshot_and_no_nodes) ... ok\ntest_permission_visibility (test_s0_s2.DiagnosticTests.test_permission_visibility) ... ok\ntest_missing_command_and_timeout (test_s0_s2.EvidenceTests.test_missing_command_and_timeout) ... ok\ntest_preserve_previous_bundle_and_privacy (test_s0_s2.EvidenceTests.test_preserve_previous_bundle_and_privacy) ... ok\ntest_csv_json_equivalence_and_bad_row (test_s0_s2.ServoTests.test_csv_json_equivalence_and_bad_row) ... ok\ntest_duplicate_fields (test_s0_s2.ServoTests.test_duplicate_fields) ... ok\ntest_incomplete_field (test_s0_s2.ServoTests.test_incomplete_field) ... ok\ntest_invalid_values (test_s0_s2.ServoTests.test_invalid_values) ... ok\ntest_malformed_cli_input (test_s0_s2.ServoTests.test_malformed_cli_input) ... ok\ntest_mapping_disagreement_and_missing_id (test_s0_s2.ServoTests.test_mapping_disagreement_and_missing_id) ... ok\ntest_missing_servo_and_mapping (test_s0_s2.ServoTests.test_missing_servo_and_mapping) ... ok\ntest_policy_mapping (test_s0_s2.ServoTests.test_policy_mapping) ... ok\ntest_raw_register_failures (test_s0_s2.ServoTests.test_raw_register_failures) ... ok\ntest_simulated_consistent_table (test_s0_s2.ServoTests.test_simulated_consistent_table) ... ok\ntest_unknown_calibration (test_s0_s2.ServoTests.test_unknown_calibration) ... ok\ntest_unknown_template_remains_blocked (test_s0_s2.ServoTests.test_unknown_template_remains_blocked) ... ok\ntest_catalog_is_pinned_and_named (test_sync_upstreams.CatalogTests.test_catalog_is_pinned_and_named) ... ok\ntest_duplicate_source_fails (test_sync_upstreams.CatalogTests.test_duplicate_source_fails) ... ok\ntest_fetch_requires_explicit_selection (test_sync_upstreams.CatalogTests.test_fetch_requires_explicit_selection) ... ok\ntest_git_timeout_is_explicit (test_sync_upstreams.CatalogTests.test_git_timeout_is_explicit) ... ok\ntest_remote_head_has_exact_ref (test_sync_upstreams.CatalogTests.test_remote_head_has_exact_ref) ... ok\ntest_unknown_source_is_rejected (test_sync_upstreams.CatalogTests.test_unknown_source_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 25 tests in 0.075s\n\nOK\n",
+  "error": null
+}

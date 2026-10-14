@@ -39,6 +39,12 @@ class CatalogTests(unittest.TestCase):
         with self.assertRaises(upstreams.SyncError):
             upstreams.select_sources(catalog["sources"], [], False)
 
+    def test_git_timeout_is_explicit(self):
+        import subprocess
+        with patch.object(upstreams.subprocess, "run", side_effect=subprocess.TimeoutExpired("git", 45)):
+            with self.assertRaises(upstreams.SyncError):
+                upstreams.git("ls-remote", "SIMULATED")
+
     def test_remote_head_has_exact_ref(self) -> None:
         source = {"name":"demo", "repo":"test/example", "branch":"main", "sha":"a"*40}
         with patch.object(upstreams, "git", return_value="a"*40 + "\trefs/heads/main") as mocked:

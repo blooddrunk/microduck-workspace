@@ -1,0 +1,452 @@
+[
+  {
+    "physical_label": "S01",
+    "joint_name": "synthetic_joint_0",
+    "current_id": 1,
+    "planned_id": 1,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S02",
+    "joint_name": "synthetic_joint_1",
+    "current_id": 2,
+    "planned_id": 2,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S03",
+    "joint_name": "synthetic_joint_2",
+    "current_id": 3,
+    "planned_id": 3,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S04",
+    "joint_name": "synthetic_joint_3",
+    "current_id": 4,
+    "planned_id": 4,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S05",
+    "joint_name": "synthetic_joint_4",
+    "current_id": 5,
+    "planned_id": 5,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S06",
+    "joint_name": "synthetic_joint_5",
+    "current_id": 6,
+    "planned_id": 6,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S07",
+    "joint_name": "synthetic_joint_6",
+    "current_id": 7,
+    "planned_id": 7,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S08",
+    "joint_name": "synthetic_joint_7",
+    "current_id": 8,
+    "planned_id": 8,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S09",
+    "joint_name": "synthetic_joint_8",
+    "current_id": 9,
+    "planned_id": 9,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S10",
+    "joint_name": "synthetic_joint_9",
+    "current_id": 10,
+    "planned_id": 10,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S11",
+    "joint_name": "synthetic_joint_10",
+    "current_id": 11,
+    "planned_id": 11,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S12",
+    "joint_name": "synthetic_joint_11",
+    "current_id": 12,
+    "planned_id": 12,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S13",
+    "joint_name": "synthetic_joint_12",
+    "current_id": 13,
+    "planned_id": 13,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S14",
+    "joint_name": "synthetic_joint_13",
+    "current_id": 14,
+    "planned_id": 14,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  },
+  {
+    "physical_label": "S15",
+    "joint_name": "synthetic_joint_14",
+    "current_id": 15,
+    "planned_id": 15,
+    "firmware": "SIMULATED",
+    "mode": "SIMULATED",
+    "baud": 1000000,
+    "position_raw": 2048,
+    "voltage_v": 7.4,
+    "temperature_c": 25,
+    "voltage_min_v": 6,
+    "voltage_max_v": 8.4,
+    "temperature_max_c": 60,
+    "mechanical_reference": "SIMULATED reference photo",
+    "encoder_zero_raw": 2048,
+    "training_home_rad": 0,
+    "direction": 1,
+    "joint_min_rad": -0.5,
+    "joint_max_rad": 0.5,
+    "registers_raw": [
+      {
+        "address": 0,
+        "width_bytes": 2,
+        "value": 2048,
+        "manual_ref": "SIMULATED register; NOT hardware address"
+      }
+    ],
+    "evidence_ref": "SIMULATED no hardware evidence"
+  }
+]

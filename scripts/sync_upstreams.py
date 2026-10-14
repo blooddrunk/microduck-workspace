@@ -42,7 +42,10 @@ def read_catalog(path: Path = CATALOG) -> dict:
 
 def git(*args: str, cwd: Path | None = None) -> str:
     cmd = ["git", *args]
-    res = subprocess.run(cmd, cwd=cwd, text=True, capture_output=True, check=False)
+    try:
+        res = subprocess.run(cmd, cwd=cwd, text=True, capture_output=True, check=False, timeout=45)
+    except subprocess.TimeoutExpired as exc:
+        raise SyncError(f"git command timed out after 45 seconds: {args[0]}") from exc
     if res.returncode:
         raise SyncError(f"git command failed ({res.returncode}): {' '.join(cmd)}\n{res.stderr.strip()}")
     return res.stdout.strip()

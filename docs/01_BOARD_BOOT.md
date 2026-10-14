@@ -12,7 +12,7 @@
 
 优先从 [Armbian 官方 ZERO 3W 页面](https://www.armbian.com/radxa-zero-3/) 下载受支持的 **Minimal/CLI ARM64** 镜像，或按 [Radxa 官方安装文档](https://docs.radxa.com/en/zero/zero3) 选择匹配板型镜像。**不要选择 Raspberry Pi Zero 镜像，也不要默认第三方镜像适配你的 HAT。**
 
-在下载页记下：系统发行版本、文件名、下载地址、镜像发布时间、校验文件。若发布方给出 SHA256，Windows PowerShell 可以验证：
+在下载页记下：系统发行版本、文件名、下载地址、镜像发布时间、校验文件。若发布方给出 SHA256，在 **Windows 开发电脑 PowerShell** 可以验证（预期完整 SHA256 与发布值一致，失败重新下载且不刷卡）：
 
 ```powershell
 Get-FileHash "C:\path\to\your-image.img.xz" -Algorithm SHA256
@@ -33,7 +33,9 @@ ssh <实际用户名>@<从路由器查到的IP地址>
 
 `<...>` 是占位符，**先替换再执行**。首连核对主机指纹；如果旧卡/新卡使用了同一 IP，主机密钥变化需要核查原因，不要无条件忽略 SSH 告警。
 
-## 4. 在开发板 SSH 终端逐条执行只读检查
+## 4. 在开发板 SSH 终端采集只读检查
+
+优先使用 [自动诊断与 H1 验收卡](06_S0_S2_AUTOMATION.md)：在电脑传输脚本、核对双端 hash，再在 Radxa 运行 `diagnose_radxa.py`。它记录下列内容及设备占用/可选 robotd 信息，并保留权限不足和异常；整体 BLOCKED 不等于单板安装失败。以下命令是人工定位补充，每条均在 **Radxa SSH 终端**执行。
 
 ```bash
 uname -m
@@ -60,7 +62,7 @@ ZERO 3W 的 UART2_M0 在 40 针物理 pin 8(TX)/10(RX) 上，Radxa 官方说明�
 
 设置新的强口令，优先添加你的 SSH 公钥；只在验证密钥登录可用后再考虑禁用口令。不要把凭据、Wi-Fi 密码或私钥提交本仓库。
 
-成功 SSH 后关机（**没有其它电源路径**时）：
+在 **Radxa SSH 终端**成功 SSH 后关机（**没有其它电源路径**时）：
 
 ```bash
 sudo shutdown -h now
@@ -77,3 +79,5 @@ sudo shutdown -h now
 - 固件与 IMU 是否“飞特总线 IMU”，以及 HAT 版次/供电路径是否与镜像适配，必须在 [02](02_SERVO_IMU.md) 和 [03](03_POWER_INTEGRATION.md) 里确认。
 
 **验收记录**：镜像版本与 hash（或无法校验）、实际 IP（发布记录可脱敏）、`uname -m`、`os-release`、`lsblk`、异常日志、第一次开机照片、关机确认。此时只勾选 Checklist S1，接下来做 [02](02_SERVO_IMU.md)。
+
+S1 现场验收按 [H1 六要素](06_S0_S2_AUTOMATION.md)；无法测电压或日志受限时保留 BLOCKED。不要通过修改设备树/串口参数或启动服务来让诊断变绿。

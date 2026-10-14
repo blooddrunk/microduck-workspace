@@ -1,0 +1,12 @@
+{
+  "command": [
+    "python3",
+    "scripts/sync_upstreams.py",
+    "check"
+  ],
+  "time_utc": "2026-10-14T03:48:18.155264+00:00",
+  "returncode": 0,
+  "stdout": "official-runtime    CURRENT            pinned=95a7e91725b4 remote=95a7e91725b4\nofficial-rl         CURRENT            pinned=b02fdea4902c remote=b02fdea4902c\nofficial-hat        CURRENT            pinned=4478fdfb0d6c remote=4478fdfb0d6c\nfanhao-replica      CURRENT            pinned=5397eb14d356 remote=5397eb14d356\nkissqy-runtime      CURRENT            pinned=7a52d297a9ad remote=7a52d297a9ad\nhd1910-rl           CURRENT            pinned=77286a243c84 remote=77286a243c84\nluwu-actuator       CURRENT            pinned=326d77a11228 remote=326d77a11228\nSources: 7, updates detected: 0, errors: 0\n",
+  "stderr": "",
+  "error": null
+}

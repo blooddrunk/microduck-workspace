@@ -20,3 +20,7 @@ records/*.mp4
 records/*.zip
 records/*.png
 records/*.jpg
+
+# Private evidence bundles and operator inventory (never auto-publish)
+/.evidence/
+/local/

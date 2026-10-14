@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "scripts/verify_workspace.py"
+  ],
+  "time_utc": "2026-10-14T03:48:17.728332+00:00",
+  "returncode": 0,
+  "stdout": "Validated 7 pinned upstream sources.\nPASS: 17 required files + local Markdown links + upstream SHA formats\nSCOPE: static documentation only; NO electrical, physical or runtime verification.\n",
+  "stderr": "",
+  "error": null
+}

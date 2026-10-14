@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "time_utc": "2026-10-14T03:48:17.708330+00:00",
+  "scope": "Workspace offline tests + remote HEAD comparison; no hardware, simulation or training acceptance",
+  "invocation": [
+    "scripts/run_checks.py",
+    "--output",
+    ".evidence/acceptance-s0-s2-release"
+  ],
+  "source": {
+    "commit": "df3a11419a1b98cc68acd06ca507c25543faf8fc",
+    "dirty": true,
+    "file_sha256": {
+      "scripts/diagnose_radxa.py": "b662be21a334c5ad21a7edb02d2789cac4d690a9c743768b7410e8ee0eedad15",
+      "scripts/evidence.py": "b926cedd4af61cc2ab78f5dfcdf10878f2201c3cb963c1b594cfddcd64b871de",
+      "scripts/run_checks.py": "579c819f32978281a2c7cbd328fdac0fcb1eb5470bff29ba5f5c29688c1ade63",
+      "scripts/sync_upstreams.py": "2836f6824fb70584db5ad564a40601373232c7b0dfe47795225a3dcb92673bfa",
+      "scripts/validate_servos.py": "c2ffbf5e2bd2790fb8b40211cc638bb9ae6dfa8643e4e24ad158123ab4b3b5e8",
+      "scripts/verify_workspace.py": "41fc0fbfa70b055c7cf2628d79d0e8a552e97a99dc086f497bfa95fc8d36e601",
+      "templates/hd1910_inventory.csv": "645e9abf9b4890a764f53571e50afe7553d8ac75f0f82d9f0b26ae9868277eeb",
+      "templates/hd1910_mapping.json": "6b0472d440a204a287db6a53d549018151a766596de1e0c70aad4cbfd66e8b6c"
+    }
+  },
+  "privacy": "LOCAL ONLY: inspect raw logs for Wi-Fi passwords, tokens, IP/MAC, serials, host/user names before sharing",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "workspace",
+      "status": "PASS",
+      "reason": "Expected exit 0; observed 0; upstream PASS means query succeeded, not compatibility",
+      "command": [
+        "python3",
+        "scripts/verify_workspace.py"
+      ],
+      "time_utc": "2026-10-14T03:48:17.728332+00:00",
+      "raw": "raw-00.txt",
+      "sha256": "fd6deb661139a125da0289f2e2e7bfc3b915f639e90ada2631a121907aab6d57"
+    },
+    {
+      "name": "unit_tests",
+      "status": "PASS",
+      "reason": "Expected exit 0; observed 0; upstream PASS means query succeeded, not compatibility",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-v"
+      ],
+      "time_utc": "2026-10-14T03:48:18.004975+00:00",
+      "raw": "raw-01.txt",
+      "sha256": "6b5702313f9ddf25d5f0d38fb680537f1566ca90c64e483ead0a95984b2ed58e"
+    },
+    {
+      "name": "upstreams",
+      "status": "PASS",
+      "reason": "Expected exit 0; observed 0; upstream PASS means query succeeded, not compatibility",
+      "command": [
+        "python3",
+        "scripts/sync_upstreams.py",
+        "check"
+      ],
+      "time_utc": "2026-10-14T03:48:18.155264+00:00",
+      "raw": "raw-02.txt",
+      "sha256": "360dece28fb63296a19c667e4677f8199156b8ab410984cfb40e83926391484a"
+    },
+    {
+      "name": "simulated_table",
+      "status": "PASS",
+      "reason": "Expected exit 0; observed 0; upstream PASS means query succeeded, not compatibility",
+      "command": [
+        "python3",
+        "scripts/validate_servos.py",
+        "tests/fixtures/servos_simulated.json",
+        "--mapping",
+        "tests/fixtures/mapping_simulated.json",
+        "--output",
+        "/home/jelinenaro/research/microduck/.evidence/acceptance-s0-s2-release/simulated"
+      ],
+      "time_utc": "2026-10-14T03:48:27.981303+00:00",
+      "raw": "raw-03.txt",
+      "sha256": "788da234bc15600085643560974179a854617338e69f420bd97e27089dccb7b0"
+    },
+    {
+      "name": "unknown_template",
+      "status": "PASS",
+      "reason": "Expected exit 2; observed 2; upstream PASS means query succeeded, not compatibility",
+      "command": [
+        "python3",
+        "scripts/validate_servos.py",
+        "templates/hd1910_inventory.csv",
+        "--mapping",
+        "templates/hd1910_mapping.json",
+        "--output",
+        "/home/jelinenaro/research/microduck/.evidence/acceptance-s0-s2-release/unknown"
+      ],
+      "time_utc": "2026-10-14T03:48:28.051822+00:00",
+      "raw": "raw-04.txt",
+      "sha256": "2f2c14697489523a915b1dfffa639a37123800300ec806201ea0e173b17239cc"
+    }
+  ],
+  "original_local_summary_sha256": "7e764be77af187eea4546fc06986a7c84dae304f8f374aa7aaa4a9d8e7ebf0f7",
+  "publication": "Reviewed software checks only; raw paths renamed to public txt copies; hardware and host raw logs excluded"
+}

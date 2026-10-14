@@ -14,6 +14,9 @@ REQUIRED = [
     "docs/02_SERVO_IMU.md", "docs/03_POWER_INTEGRATION.md",
     "docs/04_SIM_TRAINING.md", "docs/05_EVIDENCE_AND_SOURCES.md",
     "records/TEMPLATE.md", "upstreams/sources.json",
+    "docs/06_S0_S2_AUTOMATION.md", "templates/hd1910_inventory.csv",
+    "templates/hd1910_mapping.json", "scripts/diagnose_radxa.py",
+    "scripts/validate_servos.py", "scripts/run_checks.py",
 ]
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 
@@ -26,7 +29,7 @@ def internal_link_errors() -> list[str]:
     for markdown in ROOT.rglob("*.md"):
         if any(part.startswith(".") and part != "." for part in markdown.relative_to(ROOT).parts):
             continue
-        if markdown.relative_to(ROOT).parts[0] in {"microduck", "microduck_rl", "policies"}:
+        if markdown.relative_to(ROOT).parts[0] in {"microduck", "microduck_rl", "policies", "local"}:
             continue
         text = markdown.read_text(encoding="utf-8")
         for link in LINK_RE.findall(text):

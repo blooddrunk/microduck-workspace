@@ -1,0 +1,16 @@
+{
+  "command": [
+    "python3",
+    "scripts/validate_servos.py",
+    "templates/hd1910_inventory.csv",
+    "--mapping",
+    "templates/hd1910_mapping.json",
+    "--output",
+    "/home/jelinenaro/research/microduck/.evidence/acceptance-s0-s2-release/unknown"
+  ],
+  "time_utc": "2026-10-14T03:48:28.051822+00:00",
+  "returncode": 2,
+  "stdout": "BLOCKED: /home/jelinenaro/research/microduck/.evidence/acceptance-s0-s2-release/unknown/summary.json\n",
+  "stderr": "",
+  "error": null
+}

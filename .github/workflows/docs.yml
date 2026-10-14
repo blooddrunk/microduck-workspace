@@ -10,6 +10,7 @@ on:
       - "upstreams/**"
       - "scripts/**"
       - "tests/**"
+      - "templates/**"
       - ".github/workflows/docs.yml"
   pull_request:
     paths:
@@ -21,6 +22,7 @@ on:
       - "upstreams/**"
       - "scripts/**"
       - "tests/**"
+      - "templates/**"
       - ".github/workflows/docs.yml"
   workflow_dispatch:
 permissions:
@@ -35,3 +37,10 @@ jobs:
         run: python3 scripts/verify_workspace.py
       - name: Offline script unit tests
         run: python3 -m unittest discover -s tests -v
+      - name: Simulated CLI and unknown template fail closed
+        shell: bash
+        run: |
+          python3 scripts/validate_servos.py tests/fixtures/servos_simulated.json --mapping tests/fixtures/mapping_simulated.json --output "$RUNNER_TEMP/servo-simulated"
+          result=0
+          python3 scripts/validate_servos.py templates/hd1910_inventory.csv --mapping templates/hd1910_mapping.json --output "$RUNNER_TEMP/servo-unknown" || result=$?
+          test "$result" -eq 2

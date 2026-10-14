@@ -1,0 +1,92 @@
+[
+  {
+    "physical_label": "S01",
+    "joint_name": "synthetic_joint_0",
+    "planned_id": 1,
+    "policy_index": 0
+  },
+  {
+    "physical_label": "S02",
+    "joint_name": "synthetic_joint_1",
+    "planned_id": 2,
+    "policy_index": 1
+  },
+  {
+    "physical_label": "S03",
+    "joint_name": "synthetic_joint_2",
+    "planned_id": 3,
+    "policy_index": 2
+  },
+  {
+    "physical_label": "S04",
+    "joint_name": "synthetic_joint_3",
+    "planned_id": 4,
+    "policy_index": 3
+  },
+  {
+    "physical_label": "S05",
+    "joint_name": "synthetic_joint_4",
+    "planned_id": 5,
+    "policy_index": 4
+  },
+  {
+    "physical_label": "S06",
+    "joint_name": "synthetic_joint_5",
+    "planned_id": 6,
+    "policy_index": 5
+  },
+  {
+    "physical_label": "S07",
+    "joint_name": "synthetic_joint_6",
+    "planned_id": 7,
+    "policy_index": 6
+  },
+  {
+    "physical_label": "S08",
+    "joint_name": "synthetic_joint_7",
+    "planned_id": 8,
+    "policy_index": 7
+  },
+  {
+    "physical_label": "S09",
+    "joint_name": "synthetic_joint_8",
+    "planned_id": 9,
+    "policy_index": 8
+  },
+  {
+    "physical_label": "S10",
+    "joint_name": "synthetic_joint_9",
+    "planned_id": 10,
+    "policy_index": 9
+  },
+  {
+    "physical_label": "S11",
+    "joint_name": "synthetic_joint_10",
+    "planned_id": 11,
+    "policy_index": 10
+  },
+  {
+    "physical_label": "S12",
+    "joint_name": "synthetic_joint_11",
+    "planned_id": 12,
+    "policy_index": 11
+  },
+  {
+    "physical_label": "S13",
+    "joint_name": "synthetic_joint_12",
+    "planned_id": 13,
+    "policy_index": 12
+  },
+  {
+    "physical_label": "S14",
+    "joint_name": "synthetic_joint_13",
+    "planned_id": 14,
+    "policy_index": 13
+  },
+  {
+    "physical_label": "S15",
+    "joint_name": "synthetic_joint_14",
+    "planned_id": 15,
+    "policy_index": "excluded"
+  }
+]
