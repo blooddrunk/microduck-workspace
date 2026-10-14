@@ -68,7 +68,11 @@
     "electrical_polarity_measured": false,
     "verified_input_voltage": false,
     "verified_5v_output": false,
-    "battery_path": "according to upstream HAT README, +BATT/motor bus port used as HAT supply; actual board connection unverified"
+    "battery_path": "according to upstream HAT README, +BATT/motor bus port used as HAT supply; actual board connection unverified",
+    "source_manifest": "hardware/reference/manifest.json",
+    "schematic_internal_revision_warning": "C1 filename but B1 schematic title blocks; C1 PCB title block",
+    "candidate_pin_table": "docs/10_C1_ELECTRICAL_REVIEW.md",
+    "usb_hat_dual_supply": "BLOCKED_HEADER_5V_AND_USB_VBUS_SHARE_NET"
   },
   "power": {
     "bench_supply_available": true,
@@ -107,9 +111,15 @@
     "quaternion_doc": "float16_le XYZ, reconstruct nonnegative W; coordinate frame is board component-face frame",
     "feetech_identity_address0_bytes5": "UNCONFIRMED",
     "status_bit0_not_ready": "DOCUMENTED",
-    "status_bits1_to7": "UNCONFIRMED",
+    "status_bits1_to7": "DOCUMENTED_RESERVED_IN_VENDOR_PROTOCOL_NOT_FT6_FLAGS",
     "sensor_integration_tested": false,
-    "verified_kissqy_ft6_compatible": false
+    "verified_kissqy_ft6_compatible": false,
+    "protocol_repo": "https://gitee.com/QinmoTech/IMU-DXL",
+    "protocol_sha": "4644a9d19e07ac47f2c145c5e064c96683a5450b",
+    "data_age_bound_ms": "UNCONFIRMED",
+    "coordinate_axes_doc": "+X long edge down; +Y short edge right; +Z out of component face; right-handed",
+    "runtime_scale_contract": "STATIC_INCOMPATIBLE_WITH_UNMODIFIED_KISSQY_FT6",
+    "protocol_review_ref": "docs/08_VENDOR_IMU_COMPATIBILITY.md"
   },
   "known_blockers": [
     "No bench multimeter readings and matched C1 connector pin-by-pin signoff",

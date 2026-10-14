@@ -1,0 +1,110 @@
+{
+  "retrieved_at": "2026-10-14",
+  "files": [
+    {
+      "name": "official-rl",
+      "path": "src/mjlab_microduck/robot/microduck_constants.py",
+      "sha": "b02fdea4902c2b93b7d34a83a6f05da4ececb7d3",
+      "sha256": "0e7097afe833ac1259b197f9854d01c1666be03ac0c9b090233b4fbc7619eb94",
+      "url": "https://github.com/pollen-robotics/microduck_rl/blob/b02fdea4902c2b93b7d34a83a6f05da4ececb7d3/src/mjlab_microduck/robot/microduck_constants.py"
+    },
+    {
+      "name": "official-rl",
+      "path": "src/mjlab_microduck/robot/microduck/robot_groundcontact_rollers.xml",
+      "sha": "b02fdea4902c2b93b7d34a83a6f05da4ececb7d3",
+      "sha256": "e410e74978511fa2efdc9dcbe1488964c0c149ecca568a59dc73ef7f8844bf8b",
+      "url": "https://github.com/pollen-robotics/microduck_rl/blob/b02fdea4902c2b93b7d34a83a6f05da4ececb7d3/src/mjlab_microduck/robot/microduck/robot_groundcontact_rollers.xml"
+    },
+    {
+      "name": "kissqy-runtime",
+      "path": "microduck-hd1910/firmware/duck-control/src/feetech.rs",
+      "sha": "7a52d297a9adfe6d2315481953dc64060252d142",
+      "sha256": "8f8f47cdc59293c49dec5ce5d94c295027de45f00a4e4113661a8d6cd7b9e1ea",
+      "url": "https://github.com/kissqy/Microduck-kissqy/blob/7a52d297a9adfe6d2315481953dc64060252d142/microduck-hd1910/firmware/duck-control/src/feetech.rs"
+    },
+    {
+      "name": "kissqy-runtime",
+      "path": "microduck-hd1910/firmware/duck-control/src/imu.rs",
+      "sha": "7a52d297a9adfe6d2315481953dc64060252d142",
+      "sha256": "bda6ccf768aed3085a35e29a38a6087ec299a155b6f63aa259e531cf1ee404c6",
+      "url": "https://github.com/kissqy/Microduck-kissqy/blob/7a52d297a9adfe6d2315481953dc64060252d142/microduck-hd1910/firmware/duck-control/src/imu.rs"
+    },
+    {
+      "name": "kissqy-runtime",
+      "path": "microduck-hd1910/firmware/duck-control/src/model.rs",
+      "sha": "7a52d297a9adfe6d2315481953dc64060252d142",
+      "sha256": "98108bb15b9930c7096e5bfff032d7fb8effe6c39e8059d24f9a9ebed325df60",
+      "url": "https://github.com/kissqy/Microduck-kissqy/blob/7a52d297a9adfe6d2315481953dc64060252d142/microduck-hd1910/firmware/duck-control/src/model.rs"
+    },
+    {
+      "name": "kissqy-runtime",
+      "path": "microduck-hd1910/firmware/robotd/src/feetech_commissioning.rs",
+      "sha": "7a52d297a9adfe6d2315481953dc64060252d142",
+      "sha256": "c15c80ec72139cbc3870a673d027d6752239cf71cfa1cfe582bd1c03faf80083",
+      "url": "https://github.com/kissqy/Microduck-kissqy/blob/7a52d297a9adfe6d2315481953dc64060252d142/microduck-hd1910/firmware/robotd/src/feetech_commissioning.rs"
+    },
+    {
+      "name": "kissqy-runtime",
+      "path": "microduck-hd1910/firmware/console/USER-GUIDE.en.md",
+      "sha": "7a52d297a9adfe6d2315481953dc64060252d142",
+      "sha256": "56dc892c64b668acce3ce8e8beae5d327ec764af7ff8788796165e2979a98d94",
+      "url": "https://github.com/kissqy/Microduck-kissqy/blob/7a52d297a9adfe6d2315481953dc64060252d142/microduck-hd1910/firmware/console/USER-GUIDE.en.md"
+    },
+    {
+      "name": "fanhao-replica",
+      "path": "调试记录.md",
+      "sha": "5397eb14d356fa618b294a25cebd4bb0ec59c162",
+      "sha256": "21914949eb54d07a352eebdd4734adecf749966a9e91fe20304200dbb96a45cd",
+      "url": "https://github.com/fanhao375/microduck-replica/blob/5397eb14d356fa618b294a25cebd4bb0ec59c162/调试记录.md"
+    },
+    {
+      "name": "fanhao-replica",
+      "path": "docs/HD1910-20261012-kissqy镜像R1分析.md",
+      "sha": "5397eb14d356fa618b294a25cebd4bb0ec59c162",
+      "sha256": "b05babef74781ab0e6c014f23aa137fa0119ce601e5e2e86342d23315a39c8fa",
+      "url": "https://github.com/fanhao375/microduck-replica/blob/5397eb14d356fa618b294a25cebd4bb0ec59c162/docs/HD1910-20261012-kissqy镜像R1分析.md"
+    },
+    {
+      "name": "fanhao-replica",
+      "path": "tools/radxa/kissqy-r1-v112.sh",
+      "sha": "5397eb14d356fa618b294a25cebd4bb0ec59c162",
+      "sha256": "22424b35d7800feb60ce86d70ead5c0426d70aa7c495bd7e54ec79dc95fb9314",
+      "url": "https://github.com/fanhao375/microduck-replica/blob/5397eb14d356fa618b294a25cebd4bb0ec59c162/tools/radxa/kissqy-r1-v112.sh"
+    },
+    {
+      "name": "fanhao-replica",
+      "path": "tools/radxa/镜像使用说明.md",
+      "sha": "5397eb14d356fa618b294a25cebd4bb0ec59c162",
+      "sha256": "0134bc547f6d5bf0bcce90de55298e3eb6155ef21cf9a25abbf5c4c587e03622",
+      "url": "https://github.com/fanhao375/microduck-replica/blob/5397eb14d356fa618b294a25cebd4bb0ec59c162/tools/radxa/镜像使用说明.md"
+    },
+    {
+      "name": "qinmo-imu",
+      "path": "README.md",
+      "sha": "4644a9d19e07ac47f2c145c5e064c96683a5450b",
+      "sha256": "a8881c5e59f523cf356ed40132ad4bba4ac2d83c1465679a04a7f2acf111917e",
+      "url": "https://gitee.com/QinmoTech/IMU-DXL/blob/4644a9d19e07ac47f2c145c5e064c96683a5450b/README.md"
+    },
+    {
+      "name": "qinmo-imu",
+      "path": "docs/PROTOCOL.md",
+      "sha": "4644a9d19e07ac47f2c145c5e064c96683a5450b",
+      "sha256": "3f03e7d45ca63c6441ba69b755cfdbdb667c8915f0e6e3a8828df4aabc520805",
+      "url": "https://gitee.com/QinmoTech/IMU-DXL/blob/4644a9d19e07ac47f2c145c5e064c96683a5450b/docs/PROTOCOL.md"
+    },
+    {
+      "name": "qinmo-imu",
+      "path": "docs/images/connector-pinout.png",
+      "sha": "4644a9d19e07ac47f2c145c5e064c96683a5450b",
+      "sha256": "f62575166dbe6abc621aafecd307cc57e02280de21d6b59e1c1023da2a7cfdc9",
+      "url": "https://gitee.com/QinmoTech/IMU-DXL/blob/4644a9d19e07ac47f2c145c5e064c96683a5450b/docs/images/connector-pinout.png"
+    },
+    {
+      "name": "qinmo-imu",
+      "path": "docs/images/coordinate-system.png",
+      "sha": "4644a9d19e07ac47f2c145c5e064c96683a5450b",
+      "sha256": "ab3181ec469cf79f14a1be1e7bf59897f34e1c55aa95b3eb9ea1bdc7c725a0ff",
+      "url": "https://gitee.com/QinmoTech/IMU-DXL/blob/4644a9d19e07ac47f2c145c5e064c96683a5450b/docs/images/coordinate-system.png"
+    }
+  ]
+}

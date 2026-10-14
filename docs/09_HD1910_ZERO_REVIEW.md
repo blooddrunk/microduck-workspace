@@ -76,3 +76,44 @@ python3 scripts/validate_servos.py local/hd1910_inventory.csv --mapping local/hd
 - **FAIL**：坐标变号、转角冲突或异常运动。立刻撤电，恢复已保存校准值及安全机械姿态，查原因后才重新启用。
 
 **不要通过不断重新校准让数值显示 2048；那会掩盖机械基准错误。**
+
+## 固定训练/运行时映射合同与防串机检查
+
+来源固定于 [上游审查清单](../upstreams/review-2026-10-14.json)：官方 RL `b02fdea` 的 `robot_groundcontact_rollers.xml` actuator 顺序及 `microduck_constants.py` HOME；kissqy `7a52d29` 的 `model.rs` / `feetech.rs` / `feetech_commissioning.rs`；fanhao `5397eb1` 的调试记录。完整轴向、来源 SHA 和未确认的本机方向见 [机器可读参考](../hardware/hd1910-contract.json)，**这不是本机 mapping/calibration**。
+
+| Action | runtime 槽 | 设计 ID | 关节 | 默认 HOME rad | 本机 direction/zero |
+|---|---|---|---|---|---|
+| 0 | 0 | 20 | left_hip_yaw | 0 | UNKNOWN |
+| 1 | 1 | 21 | left_hip_roll | -0.0873 | UNKNOWN |
+| 2 | 2 | 22 | left_hip_pitch | -0.4579 | UNKNOWN |
+| 3 | 3 | 23 | left_knee | -0.0049 | UNKNOWN |
+| 4 | 4 | 24 | left_ankle | +0.453 | UNKNOWN |
+| 5 | 5 | 30 | neck_pitch | +0.3491 | UNKNOWN |
+| 6 | 6 | 31 | head_pitch | +0.3491 | UNKNOWN |
+| 7 | 7 | 32 | head_yaw | 0 | UNKNOWN |
+| 8 | 8 | 33 | head_roll | 0 | UNKNOWN |
+| excluded | 9 | 34 | mouth | 0（非 Policy） | UNKNOWN |
+| 9 | 10 | 10 | right_hip_yaw | 0 | UNKNOWN |
+| 10 | 11 | 11 | right_hip_roll | +0.0873 | UNKNOWN |
+| 11 | 12 | 12 | right_hip_pitch | +0.4579 | UNKNOWN |
+| 12 | 13 | 13 | right_knee | +0.0049 | UNKNOWN |
+| 13 | 14 | 14 | right_ankle | -0.453 | UNKNOWN |
+
+14 Action 跳过 mouth 槽9，不得将右腿从槽9直接排列。Policy 的最终 HOME 由其 deployment contract 提供，上表只是源码默认；动态/自训练模型不能靠此表强行改 HOME。模型轴正方向遵循 MJCF 局部坐标右手规则，本机编码器方向取决于机械装配及固件方向参数，每个关节必须独立核对。
+
+kissqy 公式与本页一致，**无 raw 自动最短路径绕回**；限位须在0..4095内，不能绕机械硬挡。上游 `model.rs` 还有 XL330 EEPROM / knee −512 常量，但飞特路径使用自己的校准和 HD1910 寄存器；不可照抄到 HD1910 EEPROM。软件 `zero_raw` 与FD写入的硬件偏移是两层，重复补偿会造成错误。
+
+fanhao 最初使用设计 ID 表；后续把嘴舵机替换左髋并用 mouth ID29，14关节记录明确排除嘴。其样机“全部 zero2048、direction−1”是那套装配的记录，**不能作为本机15/15验收**。kissqy 中控文档明确 bundle 来源 `duck-10e4`，可能恢复全部direction−1及ID30=2526/31=2228/33=1599；旧R1又有另一批示例值。不能只拦三项数值，必须拦来源不符的整个文件。
+
+持久化：默认文件 `/etc/robot/feetech-ft5/hd1910-calibration.toml`，可被 `bus.feetech_calibration` 改路径；commissioning 保存会生成 `.previous.toml`、`.saved.toml`，临时文件写入、fsync、rename 后生效。该文件是主机 TOML，不是 EEPROM 备份，也没有可靠本机身份绑定。安装/恢复脚本必须另审，不能因已有 `calibrated=true` 就信任来源。
+
+新增只读检查命令（开发电脑，JSON 支持Python3.10+，TOML需3.11+）：
+
+```bash
+python3 scripts/review_calibration.py local/hd1910-calibration.toml \
+  --provenance local/calibration-provenance.json --robot-id YOUR_LOCAL_ROBOT_LABEL
+```
+
+前提：拿到本机**只读复制**的实际生效文件、15只台账和机械证据；不要执行 runtime commissioning/restore/HOME。provenance JSON 至少包含 `robot_id`（自选本机标签，不用别人标签）、`calibration_sha256`（实际文件的 `sha256sum`）、`source="local-readback"`、`evidence_ref`（自有逐关节证据位置）。不生成假的 provenance 消除 BLOCKED。
+
+预期：来源/文件hash一致、15关节顺序/设计ID、有限单位mount、合法零位/±1方向/限位及默认HOME、`motion_enabled=false`；PASS只代表离线一致，不授权运动。更改设计ID须另审映射合同，脚本当前保守拒绝。异常 exit2=BLOCKED，格式错误 exit1=FAIL；保存JSON输出，停止安装/写入/HOME，恢复方法是保留原文件与断电台架，不把他人文件“恢复”进去。软件 `.saved` 文件与15只寄存器原值都分别保存；后续有许可的校准写入才讨论恢复。本轮不会自动写任何一层校准。

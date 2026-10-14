@@ -50,6 +50,14 @@
       "branch": "main",
       "sha": "326d77a1122870bdefa2c36403937502c958e69c",
       "role": "HD1910 M6 actuator baseline and sim2real tool references"
+    },
+    {
+      "name": "qinmo-imu",
+      "host": "gitee.com",
+      "repo": "QinmoTech/IMU-DXL",
+      "branch": "main",
+      "sha": "4644a9d19e07ac47f2c145c5e064c96683a5450b",
+      "role": "vendor IMU-DXL v1.2 protocol; hardware voltage/identity/age still unconfirmed"
     }
   ]
 }

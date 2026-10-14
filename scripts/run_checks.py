@@ -11,6 +11,8 @@ def main(argv=None):
     bundle = Bundle(args.output, 'Workspace offline tests + remote HEAD comparison; no hardware, simulation or training acceptance')
     commands = [
         ('workspace', ['python3', 'scripts/verify_workspace.py'], 0),
+        ('imu_requests', ['python3', 'scripts/imu_protocol.py', '--requests'], 0),
+        ('imu_demo', ['python3', 'scripts/imu_protocol.py', '--demo'], 0),
         ('unit_tests', ['python3', '-m', 'unittest', 'discover', '-s', 'tests', '-v'], 0),
         ('upstreams', ['python3', 'scripts/sync_upstreams.py', 'check'], 0),
         ('simulated_table', ['python3', 'scripts/validate_servos.py', 'tests/fixtures/servos_simulated.json',

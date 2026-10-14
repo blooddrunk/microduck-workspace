@@ -54,3 +54,5 @@ python3 scripts/sync_upstreams.py fetch --name kissqy-runtime
 **自动化能做**：仓库文档链接/版本锁校验、软件测试、串口日志和 CSV 分析、动作/观测合同检查、训练日志与模型回放。**自动化做不到**：确定未知实物三针线序、验证真实接插件极性、触摸检查过热、确保急停已物理安装、判断夹伤风险。因此这些项目未提供测量证据时必须 STOP，不以“待人工证据补充”作为无解释的完成状态。
 
 S0–S2 使用 [自动证据包](06_S0_S2_AUTOMATION.md) 与固定 `run_checks.py` 命令集。本轮上游检查结果与七个完整 SHA/兼容性判断见 [执行记录](../records/2026-10-14_s0-s2-automation.md)；远端一致只证明未漂移，不认证电气/固件兼容。`git` 网络命令有 45 秒超时，失败不改锁。
+
+本轮新增第八来源：[QinmoTech/IMU-DXL](https://gitee.com/QinmoTech/IMU-DXL/tree/4644a9d19e07ac47f2c145c5e064c96683a5450b)，固定v1.2协议。sync工具默认GitHub，显式host只允许github.com/gitee.com；既有七源不变。逐文件审查hash见[review清单](../upstreams/review-2026-10-14.json)，C1/Radxa下载原件hash见[reference manifest](../hardware/reference/manifest.json)。

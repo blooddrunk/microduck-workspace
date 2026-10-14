@@ -114,3 +114,7 @@ python3 -m unittest discover -s tests -v
 | 全机同时供电、全部上力或跑 Policy | **禁止越过前述 Gate** |
 
 按这些步骤上传系统诊断、FD 截图和 HAT/IMU/电源读数后，下一轮才生成每一根真实线束的最终接线表并进入 S3。
+
+## 本轮审查后的优先入口
+
+先用 [12 最小操作教程](12_MINIMAL_OPERATOR_STEPS.md)。C1针号候选、电源路径和反灌见[10](10_C1_ELECTRICAL_REVIEW.md)，V1.12启动/原卡保护见[11](11_ZERO_V112_BOOT_REVIEW.md)，更新后的[08](08_VENDOR_IMU_COMPATIBILITY.md)固定QinmoTech原文，[09](09_HD1910_ZERO_REVIEW.md)含15→14映射与本机校准来源检查。旧段落中“下轮才生成接线表”现已细化为**已有源码候选表，仍需实物端视图与万用表验收**；没有最终接线许可。

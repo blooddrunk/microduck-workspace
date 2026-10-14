@@ -10,6 +10,11 @@ from urllib.parse import unquote
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED = [
     "README.md", "ROADMAP.md", "CHECKLIST.md",
+    "docs/07_MY_HARDWARE_FIRST_STEPS.md", "docs/08_VENDOR_IMU_COMPATIBILITY.md",
+    "docs/09_HD1910_ZERO_REVIEW.md", "docs/10_C1_ELECTRICAL_REVIEW.md",
+    "docs/11_ZERO_V112_BOOT_REVIEW.md", "docs/12_MINIMAL_OPERATOR_STEPS.md",
+    "hardware/reference/manifest.json", "hardware/hd1910-contract.json",
+    "upstreams/review-2026-10-14.json", "scripts/review_calibration.py", "scripts/imu_protocol.py",
     "docs/00_START_HERE.md", "docs/01_BOARD_BOOT.md",
     "docs/02_SERVO_IMU.md", "docs/03_POWER_INTEGRATION.md",
     "docs/04_SIM_TRAINING.md", "docs/05_EVIDENCE_AND_SOURCES.md",

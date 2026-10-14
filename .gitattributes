@@ -1,0 +1,2 @@
+# Preserve upstream production CSV bytes and hashes, including their original CRLF.
+hardware/reference/c1/*.csv -text whitespace=cr-at-eol

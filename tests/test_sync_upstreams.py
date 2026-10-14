@@ -55,5 +55,19 @@ class CatalogTests(unittest.TestCase):
                 upstreams.remote_head(source)
 
 
+
+
+class HostTests(unittest.TestCase):
+    def test_gitee_and_default(self):
+        self.assertEqual(upstreams.url({'repo':'QinmoTech/IMU-DXL','host':'gitee.com'}),'https://gitee.com/QinmoTech/IMU-DXL.git')
+        self.assertEqual(upstreams.url({'repo':'test/example'}),'https://github.com/test/example.git')
+        with self.assertRaises(upstreams.SyncError):upstreams.url({'repo':'test/example','host':'bad/host'})
+    def test_catalog_rejects_host(self):
+        import json
+        d=upstreams.read_catalog();d['sources'][0]['host']='evil.example'
+        with tempfile.TemporaryDirectory() as t:
+            p=Path(t)/'catalog.json';p.write_text(json.dumps(d))
+            with self.assertRaises(upstreams.SyncError):upstreams.read_catalog(p)
+
 if __name__ == "__main__":
     unittest.main()

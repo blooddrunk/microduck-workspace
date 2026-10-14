@@ -18,7 +18,7 @@
 
 项目管理：[Roadmap](ROADMAP.md) · [逐项 Checklist](CHECKLIST.md) · [实物硬件档案](hardware/observed-2026-10-14.json) · [照片与协议审查记录](records/2026-10-14_hardware-photo-review.md)。
 
-## 完整文档导航（docs/ 00–09，共 10 篇）
+## 完整文档导航（docs/ 00–12，共 13 篇）
 
 > **文件编号是主题编号，不是强制执行顺序**。当前应从 **07** 入手；03 的通电操作需要先通过安全闸门。
 
@@ -34,6 +34,9 @@
 | 07 | **[当前实物专用第一轮教程](docs/07_MY_HARDWARE_FIRST_STEPS.md)** | **当前优先**：V1.12 + C1 HAT + HD1910 的最短路径 |
 | 08 | [第三方 ID200 IMU 协议与 FT6 兼容](docs/08_VENDOR_IMU_COMPATIBILITY.md) | S3 前置：供电、身份、帧数据、角速度比例 |
 | 09 | [HD1910 的 2048 中位校准复核](docs/09_HD1910_ZERO_REVIEW.md) | S2 前置：机械零位、编码器中位、训练 HOME 的区别 |
+| 10 | [C1 电气审查](docs/10_C1_ELECTRICAL_REVIEW.md) | 源码候选引脚与断电测量卡 |
+| 11 | [V1.12 引导审查](docs/11_ZERO_V112_BOOT_REVIEW.md) | 备用卡、完整备份与恢复合同 |
+| 12 | [本轮最小操作教程](docs/12_MINIMAL_OPERATOR_STEPS.md) | 人工实验前提、命令、停止与证据 |
 
 ## Codex 与人工操作的顺序、证据在哪里
 
@@ -71,3 +74,7 @@ S0–S2 新工具：[自动化教程与三张现场验收卡](docs/06_S0_S2_AUTO
 本工作区以“自动审查优先、必须人手操作时逐项说明、每个阶段形成可复核证据”为原则。
 
 本轮结果与限制：[2026-10-14 S0–S2 自动准备记录](records/2026-10-14_s0-s2-automation.md)。硬件阶段保持 S0 进行中，S1/S2 未验收。
+
+## 2026-10-14 S1–S3 兼容性审查交付
+
+新增：[C1电气候选表](docs/10_C1_ELECTRICAL_REVIEW.md) · [V1.12备用卡与引导回退](docs/11_ZERO_V112_BOOT_REVIEW.md) · **[可执行最小教程](docs/12_MINIMAL_OPERATOR_STEPS.md)** · [本轮记录](records/2026-10-14_s1-s3-review.md)。C1原件及hash固定；QinmoTech文档作为第八个上游。IMU比例/年龄合同不兼容，vendor仅离线诊断；主机校准增加来源/hash只读检查。没有部署或硬件动作。

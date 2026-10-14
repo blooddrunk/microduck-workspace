@@ -31,11 +31,13 @@ def read_catalog(path: Path = CATALOG) -> dict:
         if not isinstance(name, str) or not SAFE.fullmatch(name) or name in names:
             raise SyncError(f"Invalid/duplicate source name: {name!r}")
         if not isinstance(repo, str) or not REPO.fullmatch(repo):
-            raise SyncError(f"Invalid GitHub repository: {repo!r}")
+            raise SyncError(f"Invalid repository: {repo!r}")
         if not isinstance(branch, str) or not branch or branch.startswith("-") or any(c in branch for c in " ~^:?*[\\"):
             raise SyncError(f"Invalid upstream branch: {branch!r}")
         if not isinstance(sha, str) or not SHA.fullmatch(sha):
             raise SyncError(f"Invalid SHA for {name}: {sha!r}")
+        if source.get("host", "github.com") not in ("github.com", "gitee.com"):
+            raise SyncError("Unsupported repository host")
         names.add(name)
     return data
 
@@ -52,7 +54,9 @@ def git(*args: str, cwd: Path | None = None) -> str:
 
 
 def url(source: dict) -> str:
-    return f"https://github.com/{source['repo']}.git"
+    host=source.get("host", "github.com")
+    if host not in ("github.com", "gitee.com"): raise SyncError("Unsupported repository host")
+    return f"https://{host}/{source['repo']}.git"
 
 
 def remote_head(source: dict) -> str:
