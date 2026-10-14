@@ -4,18 +4,36 @@
 
 ## 现在先做什么
 
-**当前阶段：S0 实物型号已部分确认 → S1 独立主板启动。** 已有 ZERO 3W V1.12、官方 C1 HAT、HD-1910-C001、FE-URT2-C001、第三方 ID200 IMU；HAT/IMU/电源未完成电气验收。
-不要直接整机通电、使能全部舵机或运行行走 Policy。
+**当前阶段：S0 实物型号部分确认 → S1 主板独立启动 / S2 舵机只读复核。** 已有 ZERO 3W V1.12、Pollen C1 HAT、HD-1910-C001、FE-URT2-C001、第三方 ID200 IMU；**HAT、IMU、电源尚未完成电气验收。** 不要直接整机通电、使能全部舵机或执行行走 Policy。
 
-**2026-10-14 新的实物针对性入口：[07 · 已有硬件第一轮实操](docs/07_MY_HARDWARE_FIRST_STEPS.md) → [09 · 2048 校零复核](docs/09_HD1910_ZERO_REVIEW.md) → [08 · 第三方 IMU 双协议审查](docs/08_VENDOR_IMU_COMPATIBILITY.md)。** 新的可核实硬件记录：[JSON](hardware/observed-2026-10-14.json) · [照片审查](records/2026-10-14_hardware-photo-review.md)。
+**推荐阅读与操作路径（以当前这套实物为起点）：**
 
-1. [00 · 实物盘点与安全闸门](docs/00_START_HERE.md)：先确认每块板的具体版本、引脚、额定电压和电源拓扑。
-2. [01 · ZERO 3W 单板刷机与 SSH](docs/01_BOARD_BOOT.md)：**只给 Radxa USB-C 供 5V**，先独立启动。
-3. [02 · HD1910 单舵机、总线与 IMU](docs/02_SERVO_IMU.md)：每次只推进一个可测、可断电的步骤。
-4. [03 · 整机分级通电与首次运动](docs/03_POWER_INTEGRATION.md)：必须通过独立供电/映射/IMU/支架验收。
-5. [04 · 仿真、HD1910 训练与导出](docs/04_SIM_TRAINING.md)：CPU 回放、GPU 冒烟、训练、ONNX 验证；**仿真通过不等于真机可用**。
+1. **先看 [07 · 我的硬件第一轮实操](docs/07_MY_HARDWARE_FIRST_STEPS.md)**：针对 ZERO 3W V1.12、C1 HAT、HD1910 和第三方 IMU 的当前任务与阻塞点。
+2. 对照 [00 · 实物盘点与安全](docs/00_START_HERE.md)，补齐供电、线序、PCB 版本等尚未确认的信息。
+3. 按 [01 · ZERO 3W 独立启动](docs/01_BOARD_BOOT.md) 刷机 / SSH；此时**不接 HAT、舵机、IMU 或 F550 电池**。
+4. 使用 [09 · 2048 中位复核](docs/09_HD1910_ZERO_REVIEW.md) 核查已有校准，再按 [02 · HD1910 舵机与 IMU](docs/02_SERVO_IMU.md) 补充单舵机只读台账；不要立即重写零位。
+5. 阅读 [08 · 第三方 IMU 兼容性](docs/08_VENDOR_IMU_COMPATIBILITY.md)，先确认供电范围、身份寄存器和角速度比例；用 [06 · S0–S2 自动化工具](docs/06_S0_S2_AUTOMATION.md) 保存诊断证据。
 
-项目管理入口：[Roadmap](ROADMAP.md) · [逐项 Checklist](CHECKLIST.md) · [上游来源、同步与证据](docs/05_EVIDENCE_AND_SOURCES.md)。
+**后续阶段**：仅在前置电气验收通过后进入 [03 · 整机分级通电](docs/03_POWER_INTEGRATION.md)；[04 · HD1910 仿真与训练](docs/04_SIM_TRAINING.md) 可以作为独立软件工作流并行学习，不代表实机可安全运行 Policy。
+
+项目管理：[Roadmap](ROADMAP.md) · [逐项 Checklist](CHECKLIST.md) · [实物硬件档案](hardware/observed-2026-10-14.json) · [照片与协议审查记录](records/2026-10-14_hardware-photo-review.md)。
+
+## 完整文档导航（docs/ 00–09，共 10 篇）
+
+> **文件编号是主题编号，不是强制执行顺序**。当前应从 **07** 入手；03 的通电操作需要先通过安全闸门。
+
+| 编号 | 文档 | 适用阶段 / 主要用途 |
+|---|---|---|
+| 00 | [实物盘点与安全闸门](docs/00_START_HERE.md) | S0：硬件型号、供电拓扑、引脚与上电安全 |
+| 01 | [ZERO 3W 刷机、开机与 SSH](docs/01_BOARD_BOOT.md) | S1：主板脱离外设的 5V 独立启动 |
+| 02 | [HD1910 单舵机、总线与 IMU](docs/02_SERVO_IMU.md) | S2：FE-URT2 只读扫描、ID / 方向 / 参考姿态 |
+| 03 | [HAT、IMU 与整机分级通电](docs/03_POWER_INTEGRATION.md) | S3、S5–S7：硬件验收后按 G0–G5 分阶段上电、运动 |
+| 04 | [HD1910 仿真、PPO 训练与 ONNX](docs/04_SIM_TRAINING.md) | S4、S8–S9：CPU 回放、GPU Smoke Test、模型导出 |
+| 05 | [上游同步与验证证据](docs/05_EVIDENCE_AND_SOURCES.md) | 全阶段：来源可信度、固定 commit、更新审查 |
+| 06 | [S0–S2 自动诊断与现场验收卡](docs/06_S0_S2_AUTOMATION.md) | S0–S2：只读脚本、舵机台账、自动验证与证据采集 |
+| 07 | **[当前实物专用第一轮教程](docs/07_MY_HARDWARE_FIRST_STEPS.md)** | **当前优先**：V1.12 + C1 HAT + HD1910 的最短路径 |
+| 08 | [第三方 ID200 IMU 协议与 FT6 兼容](docs/08_VENDOR_IMU_COMPATIBILITY.md) | S3 前置：供电、身份、帧数据、角速度比例 |
+| 09 | [HD1910 的 2048 中位校准复核](docs/09_HD1910_ZERO_REVIEW.md) | S2 前置：机械零位、编码器中位、训练 HOME 的区别 |
 
 ## 目录与继承关系
 
