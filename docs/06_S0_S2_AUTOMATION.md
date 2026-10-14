@@ -2,6 +2,12 @@
 
 本页配合 [00 盘点](00_START_HERE.md)、[01 单板](01_BOARD_BOOT.md)、[02 单舵机](02_SERVO_IMU.md)。所有脚本只用 Python 3.10+ 标准库；不安装驱动，不打开 UART/I²C，不扫描总线，不写舵机寄存器，不操作服务。**S2 的本轮范围是逐只只读基线与配置准备；全总线连接/IMU 验收属于 S3/S5。**
 
+## 原始采集与共享记录分层
+
+执行前建议先读 [分阶段证据目录与交接流程](../records/field/README.md)。现有 `/.evidence/` 与 `/local/` **已经忽略 Git**，适合放从设备采集的完整原始数据；`records/field/` 只存**手工脱敏的审查小结**（公开仓库）。`diagnose_radxa.py`、`validate_servos.py` 和 `run_checks.py` 原有输出选项、禁止覆盖与只读边界不变。
+
+在开发电脑可以预先创建 `.evidence/s1-radxa/`、`.evidence/s2-servos/`，把每次结果放在带日期的**全新** run-id 下。远端 Codex 无法从 Git 下载本地忽略的原始证据；提交 `records/field/s1-radxa/...` 的脱敏摘要或显式提供经过检查的附件后，才让 Agent 判断 S1 数据。
+
 ## 在开发电脑生成自己的空白记录
 
 在 Linux/WSL 开发电脑、本仓库根目录运行：

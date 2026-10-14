@@ -62,3 +62,12 @@ S1/S2/S3/S4 可在满足各自前提后并行；**S5 必须同时通过 S1/S2/S3
 根据照片/采购资料，确认 ZERO 3W PCB V1.12（用户补充 2GB、无 eMMC、有排针）、32GB SanDisk Ultra microSD、HD-1910-C001、FE-URT2-C001、**官方 Pollen C1 HAT（贴签 ASE01187-C1）**、唯卓仕 F550、第三方飞特/Dynamixel 双协议 ID200 IMU。已进行 ID/2048 操作，但没有独立读回与机械中位证据。详细见 [实物审查](records/2026-10-14_hardware-photo-review.md) / [针对性教程](docs/07_MY_HARDWARE_FIRST_STEPS.md)。
 
 **状态**：S0 实物型号盘点部分完成、断电电气确认未完成；S1 未启动验收；S2 曾进行人工 ID/2048 配置，但正确性未验收；S3–S9 不变。下一轮优先纯净 ZERO V1.12 独立刷机/SSH + FE-URT2 只读 15 ID + IMU VCC/FT6 身份/角速度合同。**不提前联合上电。**
+
+## 软件准备、操作者实测与证据验收：顺序约束
+
+- **A（Codex 现在可以做）**：版本同步、C1 原理图审查、IMU 协议/FT6 对齐、ZERO V1.12 镜像风险、离线测试、教程与证据工具；没有真机不阻塞这些工作。
+- **B（操作者按前置安全条件做）**：S0 断电清点、S1 ZERO 单独 5V 启动、S2 FE-URT2 单舵机只读；与 A 可以并行。B 的每项不依赖 A 全部结束，但要使用经过确认的准确规范。
+- **C（联合验收，依赖 B 的真实证据）**：原始记录 `.evidence/` 留在本地，脱敏摘要按 [分阶段索引](records/field/README.md) 提交 `records/field/`，Codex/ChatGPT 检查，再逐项更新 Checklist。
+- **D（实机风险动作）**：只有 C 中必要的电气、IMU、关节映射 Gate 完成，才能规划/执行后续 S3/S5 上电、使能、HOME 和站立。
+
+以上流程可反复循环多轮，不以某一次 Goal 的结束冒充硬件阶段结束。

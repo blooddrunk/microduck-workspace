@@ -2,6 +2,20 @@
 
 > 推荐命名：`records/YYYY-MM-DD_stage_short-name.md`。二进制视频/大日志留在本地，并以路径/sha256 引用；**不要提交私钥、Wi-Fi 密码、家庭公网 IP、可定位地址、设备唯一序列号。**
 
+## 证据来源与交接
+
+- 实验 ID（日期 + 阶段 + 序号）：
+- 记录类型：`REAL_HARDWARE / SOFTWARE_TEST / SIMULATION / DOCUMENT_REVIEW / USER_REPORTED`（选一项；不是每类都等价于现场验收）
+- 现场原始文件位置（仅在 Git 忽略的 `.evidence/` 或 `local/`，不直接链接到 GitHub）：
+- 相关原始文件 SHA256（供同一份证据复核）：
+- 计划提交/已提交的脱敏小结路径：`records/field/<stage>/YYYY-MM-DD_<实验名>.md`
+- 是否已检查密码、IP/MAC、机器名、序列号、可定位照片、令牌等：`YES / NO`
+- 原始证据是否已另外安全备份（Git 忽略目录不是备份）：`YES / NO`
+- 远程 Agent 当前**实际能访问**的证据范围：
+- 本次结论级别：`PASS / FAIL / BLOCKED`；缺乏实机证据一律不能宣称硬件 PASS。
+
+参照 [分阶段存证指南](field/README.md)；仅可公开的脱敏摘要进入 `records/field/`。
+
 ## 基础信息
 
 - 日期/阶段/操作者：

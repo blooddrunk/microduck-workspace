@@ -24,3 +24,15 @@ records/*.jpg
 # Private evidence bundles and operator inventory (never auto-publish)
 /.evidence/
 /local/
+
+# Never stage raw/private field captures by accident (public GitHub repository)
+/records/field/**/raw/
+/records/field/**/private/
+/records/field/**/originals/
+/records/field/**/*.log
+/records/field/**/*.pcap
+/records/field/**/*.zip
+/records/field/**/*.png
+/records/field/**/*.jpg
+/records/field/**/*.jpeg
+/records/field/**/*.mp4

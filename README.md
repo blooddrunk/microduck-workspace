@@ -35,6 +35,12 @@
 | 08 | [第三方 ID200 IMU 协议与 FT6 兼容](docs/08_VENDOR_IMU_COMPATIBILITY.md) | S3 前置：供电、身份、帧数据、角速度比例 |
 | 09 | [HD1910 的 2048 中位校准复核](docs/09_HD1910_ZERO_REVIEW.md) | S2 前置：机械零位、编码器中位、训练 HOME 的区别 |
 
+## Codex 与人工操作的顺序、证据在哪里
+
+**不需要先完成三项硬件操作才能运行上一轮 Codex Goal。** Codex 现在先执行 C1 HAT 原理图、第三方 IMU / FT6 合同、HD1910 零位/关节映射、ZERO 3W V1.12 引导条件的**离线审查与工具准备**；你可并行按 [07 实物教程](docs/07_MY_HARDWARE_FIRST_STEPS.md) 完成 S1 单板和 S2 舵机只读。只有 S3 实机验收/最终接线/运动控制需要等现场证据，不得由模拟结果越级宣称通过。
+
+**统一证据入口：[records/field/ 分阶段留存与交接](records/field/README.md)**。原始诊断/照片和个人舵机台账仍保存到被 Git 忽略的 `/.evidence/`、`/local/`；**本仓库是公开仓库**，仅在人工脱敏核对后把实验 Markdown 摘要提交 `records/field/<阶段>/`，以便云端 Codex/ChatGPT 可以审查。空目录或测试脚本 PASS 不是硬件 PASS。
+
 ## 目录与继承关系
 
 | 内容 | 目录 / 命令 | 作用 |

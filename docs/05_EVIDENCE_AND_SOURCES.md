@@ -46,6 +46,9 @@ python3 scripts/sync_upstreams.py fetch --name kissqy-runtime
 
 ## 每阶段都必须形成的证据
 
+**规范化目录**：[records/field/](../records/field/README.md) 含 S0/S1/S2/S3/S4/S5–S9 的脱敏摘要分类与 Codex 交接流程；完整原始日志/截图/私有台账保留到仓库根目录 `.evidence/`、`local/`（被 Git 忽略）。**该仓库是 Public**，不可自动公开原始设备数据或机密标识。只有已提交的脱敏记录或明确提供的附件，远程 Agent 才能用于证据复核。
+
+
 用 [records/TEMPLATE.md](../records/TEMPLATE.md) 复制成按日期的实验记录，保存：目标与设备 Rev、软件 SHA、命令、关键参数（电压、电流、舵机 ID、IMU 偏置）、原始输出/照片/视频位置、预期/实际结果、失败如何回滚、未解决问题。可用 `python3 scripts/verify_workspace.py` 自动审查文档内部链接和上游 SHA 结构。
 
 **自动化能做**：仓库文档链接/版本锁校验、软件测试、串口日志和 CSV 分析、动作/观测合同检查、训练日志与模型回放。**自动化做不到**：确定未知实物三针线序、验证真实接插件极性、触摸检查过热、确保急停已物理安装、判断夹伤风险。因此这些项目未提供测量证据时必须 STOP，不以“待人工证据补充”作为无解释的完成状态。
