@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-14",
+  "sources": [
+    {
+      "name": "official-runtime",
+      "repo": "pollen-robotics/microduck",
+      "branch": "main",
+      "sha": "95a7e91725b4c079a6ee6ba0a018c8b08e2a7e46",
+      "role": "official Rust runtime (primarily Dynamixel baseline)"
+    },
+    {
+      "name": "official-rl",
+      "repo": "pollen-robotics/microduck_rl",
+      "branch": "develop",
+      "sha": "b02fdea4902c2b93b7d34a83a6f05da4ececb7d3",
+      "role": "official MuJoCo/PPO XL330 training"
+    },
+    {
+      "name": "official-hat",
+      "repo": "pollen-robotics/elec_RPI_Robot_HAT",
+      "branch": "main",
+      "sha": "4478fdfb0d6c6766110776bfed44316884e94e52",
+      "role": "official HAT hardware, PCB must match revision"
+    },
+    {
+      "name": "fanhao-replica",
+      "repo": "fanhao375/microduck-replica",
+      "branch": "master",
+      "sha": "5397eb14d356fa618b294a25cebd4bb0ec59c162",
+      "role": "HD1910 electrical and hardware field observations"
+    },
+    {
+      "name": "kissqy-runtime",
+      "repo": "kissqy/Microduck-kissqy",
+      "branch": "main",
+      "sha": "7a52d297a9adfe6d2315481953dc64060252d142",
+      "role": "HD1910 board/runtime/image and IMU hardware"
+    },
+    {
+      "name": "hd1910-rl",
+      "repo": "qiaosiyi/microduck_rl_hd1910",
+      "branch": "hd1910",
+      "sha": "77286a243c849e04483c7cc8ff4c5f8bae4eea16",
+      "role": "provisional HD1910 RL and ONNX snapshots"
+    },
+    {
+      "name": "luwu-actuator",
+      "repo": "LuwuDynamics/xgoduck_rl",
+      "branch": "main",
+      "sha": "326d77a1122870bdefa2c36403937502c958e69c",
+      "role": "HD1910 M6 actuator baseline and sim2real tool references"
+    }
+  ]
+}

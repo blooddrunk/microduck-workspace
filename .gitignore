@@ -1,8 +1,22 @@
-# 上游镜像与下载产物：由 update.sh 拉取，不入库
+# 上游镜像、训练依赖与下载产物：由本地管理，不入此仓库
 /microduck/
 /microduck_rl/
 /policies/official/
+/.upstreams/
 
-# Python 杂物
+# Python 与实验缓存
 __pycache__/
 *.pyc
+.pytest_cache/
+.venv/
+*.onnx
+*.pt
+
+# 本机采集的大型/敏感数据；放在记录中引用其路径与校验值
+records/*.csv
+records/*.json
+records/*.log
+records/*.mp4
+records/*.zip
+records/*.png
+records/*.jpg

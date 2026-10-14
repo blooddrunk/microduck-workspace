@@ -1,0 +1,37 @@
+name: Workspace docs and upstream pins
+on:
+  push:
+    paths:
+      - "README.md"
+      - "ROADMAP.md"
+      - "CHECKLIST.md"
+      - "docs/**"
+      - "records/**"
+      - "upstreams/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/docs.yml"
+  pull_request:
+    paths:
+      - "README.md"
+      - "ROADMAP.md"
+      - "CHECKLIST.md"
+      - "docs/**"
+      - "records/**"
+      - "upstreams/**"
+      - "scripts/**"
+      - "tests/**"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  offline-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Validate links and SHA pins
+        run: python3 scripts/verify_workspace.py
+      - name: Offline script unit tests
+        run: python3 -m unittest discover -s tests -v
