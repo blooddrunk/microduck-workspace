@@ -1,12 +1,12 @@
 {
   "schema_version": 1,
-  "as_of": "2026-10-14",
+  "as_of": "2026-10-15",
   "sources": [
     {
       "name": "official-runtime",
       "repo": "pollen-robotics/microduck",
       "branch": "main",
-      "sha": "95a7e91725b4c079a6ee6ba0a018c8b08e2a7e46",
+      "sha": "648bf228207f1fdedb652516d90d97ec3c50fffa",
       "role": "official Rust runtime (primarily Dynamixel baseline)"
     },
     {
@@ -27,14 +27,14 @@
       "name": "fanhao-replica",
       "repo": "fanhao375/microduck-replica",
       "branch": "master",
-      "sha": "5397eb14d356fa618b294a25cebd4bb0ec59c162",
+      "sha": "1a2936849b47e638dfc596996026f047dcfb5b05",
       "role": "HD1910 electrical and hardware field observations"
     },
     {
       "name": "kissqy-runtime",
       "repo": "kissqy/Microduck-kissqy",
       "branch": "main",
-      "sha": "7a52d297a9adfe6d2315481953dc64060252d142",
+      "sha": "02a8548d86d9bdcc04047c0ef8b706432cee6a59",
       "role": "HD1910 board/runtime/image and IMU hardware"
     },
     {

@@ -12,7 +12,7 @@
 | 社区训练 | [qiaosiyi/microduck_rl_hd1910](https://github.com/qiaosiyi/microduck_rl_hd1910/tree/hd1910) | HD1910 任务、CPU 回放、训练命令、ONNX 快照 | 暂定执行器参数已完成真机标定/步态无风险 |
 | 社区模型 | [LuwuDynamics/xgoduck_rl](https://github.com/LuwuDynamics/xgoduck_rl) | 1910 M6 参数研究、物理模型与对比工具 | 不经参数、固件与实验条件比对就可复制 |
 
-各引用的**固定 commit** 在 [sources.json](../upstreams/sources.json)，以 2026-10-14 本轮检索结果建立。上游可能后续改写 README、模型、固件与安全提示；读最新资料时必须记录日期/commit。资料冲突时：**实物铭牌+版本匹配的原理图/厂商手册 > 有测量条件的实机记录 > 仓库声称 > 推测**。社区结论仅对它的样机配置成立。
+各引用的**固定 commit** 在 [sources.json](../upstreams/sources.json)：初始锁于 2026-10-14，最近一次同步见 [2026-10-15 记录](../records/2026-10-15_upstream-sync.md)。上游可能后续改写 README、模型、固件与安全提示；读最新资料时必须记录日期/commit。资料冲突时：**实物铭牌+版本匹配的原理图/厂商手册 > 有测量条件的实机记录 > 仓库声称 > 推测**。社区结论仅对它的样机配置成立。
 
 ## 同步策略：跟踪变更，不自动运行陌生代码
 
@@ -53,6 +53,6 @@ python3 scripts/sync_upstreams.py fetch --name kissqy-runtime
 
 **自动化能做**：仓库文档链接/版本锁校验、软件测试、串口日志和 CSV 分析、动作/观测合同检查、训练日志与模型回放。**自动化做不到**：确定未知实物三针线序、验证真实接插件极性、触摸检查过热、确保急停已物理安装、判断夹伤风险。因此这些项目未提供测量证据时必须 STOP，不以“待人工证据补充”作为无解释的完成状态。
 
-S0–S2 使用 [自动证据包](06_S0_S2_AUTOMATION.md) 与固定 `run_checks.py` 命令集。本轮上游检查结果与七个完整 SHA/兼容性判断见 [执行记录](../records/2026-10-14_s0-s2-automation.md)；远端一致只证明未漂移，不认证电气/固件兼容。`git` 网络命令有 45 秒超时，失败不改锁。
+S0–S2 的 2026-10-14 上游检查结果与兼容性判断见 [执行记录](../records/2026-10-14_s0-s2-automation.md)；2026-10-15 的漂移审查与版本锁更新见 [同步记录](../records/2026-10-15_upstream-sync.md)。远端一致只证明 SHA 匹配，不认证电气/固件兼容。`git` 网络命令有 45 秒超时，失败不改锁。
 
-本轮新增第八来源：[QinmoTech/IMU-DXL](https://gitee.com/QinmoTech/IMU-DXL/tree/4644a9d19e07ac47f2c145c5e064c96683a5450b)，固定v1.2协议。sync工具默认GitHub，显式host只允许github.com/gitee.com；既有七源不变。逐文件审查hash见[review清单](../upstreams/review-2026-10-14.json)，C1/Radxa下载原件hash见[reference manifest](../hardware/reference/manifest.json)。
+2026-10-14 新增第八来源：[QinmoTech/IMU-DXL](https://gitee.com/QinmoTech/IMU-DXL/tree/4644a9d19e07ac47f2c145c5e064c96683a5450b)，固定v1.2协议；当日其余七源锁未变。sync工具默认GitHub，显式host只允许github.com/gitee.com。逐文件审查hash见[review清单](../upstreams/review-2026-10-14.json)，C1/Radxa下载原件hash见[reference manifest](../hardware/reference/manifest.json)。
