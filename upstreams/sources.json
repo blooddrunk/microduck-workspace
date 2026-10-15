@@ -58,6 +58,13 @@
       "branch": "main",
       "sha": "4644a9d19e07ac47f2c145c5e064c96683a5450b",
       "role": "vendor IMU-DXL v1.2 protocol; hardware voltage/identity/age still unconfirmed"
+    },
+    {
+      "name": "ftservo-bam",
+      "repo": "ftservo/ftservo-bam",
+      "branch": "main",
+      "sha": "4f7c0b0de3debf9c1ab254fc9654676e8aab9317",
+      "role": "HD1910 7.4V identified BAM m1-m6 model and MuJoCo/mjlab integration; Gitee mirror equality not verified"
     }
   ]
 }
