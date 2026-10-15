@@ -4,7 +4,7 @@
 
 ## 现在先做什么
 
-**当前阶段：S0 实物型号部分确认 → S1 主板独立启动 / S2 舵机只读复核。** 已有 ZERO 3W V1.12、Pollen C1 HAT、HD-1910-C001、FE-URT2-C001、第三方 ID200 IMU；**HAT、IMU、电源尚未完成电气验收。** 不要直接整机通电、使能全部舵机或执行行走 Policy。
+**当前硬件阶段：S0 实物型号部分确认 → S1 主板独立启动 / S2 舵机只读复核；当前软件优先：S4 CPU 仿真与 PPO 分阶段学习。** 已有 ZERO 3W V1.12、Pollen C1 HAT、HD-1910-C001、FE-URT2-C001、第三方 ID200 IMU；**HAT、IMU、电源尚未完成电气验收。** 不要直接整机通电、使能全部舵机或执行行走 Policy。
 
 **推荐阅读与操作路径（以当前这套实物为起点）：**
 
@@ -14,11 +14,13 @@
 4. 使用 [09 · 2048 中位复核](docs/09_HD1910_ZERO_REVIEW.md) 核查已有校准，再按 [02 · HD1910 舵机与 IMU](docs/02_SERVO_IMU.md) 补充单舵机只读台账；不要立即重写零位。
 5. 阅读 [08 · 第三方 IMU 兼容性](docs/08_VENDOR_IMU_COMPATIBILITY.md)，先确认供电范围、身份寄存器和角速度比例；用 [06 · S0–S2 自动化工具](docs/06_S0_S2_AUTOMATION.md) 保存诊断证据。
 
+**软件先行（无需实物）：** 从 [04 · 循序渐进仿真与强化学习教程](docs/04_SIM_TRAINING.md) 的 S4-0、S4-2 CPU 回放开始，再单独研究 [13 · 厂商 HD1910 BAM](docs/13_FTSERVO_BAM_RESEARCH.md)。GPU、真实训练和 ONNX 在各自 Gate 后进行；当前不改变实机验收状态。
+
 **后续阶段**：仅在前置电气验收通过后进入 [03 · 整机分级通电](docs/03_POWER_INTEGRATION.md)；[04 · HD1910 仿真与训练](docs/04_SIM_TRAINING.md) 可以作为独立软件工作流并行学习，不代表实机可安全运行 Policy。
 
 项目管理：[Roadmap](ROADMAP.md) · [逐项 Checklist](CHECKLIST.md) · [实物硬件档案](hardware/observed-2026-10-14.json) · [照片与协议审查记录](records/2026-10-14_hardware-photo-review.md)。
 
-## 完整文档导航（docs/ 00–12，共 13 篇）
+## 完整文档导航（docs/ 00–13，共 14 篇）
 
 > **文件编号是主题编号，不是强制执行顺序**。当前应从 **07** 入手；03 的通电操作需要先通过安全闸门。
 
@@ -37,6 +39,7 @@
 | 10 | [C1 电气审查](docs/10_C1_ELECTRICAL_REVIEW.md) | 源码候选引脚与断电测量卡 |
 | 11 | [V1.12 引导审查](docs/11_ZERO_V112_BOOT_REVIEW.md) | 备用卡、完整备份与恢复合同 |
 | 12 | [本轮最小操作教程](docs/12_MINIMAL_OPERATOR_STEPS.md) | 人工实验前提、命令、停止与证据 |
+| 13 | [飞特 HD1910 BAM 厂商模型评估](docs/13_FTSERVO_BAM_RESEARCH.md) | 7.4V M1–M6、注册表大小写与隔离对比，不直接替代已有模型 |
 
 ## Codex 与人工操作的顺序、证据在哪里
 
