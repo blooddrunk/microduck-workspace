@@ -14,7 +14,7 @@
 4. 使用 [09 · 2048 中位复核](docs/09_HD1910_ZERO_REVIEW.md) 核查已有校准，再按 [02 · HD1910 舵机与 IMU](docs/02_SERVO_IMU.md) 补充单舵机只读台账；不要立即重写零位。
 5. 阅读 [08 · 第三方 IMU 兼容性](docs/08_VENDOR_IMU_COMPATIBILITY.md)，先确认供电范围、身份寄存器和角速度比例；用 [06 · S0–S2 自动化工具](docs/06_S0_S2_AUTOMATION.md) 保存诊断证据。
 
-**软件先行（无需实物）：** 从 [04 · 循序渐进仿真与强化学习教程](docs/04_SIM_TRAINING.md) 的 S4-0、S4-2 CPU 回放开始，再单独研究 [13 · 厂商 HD1910 BAM](docs/13_FTSERVO_BAM_RESEARCH.md)。GPU、真实训练和 ONNX 在各自 Gate 后进行；当前不改变实机验收状态。
+**软件先行（无需实物）：** 从 [04 · 循序渐进仿真与强化学习教程](docs/04_SIM_TRAINING.md) 的 S4-0、S4-2 CPU 检查开始，再单独研究 [13 · 厂商 HD1910 BAM](docs/13_FTSERVO_BAM_RESEARCH.md)。2026-10-15 已验证 ONNX CPU 数值 rollout、发现静止姿态测试失败并完成 BAM M1–M6 CPU 敏感性对比；当前没有可用 CUDA GPU，GUI 回放和训练 Smoke 仍未完成。详见[本轮脱敏记录](records/field/s4-simulation/2026-10-15_s4-bam-evaluation.md)。
 
 **后续阶段**：仅在前置电气验收通过后进入 [03 · 整机分级通电](docs/03_POWER_INTEGRATION.md)；[04 · HD1910 仿真与训练](docs/04_SIM_TRAINING.md) 可以作为独立软件工作流并行学习，不代表实机可安全运行 Policy。
 

@@ -16,4 +16,6 @@
 
 复制 [统一模板](../../TEMPLATE.md) 为 `YYYY-MM-DD_s4-2_hd1910_cpu.md` 等；单独写明 `gate`、`status: PASS|FAIL|PARTIAL|BLOCKED|SKIP`、真实命令、Git HEAD、`uv.lock`/checkpoint/ONNX SHA256、CPU/GPU 信息、测试输入、预期与实测、关键曲线/视频的私有相对路径、恢复方法和下一关的阻塞项。**本次只创建教程，不把任何执行项标记为已通过。**
 
-厂商 BAM 研究必须同时记录 GitHub 源提交 `4f7c0b0de3debf9c1ab254fc9654676e8aab9317`、Gitee 镜像一致性是否有证据、M1–M6 JSON SHA256 与载入异常；不采集舵机、不向公共仓库提交大日志或模型文件。
+2026-10-15 的 S4/BAM 软件检查摘要见 [本轮记录](2026-10-15_s4-bam-evaluation.md)：S4-2 数值 rollout 与 BAM CPU A/B 有限值，但静止姿态验证器失败，CUDA Smoke BLOCKED。原始报告/曲线留在本地 Git 忽略的 .evidence/。
+
+厂商 BAM 研究必须同时记录 GitHub 源提交 `4f7c0b0de3debf9c1ab254fc9654676e8aab9317`、Gitee/GitHub 同 SHA 的观察结果及其身份验证边界、M1–M6 JSON SHA256 与载入异常；不采集舵机、不向公共仓库提交大日志或模型文件。

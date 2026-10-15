@@ -1,6 +1,6 @@
 # 04 · MicroDuck 仿真与强化学习：从零上手到可复现实验
 
-> **当前主线是纯软件 S4，不要求 ZERO 3W、C1 HAT、IMU、HD1910 实物或电源通过验收。** 本教程对应 `CHECKLIST.md` 中的 S4 分阶段 Gate；硬件安全闸门仍遵守 `03_POWER_INTEGRATION.md`。文中的命令在 **Linux / Ubuntu / WSL2 的 Linux 终端**运行，默认从本工作区根目录开始。命令属于“待操作者执行的教程”，不代表本轮已经实跑通过。
+> **当前主线是纯软件 S4，不要求 ZERO 3W、C1 HAT、IMU、HD1910 实物或电源通过验收。** 本教程对应 CHECKLIST.md 中的 S4 分阶段 Gate；硬件安全闸门仍遵守 03_POWER_INTEGRATION.md。命令在 **Linux / Ubuntu / WSL2 的 Linux 终端**运行，默认从本工作区根目录开始。2026-10-15 已自动完成部分固定来源、CPU ONNX 和 BAM 检查；实际结果见[本轮脱敏记录](../records/field/s4-simulation/2026-10-15_s4-bam-evaluation.md)。教程里的 GUI、CUDA 训练和用户自己训练的 Policy 仍需按各 Gate 实际执行。
 
 ## 0. 先看全貌：这次到底在学什么？
 
@@ -43,7 +43,25 @@
 
 如 Windows 的 WSL2 本身无法启动，**不要为本教程冒险修复/修改现有 VHDX 权限**；可改用独立 Ubuntu 机器或云端。所有训练使用 PC/GPU，**不在 ZERO 3W 上进行 PPO**。
 
-### 2.2 先保存软件基线
+### 2.2 开始前核对工具
+
+S4-2 CPU 数值检查至少需要 Python 3.12、uv、锁定 HD1910 fork 的依赖与 ONNX 快照；可视化另需 Linux 图形窗口/GLFW。S4-3 还要求 NVIDIA GPU、可用驱动和 CUDA。不要把 WSLg 的 DISPLAY 变量当作 GUI 已可渲染，也不要把带 CUDA wheel 的 PyTorch 当作 GPU 已可用。
+
+~~~bash
+python3 --version
+uv --version
+nvidia-smi
+~~~
+
+如果没有 nvidia-smi，S4-3 记为 BLOCKED，可继续做 CPU/BAM 检查。锁定环境建好后运行自动预检；它会写一份本地 report.json，明确分列来源、Python 依赖、ONNX 数值、GUI 线索和 CUDA：
+
+~~~bash
+python3 scripts/check_s4_environment.py --output-dir .evidence/s4-simulation/<new-run-id>-preflight
+~~~
+
+预检中的 GUI 状态只是 DISPLAY/Wayland 环境提示，不是打开窗口的证据；ONNX 零向量有限值只证明推理数值路径可执行，不证明动作语义、站立或行走。
+
+### 2.3 先保存软件基线
 
 在本工作区根目录：
 
@@ -59,7 +77,7 @@ python3 scripts/sync_upstreams.py check
 
 不要运行 `./update.sh` 来准备 HD1910；它针对本机原有官方克隆，会移动基线。不要覆盖本工作区中被 Git 忽略的 `microduck_rl/` 和 `policies/official/`。
 
-### 2.3 单独获取 HD1910 研究分支
+### 2.4 单独获取 HD1910 研究分支
 
 ~~~bash
 # 只对需要的上游做克隆；放入被忽略的 .upstreams/，不覆盖官方 baseline
@@ -77,12 +95,20 @@ uv --version
 export UV_HTTP_TIMEOUT=600
 uv python install 3.12
 uv sync --locked --python 3.12
-uv run --locked list-envs
+uv run --locked python - <<'PY'
+import mjlab.tasks
+from mjlab.tasks.registry import list_tasks
+task = 'Mjlab-Velocity-Flat-MicroDuck-HD1910'
+assert task in list_tasks(), task
+print('PASS: registered', task)
+PY
 ~~~
 
-通过：`uv.lock` 未发生重解锁；`list-envs` 能列出 `Mjlab-Velocity-Flat-MicroDuck-HD1910`。如果安装出现 GPU/CUDA 依赖下载，**CPU 回放不代表一定不下载 CUDA wheel**；磁盘和网络空间要预留。不要用 `uv lock`、`pip install -U` 解决兼容问题后不留版本记录。
+通过：uv.lock 未发生重解锁；任务注册断言输出 `PASS`。若安装出现 GPU/CUDA 依赖下载，**CPU 回放不代表一定不下载 CUDA wheel**；磁盘和网络空间要预留。不要运行 uv lock 或 pip install -U 来解决兼容问题后不留版本记录。
 
 本节来源：锁定的 [qiaosiyi HD1910 fork](https://github.com/qiaosiyi/microduck_rl_hd1910/tree/hd1910) 与 [fork 中文 README](https://github.com/qiaosiyi/microduck_rl_hd1910/blob/hd1910/README.zh-CN.md)，而非官方 XL330 配置。
+
+补充：固定 SHA 的 `list-envs` 会打印任务表但以退出码 46 结束，因为上游把任务数作为退出码返回。教程用上面的带断言检查，避免新手把这个上游行为误判为环境安装失败。
 
 ## 3. S4-1（可选）：先看官方 XL330 CPU 回放
 
@@ -136,18 +162,33 @@ MUJOCO_GL=glfw uv run --locked scripts/infer_policy.py \
 能运行纯 Python/依赖时，先完成静态模型检查与 fork 的 CPU 回归；在支持 EGL 的环境再运行数值验证。`MUJOCO_GL=egl` 依赖驱动与 OpenGL/EGL 实现，**不能保证所有纯 CPU 主机都能用**。
 
 ~~~bash
-uv run --locked --with pytest pytest tests/ -q
+# 返回工作区根目录运行固定离线检查；结果写入被 Git 忽略的 .evidence/
+cd ../..
+python3 scripts/run_checks.py --output .evidence/s4-simulation/<new-run-id>-workspace-checks
+cd .upstreams/hd1910-rl
 
 # 可选：先运行 --help 检查，再执行真实校验
 uv run --locked scripts/validate_hd1910.py --help
+mkdir -p ../../.evidence/s4-simulation/<new-run-id>-cpu-validation
 MUJOCO_GL=egl uv run --locked scripts/validate_hd1910.py \
   --onnx models/hd1910-walking-iter-2000/policy.onnx \
-  --output hd1910_validation.json
+  --output ../../.evidence/s4-simulation/<new-run-id>-cpu-validation/cpu-validation.json
 ~~~
 
 特别注意：`validate_hd1910.py` 的**进程退出成功不等于站姿/行为检查全部通过**；必须逐项打开 JSON，区分数值有限性、姿态稳定性与已知失败项目。`hd1910_validation.json` 可能进入上游工作目录：不应直接提交到公共仓库。
 
-**S4-2 Gate**：记录 SHA、环境、实际运行命令、模型哈希、测试结果、至少一个控制响应和观察结论；没有真实显示/日志时保持 BLOCKED 或 PARTIAL，不写“已完成 CPU 回放”。
+本机 2026-10-15 自动 CPU 验证中，发布 ONNX 的 float32 接口是 [1,61] → [1,14]；100 个 Policy 控制步/400 个物理步（2 秒）输出有限。另 8 组静止姿态都超过 82° 倾斜并跌倒。因此 CPU 数值 rollout 为 PASS，当前验证器的站姿行为检查为 FAIL；零速度短 rollout 不等于速度跟踪或走路成功，GUI 键盘响应也没有在本轮确认。
+
+**S4-2 Gate**：记录 SHA、环境、实际运行命令、模型哈希、测试结果、至少一次 GUI 控制响应和观察结论；没有真实显示/日志时保持 BLOCKED 或 PARTIAL，不写“已完成 CPU 回放”。
+
+### 4.4 按调用链读代码
+
+建议沿着一次控制步阅读，而不是先读完整训练框架：
+
+1. 任务 ID 与 provisional 执行器配置在锁定 fork 的 src/mjlab_microduck/tasks/__init__.py、microduck_hd1910_env_cfg.py 和 actuator/hd1910.py。
+2. Hd1910ActuatorCfg 构造实际执行器；Policy 的 14 维 action 会经过任务 action scale/HOME 映射，再变成关节目标。执行器计算力矩并交给 MuJoCo，下一次 observation 才回到 Policy。
+3. CPU 推理入口 scripts/infer_policy.py 加载已有 ONNX 与 normalizer，组装 61D observation、执行 inference session、输出 14D action。它是使用已有 Policy，不调用 PPO。
+4. GPU 训练入口 train Mjlab-Velocity-Flat-MicroDuck-HD1910 按 task registry 构造并行环境；PPO 收集 rollout、算 advantage/loss、更新 Actor/Critic 并保存 checkpoint。Smoke 只验证训练闭环，不代表 Policy 已学会走。
 
 ## 5. S4-3：第一次 PPO 训练，只做 64 环境 × 5 次迭代
 
@@ -157,7 +198,13 @@ MUJOCO_GL=egl uv run --locked scripts/validate_hd1910.py \
 # 仍在 .upstreams/hd1910-rl/
 nvidia-smi
 uv run --locked python -c "import torch; print(torch.__version__, torch.version.cuda); assert torch.cuda.is_available(), 'CUDA unavailable'"
-uv run --locked list-envs
+uv run --locked python - <<'PY'
+import mjlab.tasks
+from mjlab.tasks.registry import list_tasks
+task = 'Mjlab-Velocity-Flat-MicroDuck-HD1910'
+assert task in list_tasks(), task
+print('PASS: registered', task)
+PY
 
 uv run --locked train Mjlab-Velocity-Flat-MicroDuck-HD1910 \
   --env.scene.num-envs 64 \
@@ -187,6 +234,58 @@ uv run --locked tensorboard --logdir logs/rsl_rl --host 127.0.0.1 --port 6006
 ~~~
 
 浏览器打开 `http://127.0.0.1:6006`。远端 GPU 可用 `ssh -L 6006:127.0.0.1:6006 user@server` 转发，不要为了访问 TensorBoard 将端口无鉴权暴露到公网。
+
+### Smoke 操作卡：前置、判定、停止、重试与回滚
+
+从工作区根目录开始；不要从 ZERO 3W 或其他硬件上启动训练。
+
+~~~bash
+set -o pipefail
+RUN_ID="$(date -u +%Y%m%dT%H%M%SZ)"
+EVIDENCE="$PWD/.evidence/s4-simulation/$RUN_ID"
+mkdir -p "$EVIDENCE"
+python3 scripts/check_s4_environment.py --output-dir "$EVIDENCE/preflight"
+cd .upstreams/hd1910-rl
+
+git rev-parse HEAD | tee "$EVIDENCE/source-sha.txt"
+sha256sum uv.lock | tee "$EVIDENCE/uv-lock-sha.txt"
+nvidia-smi | tee "$EVIDENCE/nvidia-smi.txt"
+uv run --locked python -c 'import torch; print(torch.__version__, torch.version.cuda, torch.cuda.is_available()); assert torch.cuda.is_available(), "CUDA unavailable"' 2>&1 | tee "$EVIDENCE/torch-cuda.txt"
+
+uv run --locked python - <<'PY' 2>&1 | tee "$EVIDENCE/task-check.txt"
+import mjlab.tasks
+from mjlab.tasks.registry import list_tasks
+task = 'Mjlab-Velocity-Flat-MicroDuck-HD1910'
+assert task in list_tasks(), task
+print('PASS: registered', task)
+PY
+
+RUN_NAME="hd1910_smoke_$RUN_ID"
+touch "$EVIDENCE/train-start.marker"
+uv run --locked train Mjlab-Velocity-Flat-MicroDuck-HD1910 \
+  --env.scene.num-envs 64 \
+  --agent.max-iterations 5 \
+  --agent.save-interval 5 \
+  --agent.logger tensorboard \
+  --agent.run-name "$RUN_NAME" \
+  --agent.resume False 2>&1 | tee "$EVIDENCE/train.log"
+
+find logs/rsl_rl/velocity_hd1910_provisional -type f -path "*/${RUN_NAME}*/model_*.pt" \
+  -newer "$EVIDENCE/train-start.marker" -size +0c -print | tee "$EVIDENCE/checkpoint-candidates.txt"
+test -s "$EVIDENCE/checkpoint-candidates.txt"
+while IFS= read -r checkpoint; do sha256sum "$checkpoint"; done \
+  < "$EVIDENCE/checkpoint-candidates.txt" > "$EVIDENCE/checkpoint-sha256.txt"
+~~~
+
+**进入 PASS 的条件：** CUDA 预检为 true；任务注册断言通过；训练命令正常退出并有 5 次迭代的日志；loss、reward、episode length、action std 均为有限值；本次新 run 目录下至少有一个非空 checkpoint，保存其 SHA256。checkpoint 是“训练真的写出文件”的证据，不等于 Policy 行为评估通过。
+
+**停止和判定：** 找不到 GPU、CUDA 不可用、task ID 不匹配时不启动训练，记 BLOCKED 并保留预检日志。CUDA OOM、Warp 初始化/编译异常、NaN/Inf、进程异常退出或没有 checkpoint 时停止本次，标 FAIL；如只执行了更少环境/迭代或日志/检查点不完整，记 PARTIAL。不要调低环境数后把它记作 64×5 PASS，不要用零向量 ONNX 测试替代训练。
+
+**重试：** 先读 train.log 的第一条异常，确认磁盘空间、GPU 进程、驱动与锁定 SHA；不要运行 uv lock 或 pip install -U。使用新的 RUN_ID/RUN_NAME，保持相同的 64×5 参数，避免覆盖上一轮。若失败来自 GPU 资源不足，换可用 GPU 或标 BLOCKED；不同规模的新实验必须另起 Gate 和 run name。
+
+**回滚：** 训练是软件写文件，不会驱动舵机。出现错误时 Ctrl-C 停止当前训练进程；保留 train.log 和 checkpoint 候选供复核。uv run --locked 不应改动 uv.lock；检查 git status，若出现源码修改，停止并单独审查，不要用 reset --hard 清理用户状态。确认需要丢弃产物时，只处理这次 RUN_NAME 对应的日志目录；先把证据备份到私有 .evidence/，不要删除其它运行或发布快照。
+
+**提交证据：** 将 source SHA、uv.lock SHA256、GPU/driver、精确命令与退出状态、训练日志、实际环境数/迭代数、seed、TensorBoard 路径和 checkpoint SHA 放入私有 EVIDENCE 目录。公开记录只填写脱敏摘要；不提交原始大日志、checkpoint、凭据或带设备/网络标识的文件。
 
 ## 6. S4-4：开始长训前的 Gate 与第一个完整实验
 
