@@ -118,3 +118,19 @@
 - [ ] 上游新 runtime/固件与本机硬件兼容性、供电、舵机参数及现场行为仍未验收；没有安装或上电验证。
 
 详见[2026-10-15 上游同步记录](records/2026-10-15_upstream-sync.md)。
+
+## 2026-10-15 S4 软件优先学习路线（未执行的项不得勾选）
+
+**[完整操作教程](docs/04_SIM_TRAINING.md)** · **[厂商 BAM 分析](docs/13_FTSERVO_BAM_RESEARCH.md)**；这是不依赖硬件 S0–S3 的独立研究线，S3/S5–S9 均维持原状态。
+
+- [x] S4 教程已分成 S4-0～S4-6：固定来源、CPU 回放、64×5 GPU Smoke、长训、ONNX 与厂商 BAM 对照。**这是文档完成，不是运行验收**。
+- [x] GitHub `ftservo/ftservo-bam` 的 7.4V HD1910 M1～M6、驱动代码和依赖已静态审查；Gitee/GitHub commit 一致性尚未验证。
+- [ ] S4-0：本机环境/版本核查、锁定源码 SHA，提交脱敏摘要。
+- [ ] S4-1（可选）：现有 XL330 官方 Policy 的 CPU 回放；缺少历史本机目录时标记 SKIP。
+- [ ] S4-2：HD1910 2000-iter ONNX SHA256 校验、CPU GUI 回放、指令响应与日志。
+- [ ] S4-3：真实 CUDA + 64 env × 5 iteration、loss 有限、checkpoint 可读取（无 GPU 则 BLOCKED）。
+- [ ] S4-4：完整训练和 TensorBoard 分项、回放/扰动评测与多个 checkpoint（依赖 S4-3）。
+- [ ] S4-5：训练 checkpoint → 含 normalizer ONNX、61→14、PT/ONNX 数值等价和语义验证。
+- [ ] S4-6：厂商 BAM 原版加载失败场景确认及可选修复、CPU 单摆 A/B；任何 GPU/实机迁移均另立 Gate。
+
+**不可误判**：厂商源码/ONNX 已公开不代表在你的电脑上跑通；脚本退出零不代表稳定站立；厂商 7.4V 模型不能在无测量时认定适合当前 HD-1910-C001 / 实机固件。原始记录存 `.evidence/s4-simulation/`，只有脱敏总结才进 `records/field/s4-simulation/`。
