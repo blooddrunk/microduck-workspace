@@ -1,0 +1,686 @@
+{
+  "schema": "microduck-community-policy-screen/v1",
+  "date": "2026-10-16",
+  "baseline_commit": "9e0a5cf2efeeaa66bd2ad9f1463005d71672cc50",
+  "scope": "offline CPU screen; not stable walking or hardware acceptance",
+  "hardware": "NOT_RUN",
+  "s0_s3_changed": false,
+  "environment": {
+    "python": "3.12.14",
+    "numpy": "2.4.2",
+    "onnx": "1.22.0",
+    "onnxruntime": "1.24.4"
+  },
+  "native_environment": {
+    "python": "3.12.14",
+    "numpy": "2.4.1",
+    "mujoco": "3.10.0",
+    "mjlab": "1.3.0",
+    "warp-lang": "1.12.0",
+    "mujoco-warp": "3.8.1",
+    "torch": "2.9.1",
+    "onnxruntime": "1.24.4",
+    "device": "cpu"
+  },
+  "models": {
+    "kissqy": {
+      "repository": "kissqy/Microduck-kissqy",
+      "commit": "f02e875e73b88bf8ec7d5bbb34d0b461ac83b010",
+      "policy": "microduck-hd1910/firmware/policies/walk/policy.onnx",
+      "sha256": "1cbf8730eadd75a5704332c9f3c10f60bfa9412135b907831c9dbd731ce1795f",
+      "bytes": 795454,
+      "onnx": {
+        "status": "PASS",
+        "checker": "PASS",
+        "contract_61_to_14_float32": true,
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "inputs": [
+          [
+            "obs",
+            [
+              1,
+              61
+            ],
+            "tensor(float)"
+          ]
+        ],
+        "outputs": [
+          [
+            "actions",
+            [
+              1,
+              14
+            ],
+            "tensor(float)"
+          ]
+        ],
+        "embedded_normalization": true,
+        "normalizer_constants": {
+          "obs_normalizer._mean": {
+            "shape": [
+              1,
+              61
+            ],
+            "min": -0.9565542340278625,
+            "max": 0.10271167010068893,
+            "sha256": "21ad5db6da78f460b07a3a7593281f8df84b5714a1017fe873fa836b4b19cb15"
+          },
+          "onnx::Div_24": {
+            "shape": [
+              1,
+              61
+            ],
+            "min": 0.012886893935501575,
+            "max": 3.901392698287964,
+            "sha256": "c8c7b67ad9b26d5807fdbf3772eec9eda542a8dee9255119ebb9e36159baf1da"
+          }
+        },
+        "finite": true,
+        "output_changes": true,
+        "latency_ms": {
+          "runs": 200,
+          "warmup": 20,
+          "threads": 1,
+          "median": 0.0100805,
+          "p95": 0.02097804999999996,
+          "max": 0.047121
+        }
+      },
+      "sensitivity": {
+        "upright": {
+          "finite": true,
+          "max_delta_from_upright": 0.0
+        },
+        "forward": {
+          "finite": true,
+          "max_delta_from_upright": 0.11106336861848831
+        },
+        "turn": {
+          "finite": true,
+          "max_delta_from_upright": 0.041737526655197144
+        },
+        "gyro": {
+          "finite": true,
+          "max_delta_from_upright": 0.015644729137420654
+        },
+        "joint_offset": {
+          "finite": true,
+          "max_delta_from_upright": 0.02740292251110077
+        },
+        "joint_velocity": {
+          "finite": true,
+          "max_delta_from_upright": 0.0034930631518363953
+        },
+        "previous_action": {
+          "finite": true,
+          "max_delta_from_upright": 0.004644185304641724
+        },
+        "tilt": {
+          "finite": true,
+          "max_delta_from_upright": 0.053282707929611206
+        }
+      },
+      "hardware": "NOT_RUN",
+      "simulation": {
+        "status": "FAIL",
+        "scope": "native kissqy M6/backlash on CPU; no hardware acceptance",
+        "native_source_verification": {
+          "status": "PASS",
+          "sources": [
+            {
+              "repository": "official-rl",
+              "commit": "8d0db74916a4f833d1d9b95d6a1d7f4d13b9d5ec",
+              "archive_sha256": "d8abe8bf7f2ec3375459a8926ffc2ee7332de7c318a03151a8c70cd7256e12d4"
+            },
+            {
+              "repository": "kissqy-runtime",
+              "commit": "f02e875e73b88bf8ec7d5bbb34d0b461ac83b010",
+              "archive_sha256": "8032d8937b78565d67f05f4908ebe09c3c302cf3285c9507de93d4f560c84c8a"
+            }
+          ],
+          "files_checked": 301
+        },
+        "contract_checks": {
+          "kp_fw": true,
+          "delay_min_lag": true,
+          "delay_max_lag": true,
+          "vin_range": true,
+          "vin_min": true,
+          "vin_drop_gain_range": true,
+          "m6_sha256": true,
+          "home": true,
+          "action_scale": true,
+          "no_filter": true
+        },
+        "scenarios": [
+          {
+            "scenario": "zero",
+            "command": [
+              0,
+              0,
+              0
+            ],
+            "requested_s": 10,
+            "completed_s": 10.0,
+            "status": "PASS",
+            "stop_reason": null,
+            "max_tilt_deg": 2.9242918491363525,
+            "vx_rmse_m_s": 0.005922358713859801,
+            "yaw_rmse_rad_s": 0.06746675444751675,
+            "max_joint_limit_excess_rad": 0.0,
+            "max_target_limit_excess_rad": 0.0,
+            "inference_p95_ms": 0.2613744999999999
+          },
+          {
+            "scenario": "forward",
+            "command": [
+              0.1,
+              0,
+              0
+            ],
+            "requested_s": 10,
+            "completed_s": 10.0,
+            "status": "FAIL",
+            "stop_reason": null,
+            "max_tilt_deg": 6.463868618011475,
+            "vx_rmse_m_s": 0.09095204798228555,
+            "yaw_rmse_rad_s": 0.5305691400764373,
+            "max_joint_limit_excess_rad": 0.0,
+            "max_target_limit_excess_rad": 0.0,
+            "inference_p95_ms": 0.23571449999999997
+          },
+          {
+            "scenario": "turn",
+            "command": [
+              0,
+              0,
+              0.2
+            ],
+            "requested_s": 10,
+            "completed_s": 10.0,
+            "status": "FAIL",
+            "stop_reason": null,
+            "max_tilt_deg": 2.3083407878875732,
+            "vx_rmse_m_s": 0.005548036527894782,
+            "yaw_rmse_rad_s": 0.20713155111347517,
+            "max_joint_limit_excess_rad": 0.0,
+            "max_target_limit_excess_rad": 0.0,
+            "inference_p95_ms": 0.2090795499999998
+          }
+        ],
+        "conditions": {
+          "seed": 42,
+          "terrain": "native Rough generator",
+          "auto_reset": false,
+          "pushes": false,
+          "commands": "raw ONNX command block overridden each step, head/body zero",
+          "randomization": "native startup/randomization retained; not a deterministic PD comparison",
+          "thresholds": {
+            "fall_tilt_deg": 55,
+            "fall_root_z_relative_origin_m": 0.06,
+            "joint_or_target_excess_rad": 0.01,
+            "vx_rmse_m_s": 0.1,
+            "yaw_rmse_rad_s": 0.2
+          },
+          "warning_count": "NOT_RUN: no per-step warning counter exported by this adapter"
+        }
+      },
+      "overall_status": "FAIL",
+      "overall_scope": "native short behavior screen",
+      "license": "Personal Non-Commercial License v1.0",
+      "task": "Mjlab-VelStand-Rough-Backlash-MicroDuck",
+      "checkpoint_iteration": 9599,
+      "joint_names": [
+        "left_hip_yaw",
+        "left_hip_roll",
+        "left_hip_pitch",
+        "left_knee",
+        "left_ankle",
+        "neck_pitch",
+        "head_pitch",
+        "head_yaw",
+        "head_roll",
+        "right_hip_yaw",
+        "right_hip_roll",
+        "right_hip_pitch",
+        "right_knee",
+        "right_ankle"
+      ],
+      "onnx_home_metadata_rad": [
+        0.0,
+        -0.087,
+        -0.458,
+        -0.005,
+        0.453,
+        0.349,
+        0.349,
+        0.0,
+        0.0,
+        0.0,
+        0.087,
+        0.458,
+        0.005,
+        -0.453
+      ]
+    },
+    "qiaosiyi": {
+      "repository": "qiaosiyi/microduck_rl_hd1910",
+      "commit": "77286a243c849e04483c7cc8ff4c5f8bae4eea16",
+      "policy": "models/hd1910-walking-iter-2000/policy.onnx",
+      "sha256": "40f7af33cc67218a9b5dc8c8daa4dc0c52260dfcbb76d8a71f66335cd254dec2",
+      "bytes": 794100,
+      "onnx": {
+        "status": "PASS",
+        "checker": "PASS",
+        "contract_61_to_14_float32": true,
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "inputs": [
+          [
+            "obs",
+            [
+              1,
+              61
+            ],
+            "tensor(float)"
+          ]
+        ],
+        "outputs": [
+          [
+            "actions",
+            [
+              1,
+              14
+            ],
+            "tensor(float)"
+          ]
+        ],
+        "embedded_normalization": true,
+        "normalizer_constants": {
+          "obs_normalizer._mean": {
+            "shape": [
+              1,
+              61
+            ],
+            "min": -1.6994218826293945,
+            "max": 1.513463020324707,
+            "sha256": "fc8ff569dda9f05a122da5a962d2cffcc8979bdb15223b7ba66141f5fc0b80bf"
+          },
+          "onnx::Div_24": {
+            "shape": [
+              1,
+              61
+            ],
+            "min": 0.01288490928709507,
+            "max": 7.8212571144104,
+            "sha256": "664e6ed62fcafc6c0905dd75c222ee838090af4d3279377ba630e6b69337d6e5"
+          }
+        },
+        "finite": true,
+        "output_changes": true,
+        "latency_ms": {
+          "runs": 200,
+          "warmup": 20,
+          "threads": 1,
+          "median": 0.01001,
+          "p95": 0.011602999999999999,
+          "max": 0.039651
+        }
+      },
+      "sensitivity": {
+        "upright": {
+          "finite": true,
+          "max_delta_from_upright": 0.0
+        },
+        "forward": {
+          "finite": true,
+          "max_delta_from_upright": 0.05835221707820892
+        },
+        "turn": {
+          "finite": true,
+          "max_delta_from_upright": 0.03955036401748657
+        },
+        "gyro": {
+          "finite": true,
+          "max_delta_from_upright": 0.023242346942424774
+        },
+        "joint_offset": {
+          "finite": true,
+          "max_delta_from_upright": 0.014532417058944702
+        },
+        "joint_velocity": {
+          "finite": true,
+          "max_delta_from_upright": 0.0072406381368637085
+        },
+        "previous_action": {
+          "finite": true,
+          "max_delta_from_upright": 0.007988661527633667
+        },
+        "tilt": {
+          "finite": true,
+          "max_delta_from_upright": 0.07238147407770157
+        }
+      },
+      "hardware": "NOT_RUN",
+      "simulation": {
+        "status": "FAIL",
+        "scope": "native provisional PD CPU; deterministic HOME start; fixed 7.4V/4 physics-step delay; no DR",
+        "thresholds": {
+          "fall_tilt_deg": 55,
+          "fall_root_z_m": 0.06,
+          "joint_or_target_excess_rad": 0.01,
+          "vx_rmse_m_s": 0.1,
+          "yaw_rmse_rad_s": 0.2,
+          "warnings": 0
+        },
+        "source": "77286a243c849e04483c7cc8ff4c5f8bae4eea16",
+        "scenarios": [
+          {
+            "scenario": "zero",
+            "command": [
+              0,
+              0,
+              0
+            ],
+            "status": "FAIL",
+            "requested_s": 10,
+            "completed_s": 10.000000000000163,
+            "fall_time_s": null,
+            "stop_reason": null,
+            "max_tilt_deg": 2.009923201909576,
+            "vx_rmse_m_s": 0.03465928779413425,
+            "yaw_rmse_rad_s": 0.45308534409565404,
+            "max_joint_limit_excess_rad": 0.05529538228126368,
+            "max_target_limit_excess_rad": 5.17564526421089,
+            "warning_count": 0,
+            "inference_p95_ms": 0.15944999999999993
+          },
+          {
+            "scenario": "forward",
+            "command": [
+              0.1,
+              0,
+              0
+            ],
+            "status": "FAIL",
+            "requested_s": 10,
+            "completed_s": 10.000000000000163,
+            "fall_time_s": null,
+            "stop_reason": null,
+            "max_tilt_deg": 1.9853880592292026,
+            "vx_rmse_m_s": 0.0814074707270643,
+            "yaw_rmse_rad_s": 0.461865054475823,
+            "max_joint_limit_excess_rad": 0.06161785208662385,
+            "max_target_limit_excess_rad": 5.071359547200392,
+            "warning_count": 0,
+            "inference_p95_ms": 0.23627299999999993
+          },
+          {
+            "scenario": "turn",
+            "command": [
+              0,
+              0,
+              0.2
+            ],
+            "status": "FAIL",
+            "requested_s": 10,
+            "completed_s": 10.000000000000163,
+            "fall_time_s": null,
+            "stop_reason": null,
+            "max_tilt_deg": 1.9456053082876972,
+            "vx_rmse_m_s": 0.03442525377881502,
+            "yaw_rmse_rad_s": 0.4342906679227352,
+            "max_joint_limit_excess_rad": 0.06857773242770565,
+            "max_target_limit_excess_rad": 5.158829601826857,
+            "warning_count": 0,
+            "inference_p95_ms": 0.31125949999999986
+          }
+        ]
+      },
+      "overall_status": "FAIL",
+      "overall_scope": "native short behavior screen",
+      "license": "Apache-2.0",
+      "task": "Mjlab-Velocity-Flat-MicroDuck-HD1910",
+      "checkpoint_iteration": 2000,
+      "joint_names": [
+        "left_hip_yaw",
+        "left_hip_roll",
+        "left_hip_pitch",
+        "left_knee",
+        "left_ankle",
+        "neck_pitch",
+        "head_pitch",
+        "head_yaw",
+        "head_roll",
+        "right_hip_yaw",
+        "right_hip_roll",
+        "right_hip_pitch",
+        "right_knee",
+        "right_ankle"
+      ],
+      "onnx_home_metadata_rad": [
+        0.0,
+        -0.087,
+        -0.458,
+        -0.005,
+        0.453,
+        0.349,
+        0.349,
+        0.0,
+        0.0,
+        0.0,
+        0.087,
+        0.458,
+        0.005,
+        -0.453
+      ]
+    },
+    "xgo": {
+      "repository": "LuwuDynamics/xgoduck_runtime_arduino",
+      "commit": "9dc36787bc61b102c2da0f97c9c758e639e90ab8",
+      "policy": "python/xgoduck_walk.onnx",
+      "sha256": "5727b909d5ea1a0f9ff63bf4cea9707339dea6a522374c7a120da633605b923f",
+      "bytes": 793706,
+      "onnx": {
+        "status": "PASS",
+        "checker": "PASS",
+        "contract_61_to_14_float32": true,
+        "providers": [
+          "CPUExecutionProvider"
+        ],
+        "inputs": [
+          [
+            "obs",
+            [
+              1,
+              61
+            ],
+            "tensor(float)"
+          ]
+        ],
+        "outputs": [
+          [
+            "actions",
+            [
+              1,
+              14
+            ],
+            "tensor(float)"
+          ]
+        ],
+        "embedded_normalization": true,
+        "normalizer_constants": {
+          "obs_normalizer._mean": {
+            "shape": [
+              1,
+              61
+            ],
+            "min": -0.9965115189552307,
+            "max": 0.08792771399021149,
+            "sha256": "cc673314e68cbf159df63d0cc849ee44e86125982e179db712b28aaeee4ae674"
+          },
+          "onnx::Div_24": {
+            "shape": [
+              1,
+              61
+            ],
+            "min": 0.012886367738246918,
+            "max": 2.7482151985168457,
+            "sha256": "9874a8d4b78da7b4d8fa7e6ef253da32db430436999577322e367991d7982ec9"
+          }
+        },
+        "finite": true,
+        "output_changes": true,
+        "latency_ms": {
+          "runs": 200,
+          "warmup": 20,
+          "threads": 1,
+          "median": 0.01,
+          "p95": 0.01423949999999998,
+          "max": 0.048001
+        }
+      },
+      "sensitivity": {
+        "upright": {
+          "finite": true,
+          "max_delta_from_upright": 0.0
+        },
+        "forward": {
+          "finite": true,
+          "max_delta_from_upright": 0.027357229962944984
+        },
+        "turn": {
+          "finite": true,
+          "max_delta_from_upright": 0.02773382142186165
+        },
+        "gyro": {
+          "finite": true,
+          "max_delta_from_upright": 0.010114647448062897
+        },
+        "joint_offset": {
+          "finite": true,
+          "max_delta_from_upright": 0.03859126567840576
+        },
+        "joint_velocity": {
+          "finite": true,
+          "max_delta_from_upright": 0.0014258809387683868
+        },
+        "previous_action": {
+          "finite": true,
+          "max_delta_from_upright": 0.003251921385526657
+        },
+        "tilt": {
+          "finite": true,
+          "max_delta_from_upright": 0.01753527671098709
+        }
+      },
+      "hardware": "NOT_RUN",
+      "simulation": {
+        "status": "NOT_RUN",
+        "reason": "No corresponding native HD1910 MuJoCo task/model in pinned runtime; training physics unknown"
+      },
+      "native_adapter": {
+        "status": "PASS",
+        "no_transport_imported": true
+      },
+      "overall_status": "PASS",
+      "overall_scope": "structure and CPU inference only; not HD1910 compatibility",
+      "license": "NOT_FOUND",
+      "task": "NOT_DISCLOSED",
+      "checkpoint_iteration": null,
+      "joint_names": [
+        "left_hip_yaw",
+        "left_hip_roll",
+        "left_hip_pitch",
+        "left_knee",
+        "left_ankle",
+        "neck_pitch",
+        "head_pitch",
+        "head_yaw",
+        "head_roll",
+        "right_hip_yaw",
+        "right_hip_roll",
+        "right_hip_pitch",
+        "right_knee",
+        "right_ankle"
+      ],
+      "onnx_home_metadata_rad": [
+        0.0,
+        -0.087,
+        -0.349,
+        -0.005,
+        0.349,
+        0.349,
+        0.349,
+        0.0,
+        0.0,
+        0.0,
+        0.087,
+        0.349,
+        0.005,
+        -0.349
+      ]
+    }
+  },
+  "qiaosiyi_source_fingerprints": {
+    "checked": 199,
+    "mismatches": [],
+    "status": "PASS"
+  },
+  "qiaosiyi_native_pt_onnx_verification": {
+    "checkpoint_iteration": 2000,
+    "onnx_checker": "passed",
+    "input_shape": [
+      1,
+      61
+    ],
+    "output_shape": [
+      1,
+      14
+    ],
+    "tested_observations": 128,
+    "observation_normalization": "included; compared with checkpoint mean/std and rsl_rl normalization",
+    "comparison": "deterministic actor mean; exploration noise excluded",
+    "max_absolute_error": 9.5367431640625e-07,
+    "rmse": 1.668886966399441e-07,
+    "allclose": {
+      "rtol": 0.0001,
+      "atol": 1e-05,
+      "passed": true
+    },
+    "finite": true
+  },
+  "private_evidence": {
+    "directory": ".evidence/s4-simulation/2026-10-16-community-policy",
+    "sha256": {
+      "onnx-verified/report.json": "19ab787b2784165bd1756113b01dce5772bd4f4a4031b5d416792769613ed31a",
+      "kissqy-native-final/report.json": "dd11cd5f0b050eb93ed6f0492a91d2dd60a493daf3e759e0cd8d836affb31072",
+      "qiaosiyi-native-final/report.json": "a0c850aa3b55cc70821e881d42e31662fde477f5cb91756074d0926d41f6be3a",
+      "native-pinned/native-inventory.json": "2442135bde91e5bc3cc0a1b1e604208b997f777c97d802835703363e90145baf",
+      "pinned-downloads/inventory.json": "7de472ffecd12466a7447bdc0ac8317610cbe930623353eb32d58de3a76a23e1"
+    }
+  },
+  "recommendation": {
+    "next": "continue offline simulation",
+    "priority": [
+      "kissqy",
+      "qiaosiyi",
+      "xgo reference only"
+    ],
+    "hardware_motion_bench": "DO_NOT_ADVANCE",
+    "unverified": [
+      "long duration stability",
+      "multi-seed robustness",
+      "lateral speed tracking",
+      "real servo actuator identification",
+      "hardware wiring/calibration",
+      "A per-step simulator warning count",
+      "C native HD1910 simulation",
+      "C weight license",
+      "SitStand not run"
+    ]
+  }
+}

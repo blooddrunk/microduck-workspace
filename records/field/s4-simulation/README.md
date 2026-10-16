@@ -1,5 +1,7 @@
 # S4 · HD1910 仿真与训练
 
+2026-10-16 社区预训练候选快速测试：[候选矩阵与复现命令](2026-10-16_community-policy-evaluation.md) · [脱敏 JSON](2026-10-16_community-policy-results.json)。A/B 原生 CPU 短回放行为筛查 FAIL；C 仅结构/CPU PASS，HD1910 仿真 NOT_RUN。继续离线研究，不推进硬件 Gate。
+
 这里保存**经人工脱敏后**的 `YYYY-MM-DD_<实验名>.md`；原始照片、日志、串口帧与可能包含私密标识的数据放在 **`.evidence/s4-simulation/<run-id>/`**（仓库根目录、被 Git 忽略）。目录中仅有本说明，**表示尚无新的实物验收记录**。
 
 ## 建议收集的证据
