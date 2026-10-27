@@ -157,6 +157,30 @@ MUJOCO_GL=glfw uv run --locked scripts/infer_policy.py \
 | 原生 Windows 报 `termios` 找不到 | 当前脚本面向 Linux 终端；使用 Ubuntu/WSL，不要把安装包强行混装 |
 | 站不稳或跌倒 | 如实记录；2000-iter 是中间快照，不能据此宣称完整步态或实机可靠 |
 
+#### Windows 11 + WSL2/WSLg：OpenGL 画面卡顿时
+
+MuJoCo 窗口在 WSLg 中仍由 Linux 进程创建；如果窗口卡顿，先确认 OpenGL 是否退回了 `llvmpipe` 软件渲染。WSLg 的 Mesa D3D12 路径可用 `glxinfo -B` 查看，硬件加速时 renderer 应显示 `D3D12 (<GPU 名称>)` 和 `Accelerated: yes`（GPU 字符串依机器而异）。参见 [Microsoft WSLg 的 GPU 选择说明](https://github.com/microsoft/wslg/wiki/GPU-selection-in-WSLg)。
+
+~~~bash
+# 若 glxinfo 尚未安装，仅安装这个诊断工具
+command -v glxinfo >/dev/null || sudo apt install -y mesa-utils
+GALLIUM_DRIVER=d3d12 glxinfo -B
+~~~
+
+如果输出仍为 `llvmpipe`，当前图形上下文仍在软件渲染。若显示 D3D12 和 GPU 名称，可在**同一个 WSL Linux 终端**用以下命令重启回放：
+
+~~~bash
+cd .upstreams/hd1910-rl
+GALLIUM_DRIVER=d3d12 MUJOCO_GL=glfw uv run --locked scripts/infer_policy.py \
+  --motor-profile hd1910 \
+  --vin 7.4 \
+  --walking models/hd1910-walking-iter-2000/policy.onnx
+~~~
+
+`GALLIUM_DRIVER=d3d12` 只对这次启动的进程生效；已打开的 viewer 需要退出后重开。若加上此设置后 `glxinfo` 仍报告 `llvmpipe`，将 GUI 渲染记为 BLOCKED/PARTIAL，并继续可执行的无窗口 CPU 检查，不要把它记成模型推理失败。该设置只影响图形渲染，不会启用 CUDA 训练。
+
+这个脚本从**启动它的终端**读取方向键，而不是从 MuJoCo 窗口读取。让终端保持焦点后按 ↑，终端应打印 `Vel cmd: [...] [walking]`；按 Space 清零，按 Q 退出。如果速度命令已打印而鸭子动作仍弱或跌倒，应单独评估当前中间 Policy 的行为，不要把 renderer 已加速当成策略通过。
+
 ### 4.3 无图形界面时的退路
 
 能运行纯 Python/依赖时，先完成静态模型检查与 fork 的 CPU 回归；在支持 EGL 的环境再运行数值验证。`MUJOCO_GL=egl` 依赖驱动与 OpenGL/EGL 实现，**不能保证所有纯 CPU 主机都能用**。
