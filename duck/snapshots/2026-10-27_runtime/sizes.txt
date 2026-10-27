@@ -1,0 +1,14 @@
+4.0K	/home/radxa/resume.txt
+24K	/home/radxa/voice_chat.py
+32K	/home/radxa/duck.py
+32K	/home/radxa/intent.py
+40K	/home/radxa/microduck-voice
+104K	/home/radxa/microduck-public-image-R5.sh
+104K	/home/radxa/microduck-public-image.sh
+872K	/home/radxa/microduck-official-init
+34M	/home/radxa/microduck-official-install-1791003732
+162M	/home/radxa/voice
+359M	/home/radxa/zhangtong
+5.7G	/home/radxa/shishaodong
+---
+[该段采集失败，见文件内容]

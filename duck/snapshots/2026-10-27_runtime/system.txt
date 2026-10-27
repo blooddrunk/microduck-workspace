@@ -1,0 +1,9 @@
+Linux microduck 6.1.115-vendor-rk35xx #1 SMP Fri Jan 16 11:40:29 UTC 2026 aarch64 GNU/Linux
+PRETTY_NAME="Armbian 26.2.1 trixie"
+ARMBIAN_PRETTY_NAME="Armbian 26.2.1 trixie"
+ 15:01:17 up 8 min, 14 users,  load average: 2.62, 2.27, 1.21
+               total        used        free      shared  buff/cache   available
+Mem:           1.9Gi       523Mi       756Mi       6.8Mi       718Mi       1.4Gi
+Swap:          983Mi          0B       983Mi
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk1p1   30G   11G   19G  36% /

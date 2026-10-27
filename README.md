@@ -20,6 +20,13 @@
 
 项目管理：[Roadmap](ROADMAP.md) · [逐项 Checklist](CHECKLIST.md) · [实物硬件档案](hardware/observed-2026-10-14.json) · [照片与协议审查记录](records/2026-10-14_hardware-photo-review.md)。
 
+## 实况手册与鸭子运维（2026-10-27 新增）
+
+鸭子已完成组装、调零标定并能运行策略与语音控制。日常操作看 **[docs/manual/ 实用手册系列](docs/manual/README.md)**（14 连接 · 15 状态巡检 · 16 网页与策略 · 17 协作与优化），
+当前实况看 **[duck/ 鸭子实况档案](duck/README.md)**（一页纸状态 + 网络身份证 + 每日快照），
+一键工具在 **[scripts/duck/](scripts/duck/README.md)**（`status-duck.sh` 只读巡检、`pull-duck.sh` 快照回仓、`push-duck.sh` 白名单上板、`tunnel-duck.sh` 异地隧道）。
+标定与运行时配置的最新存档：[duck/snapshots/2026-10-27_runtime/](duck/snapshots/2026-10-27_runtime/README.md)。
+
 ## 完整文档导航（docs/ 00–13，共 14 篇）
 
 > **文件编号是主题编号，不是强制执行顺序**。当前应从 **07** 入手；03 的通电操作需要先通过安全闸门。
@@ -52,6 +59,9 @@
 | 内容 | 目录 / 命令 | 作用 |
 |---|---|---|
 | 本仓库文档与工具 | `docs/`、`scripts/`、`upstreams/` | 版本化、可审核 |
+| 实用手册（新人入口） | `docs/manual/14–17` | 连接/巡检/操控/协作的日常操作层 |
+| 鸭子实况档案 | `duck/` | 一页纸状态、网络身份证、sanitized 快照 |
+| 鸭子运维工具 | `scripts/duck/*.sh` | 只读巡检、拉取/推送白名单、隧道 |
 | 官方 RL（本机已有，忽略 Git） | `microduck_rl/` | **XL330 官方基线**；不要当作 HD1910 实机驱动 |
 | 官方 Rust runtime（本机已有，忽略 Git） | `microduck/` | 官方 Dynamixel 路径；飞特需要匹配的总线适配 |
 | 官方 ONNX（本机已有，忽略 Git） | `policies/official/` | 对齐 61→14 观测/动作接口，不是 HD1910 上机许可 |

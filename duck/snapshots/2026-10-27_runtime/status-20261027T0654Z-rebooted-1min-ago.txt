@@ -1,0 +1,379 @@
+===== system =====
+Linux microduck 6.1.115-vendor-rk35xx #1 SMP Fri Jan 16 11:40:29 UTC 2026 aarch64 GNU/Linux
+PRETTY_NAME="Armbian 26.2.1 trixie"
+ARMBIAN_PRETTY_NAME="Armbian 26.2.1 trixie"
+ 14:54:21 up 1 min, 10 users,  load average: 1.80, 0.89, 0.35
+               total        used        free      shared  buff/cache   available
+Mem:           1.9Gi       247Mi       1.3Gi       4.5Mi       397Mi       1.7Gi
+Swap:          983Mi          0B       983Mi
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/mmcblk1p1   30G   11G   19G  36% /
+===== network =====
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+end1             DOWN           
+wlan0            UP             192.168.8.161/24 fe80::cec8:37ff:fe3d:3c93/64 
+---
+default via 192.168.8.1 dev wlan0 proto dhcp src 192.168.8.161 metric 600 
+192.168.8.0/24 dev wlan0 proto kernel scope link src 192.168.8.161 metric 600 
+---
+yes:GL-MT3600BE-5e4:100
+no:GL-MT3600BE-5e4-5G:95
+no::80
+no:CMCC-FGF4:79
+no:DIRECT-iYLAPTOP-56HVUEDSmsEX:75
+no:s:65
+no:QuickShare-6b7a:65
+no:ZYHY-Private:60
+no:ZYHY-Guest:59
+no:ZYHY-Public:59
+no:ZYHY-Public:57
+no:ZYHY-Private:57
+no:ZYHY-Guest:57
+no:ZYHY-Public:52
+no:wifi_R1TPACA001051:50
+no:CMCC-fQdS-5G:50
+no::50
+no:ZYHY-Guest:50
+no:ZYHY-Private:50
+no::49
+no:TP-LINK_DEED:47
+no:ZYHY-Guest:47
+no:ZYHY-Private:45
+no:ZYHY-Public:44
+no:ZYHY-Public:42
+no:ZYHY-Private:40
+no:ZYHY-Guest:40
+no:Xiaomi 15:39
+no:CMCC-65EJ-5G:35
+no:CMCC-xCCt-5G:34
+no:CMCC-D5uD-5G:34
+no:CMCC-vAMd-5G:32
+no:CMCC-6644-5G:32
+no:ZYHY-Public:32
+no:ZYHY-Private:32
+no:ZYHY-Guest:32
+no:ZYHY-Public:30
+no:ZYHY-Private:30
+no:ZYHY-Guest:30
+no:ZYHY-Public:29
+no:ZYHY-Private:29
+no:ZYHY-Guest:27
+no::25
+no:ZYHY-Private:24
+===== services =====
+bluetooth.service         loaded active running Bluetooth service
+btd.service               loaded active running Robot BLE transport adapter
+configd.service           loaded active running Robot config service (wifi, identity)
+cron.service              loaded active running Regular background program processing daemon
+dbus.service              loaded active running D-Bus System Message Bus
+gamesir-xboxd.service     loaded active running GameSir Nova 2 Lite Bluetooth to Xbox input bridge
+getty@tty1.service        loaded active running Getty on tty1
+mediad.service            loaded active running Robot media and WebRTC gateway
+NetworkManager.service    loaded active running Network Manager
+padd.service              loaded active running Robot gamepad intent client
+powerlog.service          loaded active running Power-path recorder (fall power-off diagnosis)
+robotd.service            loaded active running Robot control daemon
+rsyslog.service           loaded active running System Logging Service
+ssh.service               loaded active running OpenBSD Secure Shell server
+systemd-journald.service  loaded active running Journal Service
+systemd-logind.service    loaded active running User Login Management
+systemd-networkd.service  loaded active running Network Configuration
+systemd-resolved.service  loaded active running Network Name Resolution
+systemd-timesyncd.service loaded active running Network Time Synchronization
+systemd-udevd.service     loaded active running Rule-based Manager for Device Events and Files
+tofd.service              loaded active running Robot head ToF sensor daemon
+user@1000.service         loaded active running User Manager for UID 1000
+wpa_supplicant.service    loaded active running WPA supplicant
+---FAILED---
+[robotd] MainPID=1087
+[robotd] NRestarts=0
+[robotd] LoadState=loaded
+[robotd] ActiveState=active
+[robotd] SubState=running
+[padd] MainPID=1151
+[padd] NRestarts=0
+[padd] LoadState=loaded
+[padd] ActiveState=active
+[padd] SubState=running
+[mediad] MainPID=7561
+[mediad] NRestarts=11
+[mediad] LoadState=loaded
+[mediad] ActiveState=active
+[mediad] SubState=running
+[tofd] MainPID=739
+[tofd] NRestarts=0
+[tofd] LoadState=loaded
+[tofd] ActiveState=active
+[tofd] SubState=running
+[btd] MainPID=844
+[btd] NRestarts=0
+[btd] LoadState=loaded
+[btd] ActiveState=active
+[btd] SubState=running
+[configd] MainPID=967
+[configd] NRestarts=0
+[configd] LoadState=loaded
+[configd] ActiveState=active
+[configd] SubState=running
+[gamesir-xboxd] MainPID=1143
+[gamesir-xboxd] NRestarts=0
+[gamesir-xboxd] LoadState=loaded
+[gamesir-xboxd] ActiveState=active
+[gamesir-xboxd] SubState=running
+===== files-tree =====
+/home/radxa
+/home/radxa/.bash_aliases
+/home/radxa/.bash_history
+/home/radxa/.bash_logout
+/home/radxa/.bashrc
+/home/radxa/.claude
+/home/radxa/.claude/backups
+/home/radxa/.claude/backups/.claude.json.backup.1793071455418
+/home/radxa/.claude/backups/.claude.json.backup.1793071590340
+/home/radxa/.claude/backups/.claude.json.backup.1793072057958
+/home/radxa/.claude/backups/.claude.json.backup.1793072814894
+/home/radxa/.claude/backups/.claude.json.backup.1793083616389
+/home/radxa/.claude/backups/.claude.json.corrupted.1793070239753
+/home/radxa/.claude/cache
+/home/radxa/.claude/cache/changelog.md
+/home/radxa/.claude/downloads
+/home/radxa/.claude/downloads/claude-2.1.310-linux-arm64
+/home/radxa/.claude/file-history
+/home/radxa/.claude/file-history/2f24c26f-4c26-42b7-9e13-5fb63c92caf0
+/home/radxa/.claude/history.jsonl
+/home/radxa/.claude.json
+/home/radxa/.claude.json.tmp.4998.b05e0fc68009
+/home/radxa/.claude/.last-cleanup
+/home/radxa/.claude/plugins
+/home/radxa/.claude/plugins/known_marketplaces.json
+/home/radxa/.claude/plugins/marketplaces
+/home/radxa/.claude/plugins/plugin-directory-cache-v2.json
+/home/radxa/.claude/projects
+/home/radxa/.claude/projects/-home-radxa
+/home/radxa/.claude/session-env
+/home/radxa/.claude/session-env/2f24c26f-4c26-42b7-9e13-5fb63c92caf0
+/home/radxa/.claude/sessions
+/home/radxa/.claude/sessions/118587.1efc85005add00012722da3f094559c2204d43ccf7492e2b2fa58e3793fa1d34.key
+/home/radxa/.claude/sessions/118587.json
+/home/radxa/.claude/settings.json
+/home/radxa/.claude/settings.json-lutao
+/home/radxa/.claude/settings.json-lutao-y
+/home/radxa/.claude/shell-snapshots
+/home/radxa/.claude/shell-snapshots/snapshot-bash-1793065279768-ndeh6f.sh
+/home/radxa/.claude/shell-snapshots/snapshot-bash-1793069554172-ewf2sv.sh
+/home/radxa/.claude/shell-snapshots/snapshot-bash-1793070428050-wu1l0v.sh
+/home/radxa/.claude/shell-snapshots/snapshot-bash-1793070936144-p97oji.sh
+/home/radxa/.claude/shell-snapshots/snapshot-bash-1793071547383-yx52dm.sh
+/home/radxa/.claude/telemetry
+/home/radxa/.claude/telemetry/1p_failed_events.2f24c26f-4c26-42b7-9e13-5fb63c92caf0.179c9c5c-01a3-42a9-99ad-187099989f83.json
+/home/radxa/.claude/telemetry/1p_failed_events.9314c7f2-e252-47b3-bd0d-4678ec97cc96.179c9c5c-01a3-42a9-99ad-187099989f83.json
+/home/radxa/.claude/telemetry/1p_failed_events.a6c44268-6fb9-47ac-9855-295aa1c96945.482cf9f5-317b-4594-829c-fd1cac732bf4.json
+/home/radxa/.config
+/home/radxa/.config/fish
+/home/radxa/.config/fish/conf.d
+/home/radxa/.config/procps
+/home/radxa/.config/Ultralytics
+/home/radxa/.config/Ultralytics/settings.json
+/home/radxa/.config/uv
+/home/radxa/.config/uv/uv-receipt.json
+/home/radxa/.config/wireplumber
+/home/radxa/.config/wireplumber/wireplumber.conf.d
+/home/radxa/duck.py
+/home/radxa/intent.py
+/home/radxa/.local
+/home/radxa/.local/bin
+/home/radxa/.local/bin/btconnect
+/home/radxa/.local/bin/env
+/home/radxa/.local/bin/env.fish
+/home/radxa/.local/bin/uv
+/home/radxa/.local/bin/uvx
+/home/radxa/.local/share
+/home/radxa/.local/share/applications
+/home/radxa/.local/state
+/home/radxa/.local/state/wireplumber
+/home/radxa/microduck-official-init
+/home/radxa/microduck-official-init/deploy
+/home/radxa/microduck-official-init/deploy/audio
+/home/radxa/microduck-official-init/deploy/dev-key
+/home/radxa/microduck-official-init/deploy/journald.conf.d
+/home/radxa/microduck-official-init/deploy/overlays
+/home/radxa/microduck-official-init/deploy/README.md
+/home/radxa/microduck-official-init/deploy/robotd.toml
+/home/radxa/microduck-official-init/deploy/trusted_keys
+/home/radxa/microduck-official-init/deploy/updater.toml
+/home/radxa/microduck-official-init/migrate-network-after-reboot.log
+/home/radxa/microduck-official-init/migrate-network-first.log
+/home/radxa/microduck-official-init/scripts
+/home/radxa/microduck-official-init/scripts/bake-duck-mesh.py
+/home/radxa/microduck-official-init/scripts/board-test.sh
+/home/radxa/microduck-official-init/scripts/ci-release-notes.sh
+/home/radxa/microduck-official-init/scripts/cross-sysroot.sh
+/home/radxa/microduck-official-init/scripts/dev-build.Dockerfile
+/home/radxa/microduck-official-init/scripts/dev-push.sh
+/home/radxa/microduck-official-init/scripts/duck-sim
+/home/radxa/microduck-official-init/scripts/install.sh
+/home/radxa/microduck-official-init/scripts/migrate-network.sh
+/home/radxa/microduck-official-init/scripts/pad-link-test.sh
+/home/radxa/microduck-official-init/scripts/pad-stack-report.sh
+/home/radxa/microduck-official-init/scripts/provision-board.sh
+/home/radxa/microduck-official-init/scripts/provision.sh
+/home/radxa/microduck-official-init/scripts/publish-console.sh
+/home/radxa/microduck-official-init/scripts/publish-space.sh
+/home/radxa/microduck-official-init/scripts/rkaiq-modinfo-shim.c
+/home/radxa/microduck-official-init/scripts/robot-boot-check
+/home/radxa/microduck-official-init/scripts/robot-rescue
+/home/radxa/microduck-official-init/scripts/seed-detector.sh
+/home/radxa/microduck-official-init/scripts/seed-policies.sh
+/home/radxa/microduck-official-init/scripts/setup-board.sh
+/home/radxa/microduck-official-init/scripts/setup-gstreamer.sh
+/home/radxa/microduck-official-init/scripts/setup-login.sh
+/home/radxa/microduck-official-init/scripts/setup-npu.sh
+/home/radxa/microduck-official-init/scripts/setup-quiet-boot.sh
+/home/radxa/microduck-official-init/scripts/setup-rkaiq.sh
+/home/radxa/microduck-official-init/scripts/systemd-test.Dockerfile
+/home/radxa/microduck-official-init/scripts/systemd-test.sh
+/home/radxa/microduck-official-init/setup-board-after-reboot.log
+/home/radxa/microduck-official-init/setup-board-first.log
+/home/radxa/microduck-official-install-1791003732
+/home/radxa/microduck-official-install-1791003732/0.15.1-dev.local.1791003732.g1fa8438.manifest.json
+/home/radxa/microduck-official-install-1791003732/0.15.1-dev.local.1791003732.g1fa8438.manifest.json.minisig
+/home/radxa/microduck-official-install-1791003732/daemon-0.15.1-dev.local.1791003732.g1fa8438.tar.zst
+/home/radxa/microduck-official-install-1791003732/daemon-0.15.1-dev.local.1791003732.g1fa8438.tar.zst.minisig
+/home/radxa/microduck-official-install-1791003732/install-first.log
+/home/radxa/microduck-official-install-1791003732/install-services-first.log
+/home/radxa/microduck-official-install-1791003732/install.sh
+/home/radxa/microduck-official-install-1791003732/local.dev.pub
+/home/radxa/microduck-official-install-1791003732/manifest.json
+/home/radxa/microduck-official-install-1791003732/manifest.json.minisig
+/home/radxa/microduck-official-install-1791003732/release-1.pub
+/home/radxa/microduck-official-install-1791003732/release-2.pub
+/home/radxa/microduck-official-install-1791003732/release-3.pub
+/home/radxa/microduck-official-install-1791003732/robotd.toml
+/home/radxa/microduck-official-install-1791003732/updaterd
+/home/radxa/microduck-official-install-1791003732/updater.toml
+/home/radxa/microduck-public-image-R5.sh
+/home/radxa/microduck-public-image.sh
+/home/radxa/microduck-voice
+/home/radxa/.npm
+/home/radxa/.npm/_cacache
+/home/radxa/.npm/_cacache/content-v2
+/home/radxa/.npm/_cacache/index-v5
+/home/radxa/.npm/_cacache/tmp
+/home/radxa/.npm/_logs
+/home/radxa/.npm/_logs/2026-10-26T07_43_53_346Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-26T07_44_02_174Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-26T07_44_15_387Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T01_38_33_576Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T02_11_42_167Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T02_51_52_148Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T03_06_17_281Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T03_14_54_282Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T03_24_30_488Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T03_47_47_806Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T03_54_28_187Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T04_24_28_548Z-debug-0.log
+/home/radxa/.npm/_logs/2026-10-27T06_47_16_850Z-debug-0.log
+/home/radxa/.npmrc
+/home/radxa/.npm/_update-notifier-last-checked
+/home/radxa/.profile
+/home/radxa/.python_history
+/home/radxa/resume.txt
+/home/radxa/shishaodong
+/home/radxa/shishaodong/ultralytics-learn
+/home/radxa/shishaodong/ultralytics-learn/bus.jpg
+/home/radxa/shishaodong/ultralytics-learn/camera_detect.py
+/home/radxa/shishaodong/ultralytics-learn/hello_world.py
+/home/radxa/shishaodong/ultralytics-learn/pyproject.toml
+/home/radxa/shishaodong/ultralytics-learn/test.py
+/home/radxa/shishaodong/ultralytics-learn/uv.lock
+/home/radxa/shishaodong/ultralytics-learn/yolo11n.pt
+/home/radxa/shishaodong/ultralytics-learn/yolo26n.pt
+/home/radxa/.ssh
+/home/radxa/.ssh/authorized_keys
+/home/radxa/.sudo_as_admin_successful
+/home/radxa/.viminfo
+/home/radxa/voice
+/home/radxa/voice_chat.py
+/home/radxa/voice/microduck-voice
+/home/radxa/voice/microduck-voice/2.log
+/home/radxa/voice/microduck-voice/3.log
+/home/radxa/voice/microduck-voice/4.log
+/home/radxa/voice/microduck-voice/5.log
+/home/radxa/voice/microduck-voice/cmd.txt
+/home/radxa/voice/microduck-voice/config.yaml
+/home/radxa/voice/microduck-voice/install.sh
+/home/radxa/voice/microduck-voice/keywords.txt
+/home/radxa/voice/microduck-voice/log.txt
+/home/radxa/voice/microduck-voice/models
+/home/radxa/voice/microduck-voice/__pycache__
+/home/radxa/voice/microduck-voice/requirements.txt
+/home/radxa/voice/microduck-voice/robot_executor.py
+/home/radxa/voice/microduck-voice/speaker.py
+/home/radxa/voice/microduck-voice/test_devices.py
+/home/radxa/voice/microduck-voice/test_robotd_head.py
+/home/radxa/voice/microduck-voice/voiced.service
+/home/radxa/voice/microduck-voice/wake_asr_demo.py
+/home/radxa/voice/microduck-voice/wake_asr_demo.py.bak
+/home/radxa/voice/microduck-voice.zip
+/home/radxa/.Xauthority
+/home/radxa/.xsessionrc
+/home/radxa/zhangtong
+/home/radxa/zhangtong/duck-voice
+/home/radxa/zhangtong/duck-voice-20261027.tar.gz
+/home/radxa/zhangtong/duck-voice/audio_io.py
+/home/radxa/zhangtong/duck-voice/DEPLOY.md
+/home/radxa/zhangtong/duck-voice/.DS_Store
+/home/radxa/zhangtong/duck-voice/duck.py
+/home/radxa/zhangtong/duck-voice/duck-voice.service
+/home/radxa/zhangtong/duck-voice/.env
+/home/radxa/zhangtong/duck-voice/.env.example
+/home/radxa/zhangtong/duck-voice/.gitignore
+/home/radxa/zhangtong/duck-voice/intent.py
+/home/radxa/zhangtong/duck-voice/llm.py
+/home/radxa/zhangtong/duck-voice/models
+/home/radxa/zhangtong/duck-voice/__pycache__
+/home/radxa/zhangtong/duck-voice/requirements.txt
+/home/radxa/zhangtong/duck-voice/sample.wav
+/home/radxa/zhangtong/duck-voice/selftest
+/home/radxa/zhangtong/duck-voice/stt.py
+/home/radxa/zhangtong/duck-voice/stt_xfyun.py
+/home/radxa/zhangtong/duck-voice/tts.mp3
+/home/radxa/zhangtong/duck-voice/tts.py
+/home/radxa/zhangtong/duck-voice/voice_chat.py
+/home/radxa/zhangtong/duck-voice/voice_gui.py
+/home/radxa/zhangtong/duck-voice/wake.py
+/home/radxa/zhangtong/duck-voice/大模型中文语音识别.py
+/home/radxa/.zshrc
+--- /etc,/opt ---
+/etc/robot:
+total 56
+drwxr-xr-x  4 root root   4096 Oct 26 13:49 .
+drwxr-xr-x 91 root root   4096 Oct 27 14:00 ..
+drwxr-xr-x  2 root robot  4096 Oct 26 17:26 feetech-ft5
+-rw-r--r--  1 root root  28322 Oct 26 13:49 robotd.toml
+drwxr-xr-x  2 root root   4096 Oct  3 14:36 trusted_keys
+-rw-r--r--  1 root root  10884 Oct  3 14:36 updater.toml
+
+/opt/robot:
+total 24
+drwxr-xr-x 6 root root 4096 Oct 10 21:20 .
+drwxr-xr-x 3 root root 4096 Oct  3 14:36 ..
+drwxr-xr-x 3 root root 4096 Oct  3 14:42 daemon
+drwxr-xr-x 3 root root 4096 Oct  3 14:43 detector
+drwxr-xr-x 8 root root 4096 Oct 26 17:00 feetech-ft5-r5
+drwxr-xr-x 3 root root 4096 Oct  3 14:42 policies
+===== sizes =====
+4.0K	/home/radxa/resume.txt
+24K	/home/radxa/voice_chat.py
+32K	/home/radxa/duck.py
+32K	/home/radxa/intent.py
+40K	/home/radxa/microduck-voice
+104K	/home/radxa/microduck-public-image-R5.sh
+104K	/home/radxa/microduck-public-image.sh
+872K	/home/radxa/microduck-official-init
+34M	/home/radxa/microduck-official-install-1791003732
+162M	/home/radxa/voice
+359M	/home/radxa/zhangtong
+5.7G	/home/radxa/shishaodong
+7.6M	/opt/robot/policies
+16M	/opt/robot/feetech-ft5-r5/models

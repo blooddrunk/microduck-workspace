@@ -1,0 +1,59 @@
+bluetooth.service         loaded active running Bluetooth service
+btd.service               loaded active running Robot BLE transport adapter
+configd.service           loaded active running Robot config service (wifi, identity)
+cron.service              loaded active running Regular background program processing daemon
+dbus.service              loaded active running D-Bus System Message Bus
+gamesir-xboxd.service     loaded active running GameSir Nova 2 Lite Bluetooth to Xbox input bridge
+getty@tty1.service        loaded active running Getty on tty1
+mediad.service            loaded active running Robot media and WebRTC gateway
+NetworkManager.service    loaded active running Network Manager
+padd.service              loaded active running Robot gamepad intent client
+powerlog.service          loaded active running Power-path recorder (fall power-off diagnosis)
+robotd.service            loaded active running Robot control daemon
+rsyslog.service           loaded active running System Logging Service
+ssh.service               loaded active running OpenBSD Secure Shell server
+systemd-journald.service  loaded active running Journal Service
+systemd-logind.service    loaded active running User Login Management
+systemd-networkd.service  loaded active running Network Configuration
+systemd-resolved.service  loaded active running Network Name Resolution
+systemd-timesyncd.service loaded active running Network Time Synchronization
+systemd-udevd.service     loaded active running Rule-based Manager for Device Events and Files
+tofd.service              loaded active running Robot head ToF sensor daemon
+user@1000.service         loaded active running User Manager for UID 1000
+wpa_supplicant.service    loaded active running WPA supplicant
+---FAILED---
+[robotd] MainPID=1087
+[robotd] NRestarts=0
+[robotd] LoadState=loaded
+[robotd] ActiveState=active
+[robotd] SubState=running
+[padd] MainPID=1151
+[padd] NRestarts=0
+[padd] LoadState=loaded
+[padd] ActiveState=active
+[padd] SubState=running
+[mediad] MainPID=30775
+[mediad] NRestarts=60
+[mediad] LoadState=loaded
+[mediad] ActiveState=active
+[mediad] SubState=running
+[tofd] MainPID=739
+[tofd] NRestarts=0
+[tofd] LoadState=loaded
+[tofd] ActiveState=active
+[tofd] SubState=running
+[btd] MainPID=844
+[btd] NRestarts=0
+[btd] LoadState=loaded
+[btd] ActiveState=active
+[btd] SubState=running
+[configd] MainPID=967
+[configd] NRestarts=0
+[configd] LoadState=loaded
+[configd] ActiveState=active
+[configd] SubState=running
+[gamesir-xboxd] MainPID=1143
+[gamesir-xboxd] NRestarts=0
+[gamesir-xboxd] LoadState=loaded
+[gamesir-xboxd] ActiveState=active
+[gamesir-xboxd] SubState=running
