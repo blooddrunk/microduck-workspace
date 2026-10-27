@@ -1,138 +1,68 @@
 # 实验 Checklist（证据优先）
 
-状态含义：`[x]` = 已证实或明确标识为用户自述；`[ ]` = 未验收。**不能因他人演示/脚本返回 0 就勾选你的实机验收。**
-每个硬件相关项完成后，原始诊断/照片放入 Git 忽略的 `.evidence/` 或 `local/`；**审查与脱敏后**把可共享的实验摘要放入 [records/field/](records/field/README.md)，再关联 Checklist；本项目是公开仓库，凭据/家庭 Wi-Fi/IP/设备标识等不得入库。
+状态含义：`[x]` = 已证实（附证据链接）；`[ ]` = 未完成；`[豁免]` = 2026-10-27 决定不再补做（见下）。
+原始诊断/照片放 Git 忽略的 `.evidence/`、`local/`；**审查脱敏后**的摘要进 [records/field/](records/field/README.md)。
+本仓库公开：凭据、WiFi 密码、`.env`、私钥、设备标识不得入库。
 
-## 已知起点
+> **2026-10-27 门禁豁免**：整机已由团队线下完成装配/标定/通电并长期运行，原 S0–S3 的形式化证据
+> （断电测量、单舵机台架读回、备用卡、IMU 四方向实测等）不再补做。新证据基线 =
+> [duck/snapshots/ 实况快照](duck/snapshots/2026-10-27_runtime/README.md)（只读巡检）。
+> **豁免不适用于换件/换镜像/重新接线**——那属于新的电气事件，对应检查重新生效。
 
-- [x] 用户报告已购 HD1910 舵机并完成机身舵机安装（**未进行独立电气验收**）。
-- [x] 用户报告已购 Radxa ZERO 3W RK3566。
-- [x] 用户报告舵机完成初步连线（**极性、ID、方向、负载尚未核对**）。
-- [x] 2026-10-12 历史笔记记载官方 XL330 仿真及 255 pass/1 skip；**这是历史结果，不代表本轮重新执行**。
-- [ ] 确认 HAT/IMU/电源已完成最终接线 —— **当前禁止标记完成**。
+## 2026-10-27 实况基线（已证实）
 
-## S0：盘点，开始实机前的硬门槛（[教程](docs/00_START_HERE.md)）
+- [x] 整机运行：robotd/padd/tofd/btd/configd/gamesir-xboxd/powerlog 全部 active，`systemctl --failed` 为空（重启后复查）。
+- [x] 15 关节标定完成：`calibrated = true` × 15，`motion_enabled = true`，IMU `imu_mount_verified = true`；含 .previous/.saved 历史档。→ [calibration 快照](duck/snapshots/2026-10-27_runtime/calibration/)
+- [x] 6 个自训策略已部署（walk/sitstand/ground_pick/kick×2/roulade，2026-10-01 training-console 训练），provenance（task/checkpoint/sha256）已存档。→ [models 快照](duck/snapshots/2026-10-27_runtime/models/)
+- [x] robotd 运行时配置快照（policy 路径/增益/skill 表/安全项）已存档。→ [etc-robot 快照](duck/snapshots/2026-10-27_runtime/etc-robot/)
+- [x] 网络身份确认：IP 192.168.8.161、MAC cc:c8:37:3d:3c:93、WiFi GL-MT3600BE-5e4；异地通道（跳板/隧道）可用。→ [duck/network.md](duck/network.md)
+- [x] 语音控制在跑：`voice_chat.py --wake-keep 20`（讯飞 ASR + 大模型识别 + 意图解析）。
+- [x] 权重备份：21 个 onnx（43MB）拉到本机 `local/duck-policies-20261027/`（不入库）。
+- [x] 已知问题登记：mediad 崩溃循环（重启前 NRestarts=497，重启后 17min +123）；低电保护与 limp_fall 关闭。
 
-- [ ] 每个部件有清晰型号、PCB Rev/固件版本、购买/设计文档；区分官方 HAT、kissqy HAT、自制转接板。
-- [ ] 确认 HD1910 **实际数量、规格、线序**，填 15 路预期关节表。
-- [ ] 确认 IMU 是总线 `imu_to_dxl` / 飞特协议、还是 I²C/SPI 模块；明确匹配运行时。
-- [ ] 画出电池→舵机母线与电池→5V 稳压→主控两条供电路径；注明保险丝、开关、急停。
-- [ ] **断电**用万用表检查正负极、无意外短路、接插件 pin 1 方位，留照片。
-- [ ] 可随时切断舵机主电、急停可达、关节可脱离桌面且不会夹伤/摔落。
+## 运维加固待办（P0/P1，详见[手册 17](docs/manual/17-team-workflow.md)）
 
-## S1：ZERO 3W 仅 USB 5V（[教程](docs/01_BOARD_BOOT.md)）
+- [ ] P0 mediad 崩溃循环：现场决策 disable 或定位修复（疑与语音进程抢音频相关；保留 8080 网页中控的需求要一并权衡）
+- [ ] P0 鸭子本体安装 Tailscale（装完异地直达，摆脱 GL 路由器中继）
+- [ ] P0 板上无版本代码收编：`~/zhangtong/duck-voice`、`~/voice/microduck-voice`、`~/shishaodong/ultralytics-learn` 正本迁入本仓库 `apps/`（注意 `.env` 密钥不入库）
+- [ ] P0 评审并决定低电保护：`battery_empty_shutdown` / `limp_fall` 是否启用；结合 powerlog 掉电数据分析
+- [ ] P1 语音进程 systemd 化：评审 `duck-voice.service` 后 enable，配 `Restart=on-failure`
+- [ ] P1 SSH 收敛纯密钥：各队员 `setup-key-duck.sh` 装钥匙，齐后关密码登录（鸭子与 GL 路由器）；路由器管理密码轮换
+- [ ] P1 journald 限容（`SystemMaxUse=200M`）与板上 5.7G 数据集外迁
+- [ ] P1 每次重标定/换策略后 `pull-duck.sh` 重新存档（写进操作习惯）
 
-- [ ] 从可信镜像源下载，校验发布的 hash/签名（如有），刷 SD，保存镜像信息。
-- [ ] **不接 HAT/总线/电池**，USB-C 5V 供电独立启动并通过 SSH。
-- [ ] 采集 `uname -m`、`/etc/os-release`、网络、块设备、内核日志；记录板子真实型号/内存/存储。
-- [ ] SSH 口令更换、密钥登录、升级前备份 SD；无异常重启/过热/存储错误。
-- [ ] 单板断电并确认电源拔下。
+## 语音/本地模型待办（P2）
 
-## S2：HD1910 单舵机台架（[教程](docs/02_SERVO_IMU.md)）
+- [ ] 本地 ASR 替代讯飞云端：sherpa-onnx int8 流式模型上板验证（内存/延迟/识别率），安装脚本走 `scripts/duck/remote/` 评审流程
+- [ ] 唤醒词本地化（openWakeWord / sherpa-onnx KWS）替代 `--wake-keep` 窗口逻辑
+- [ ] intent 规则库扩充与回归样例集
+- [ ] 可选：本地 TTS（piper 中文）；板上不跑 LLM，复杂意图留云端可选项
 
-- [ ] FE-URT 系列实际型号与线序/逻辑电平核实；**一次只接一只**。
-- [ ] 首次连接前量适配器 GND/V+/DATA 极性、电压、夹具状态。
-- [ ] 只读读取 1 号舵机的信息、ID、位置、温度、电压、模式和参数，原始输出存档。
-- [ ] 对全部舵机逐个记录“实物标签→身体关节→当前 ID→规划 ID→反馈角”，无重号。
-- [ ] 后续另获硬件许可与参数确认才写 ID；本轮不执行写入。写 ID 时确保总线上只有一个待写舵机，写后断电重连复读，其他寄存器不改。
-- [ ] 静态机械极限、方向、零位与训练 HOME 的对应关系经人工确认。
-- [ ] 正式总线全量只读扫描，确认 15 颗位置数据稳定、错误率已记录（S3/S5，不能以单只扫描代替）。
+## S4 自有训练线（继续有效）
 
-## S3：HAT/IMU/供电（[教程](docs/03_POWER_INTEGRATION.md)）
+- [x] S4-2 数值部分：ONNX SHA256、float32 61→14 与 2 秒有限 CPU rollout 通过；静止姿态 8/8 FAIL（约 82° 倾倒）——记录在案，不是站立 PASS。
+- [x] S4-6 CPU 部分：BAM M1–M6 原版注册键名错误复现、隔离 alias 可加载、CPU A/B 有限值；综合 PARTIAL。
+- [ ] S4-0 完整预检复核（CUDA BLOCKED、GUI 环境线索未复核）。
+- [ ] S4-3：真实 CUDA + 64 env × 5 iteration smoke（loss 有限、checkpoint 可读）。
+- [ ] S4-4：完整长训 + TensorBoard 分项 + 回放/扰动评测。
+- [ ] S4-5：checkpoint → 含 normalizer 的 ONNX、61→14、PT/ONNX 数值等价与语义验证。
+- [ ] S9（本仓库管线）：自有 ONNX 按[手册 16 §5](docs/manual/16-web-and-policies.md) 上机流程完成一次部署→回滚演练。
+- [ ] S8：任一自训策略的 sim-to-real 对照（轨迹/延迟/压降），一次只改一个变量。
 
-- [ ] 根据**手中版本的原理图**完成 pin-to-pin 对照（不得直接抄另一款 HAT）。
-- [ ] 断电分别量 BATT、GND、5V、3V3、DATA；不存在把 2S 电压送进 ZERO 3W 的路径。
-- [ ] 验证供电限流、导线与接头额定、保险丝规格、急停和可安全断电；不带主控先检 HAT 输出。
-- [ ] HAT 的 5V 稳定后，明确是否有 USB-C 与 HAT 双电源反灌风险，并选择单一路径验证。
-- [ ] IMU 上电后取得型号/固件/地址或总线 ID、采样时间戳/帧率、姿态/角速度。
-- [ ] 对 IMU 做前/后/左/右倾斜四方向测试以及静止偏置记录；不得照搬他人四元数。
-- [ ] IMU 与主运行时的协议（飞特总线或 I²C）匹配且正常报告。
+## 历史门槛（S0–S3，2026-10-27 豁免）
 
-## S4：软件/训练（[教程](docs/04_SIM_TRAINING.md)）
+以下各项**不再要求补证**；列在这里是为了换件/换镜像时知道哪些检查要重新生效：
 
-- [ ] 记录官方 RL 与 HD1910 分支 commit；不把两个同名 `microduck_rl` 目录混用。
-- [ ] CPU HD1910 ONNX 回放：`--motor-profile hd1910`，记录 Policy SHA256 和演示。
-- [ ] GPU `nvidia-smi` 可用（若不具备，标记“云端待做”，不假装训练过）。
-- [ ] 64 env × 5 iteration smoke：有限 loss、reward 非零、无 NaN/Inf、checkpoint 实际可读取。
-- [ ] 长训前观察奖励拆项、Episode length、跌倒/站立/跟随行为、Action Std/Rate。
-- [ ] ONNX 输入 `[1,61]` 输出 `[1,14]`，含 observation normalizer，训练任务/关节顺序一致。
-- [ ] Policy 的输出不是直接的 HD1910 原始舵机寄存器值；部署侧映射与 scale 单独校验。
+- [豁免] S0 断电万用表测量（短路/极性/pin1）、供电路径图与保险丝确认。
+- [豁免] S1 备用系统卡制作与回退演练（V1.12 引导方案见 [docs/11](docs/11_ZERO_V112_BOOT_REVIEW.md)）。
+- [豁免] S2 单舵机台架逐只读回（FE-URT2 只读 15 ID 台账）；标定实际经整机完成并存档。
+- [豁免] S3 pin-to-pin 对照、双电源反灌实测、IMU 四方向倾斜与静止偏置记录。
+- 说明：换 HAT/换 IMU/换镜像/改供电拓扑时，上述对应项**重新变为必检**。
 
-## S5–S9：真机运动（[教程](docs/03_POWER_INTEGRATION.md)）
+## 历史软件交付（保留勾选记录）
 
-- [ ] S5：全舵机**保持卸力**启动，主板/IMU/15 颗舵机只读健康与延时稳定。
-- [ ] S6：整机支架固定，逐关节小角度/单关节受限动作方向正确，站姿 HOME 小步上力无撞击。
-- [ ] S7：IMU 坐标、静止零点（对照运动学）、急停、失联保护、低电压保护均可复测。
-- [ ] S7：静止站立/低速行走由现场人员监护并录制视频/日志，记录失败与回滚步骤。
-- [ ] S8：实测目标/反馈误差、关节延迟、供电掉压/温升，与仿真结果对照。
-- [ ] S9：自训 Policy 标注训练 commit/配置/模型 hash/回滚策略，完成支架上受限验收后才考虑自由行走。
-
-## 目前不能由程序替你完成的事项
-
-**未提供实物 HAT、IMU、供电模块的型号/照片/原理图之前：不能交付经验证的最终接线针脚表，也不能勾选 S3/S5/S6/S7。** 具体缺口在 [00 教程](docs/00_START_HERE.md)。失败时停止、撤电、保留日志和原始测量，禁止通过放宽安全阈值硬过门。
-
-## S0–S2 软件准备（不勾硬件项）
-
-- [x] 只读 Linux/Radxa 采集工具、可选 robotd 元数据与设备占用快照；无配置/总线写入。
-- [x] 15 个实体标签的空白台账、独立运行时/策略映射与 CSV/JSON 静态验证。
-- [x] 原始/摘要分离的本地证据包、版本/hash/时间/命令/范围与防覆盖。
-- [x] 离线模拟与失败场景单元测试，实跑结果见 [本轮记录](records/2026-10-14_s0-s2-automation.md)。
-- [x] 2026-10-15：8 个上游远端 HEAD 与当前锁定 SHA 一致；本次推进 3 个来源锁，未移植或安装上游代码。审查见 [上游同步记录](records/2026-10-15_upstream-sync.md)。
-- [ ] H0 照片/Rev/电源与断电测量、H1 实板诊断、H2 单舵机原值：无现场证据，均 BLOCKED。
-
-下一次桌面操作逐项采用 [H0/H1/H2 验收卡](docs/06_S0_S2_AUTOMATION.md)，不把模拟表 PASS 当实机通过。
-
-## 2026-10-14 实物照片补充（来源与验收不能混淆）
-
-- [x] **型号识别**：ZERO 3W V1.12（正面丝印）、32GB SanDisk Ultra、Pollen C1 HAT（贴签 ASE01187-C1）；2GB/无 eMMC/排针、HD1910-C001、FE-URT2-C001、唯卓仕 F550、可调电源按用户提供的信息录入 [硬件档案](hardware/observed-2026-10-14.json)。
-- [x] **历史操作报告**：用户表示已用 FE-URT2 进行 ID 设置和 2048 中位校准；这不是“校准成功”结论。
-- [x] **IMU 文档识别**：飞特/Dynamixel 双协议 ID200、地址 56 长 15 的声明已提取；记录见 [08 协议](docs/08_VENDOR_IMU_COMPATIBILITY.md)。
-- [ ] **ZERO V1.12 已成功刷机+SSH**：没有命令/图片证据。
-- [ ] **15 舵机 ID 读回与物理映射**：没有逐一 ID 表/原始读数。
-- [ ] **2048 对应正确机械零位**：未按 [09 零位复核](docs/09_HD1910_ZERO_REVIEW.md) 验收。
-- [ ] **C1 HAT 端视图/极性/5V 实测**：未提供；官方 C1 原理图已定位，**不是已验证接线**。
-- [ ] **唯卓仕 F550 电池座极性/限流/开关实测**：未提供。
-- [ ] **第三方 IMU VCC 允许范围与 PCB 版本**：卖家截图缺失；禁止接 2S 母线。
-- [ ] **IMU 与 kissqy FT6 身份/状态/角速度比例兼容**：身份证 `06 00 00 00 F2`、status、比例需真实设备核对。
-- [ ] **整机供电/使能/站立**：禁止由上述用户报告推定完成。
-
-## 2026-10-14 本轮软件交付（不替代硬件勾选）
-
-- [x] C1 SCH/BOM/POS/PCB/Gerber/STEP原件、来源commit与SHA256固定；保留SCH页脚B1冲突。
-- [x] 电气候选表覆盖40Pin、电源、TTL/RS485、端视图约定及USB反灌路径；未验收针脚不标通过。
-- [x] QinmoTech IMU v1.2固定源审查；比例及缓存年龄合同差异明确，离线profile解析/失败场景完成。
-- [x] 官方训练顺序、15→14、HOME/轴向及kissqy持久化核对；本机校准来源/hash只读工具完成。
-- [x] V1.12镜像风险与备用卡完整备份/恢复合同，保留原系统。
-- [ ] 实物C1端视图/全针通断、5V稳定与供电余量。
-- [ ] ZERO V1.12真实启动和无线/串口诊断。
-- [ ] 15只舵机实际ID、机械零位、每关节方向及限位。
-- [ ] IMU具体VCC范围、实际身份、数据年龄与安装方向。
-- [ ] 任何runtime适配的真实台架验证；本轮没有部署/EEPROM/HOME。
-
-结果与原始证据路径：[本轮记录](records/2026-10-14_s1-s3-review.md)。
-
-## 2026-10-15 上游快照同步（仅版本锁）
-
-- [x] 检查 8 个已登记来源：3 个有更新、0 个查询错误；更新官方 runtime、fanhao 社区实机记录、kissqy HD1910 runtime 的固定 SHA。
-- [x] 再次检查后 8/8 来源与 `upstreams/sources.json` 一致；上游变更只留作可审查快照，没有并入本仓库代码。
-- [ ] 上游新 runtime/固件与本机硬件兼容性、供电、舵机参数及现场行为仍未验收；没有安装或上电验证。
-
-详见[2026-10-15 上游同步记录](records/2026-10-15_upstream-sync.md)。
-
-## 2026-10-15 S4 软件优先学习路线（未执行的项不得勾选）
-
-**[完整操作教程](docs/04_SIM_TRAINING.md)** · **[厂商 BAM 分析](docs/13_FTSERVO_BAM_RESEARCH.md)**；这是不依赖硬件 S0–S3 的独立研究线，S3/S5–S9 均维持原状态。
-
-- [x] S4 教程已分成 S4-0～S4-6：固定来源、CPU 回放、64×5 GPU Smoke、长训、ONNX 与厂商 BAM 对照。**这是文档完成，不是运行验收**。
-- [x] 固定 FTServo BAM commit `4f7c0b0de3debf9c1ab254fc9654676e8aab9317`；2026-10-15 Gitee/GitHub main 远端均公布相同 SHA。Apache-2.0 已核对；Gitee 账号及发布者法律身份没有独立认证。
-- [x] S4-6 CPU 研究：M1–M6 原版注册键名错误已复现，进程内小写 alias 可加载；单步/reset/CPU 单舵机 A/B 有限值。综合 PARTIAL；不代表模型已实测或可加入默认训练。
-- [ ] S4-0：sources SHA、干净上游、静态链接和 ONNX CPU 接口已自动核查；CUDA BLOCKED、GUI 只检查到环境线索，尚未完成完整预检证据复核。
-- [ ] S4-1（可选）：现有 XL330 官方 Policy 的 CPU 回放；缺少历史本机目录时标记 SKIP。
-- [x] S4-2 数值部分：ONNX SHA256、float32 61→14 与 2 秒有限 CPU rollout 已通过；静止姿态 8/8 FAIL（约 82° 倾倒）。这不是站立/步态 PASS。
-- [ ] S4-2 GUI 部分：窗口渲染、键盘命令响应、重置与现场观察尚未完成。
-- [ ] S4-3：真实 CUDA + 64 env × 5 iteration、loss 有限、checkpoint 可读取（无 GPU 则 BLOCKED）。
-- [ ] S4-4：完整训练和 TensorBoard 分项、回放/扰动评测与多个 checkpoint（依赖 S4-3）。
-- [ ] S4-5：训练 checkpoint → 含 normalizer ONNX、61→14、PT/ONNX 数值等价和语义验证。
-- [x] S4-6 CPU 部分：M1–M6 原版加载错误/隔离 alias 与 CPU A/B 已运行；stock loader 仍 FAIL，后续 GPU backend 不推荐直接开始。
-
-**不可误判**：厂商源码/ONNX 已公开不代表在你的电脑上跑通；脚本退出零不代表稳定站立；厂商 7.4V 模型不能在无测量时认定适合当前 HD-1910-C001 / 实机固件。原始记录存 `.evidence/s4-simulation/`，只有脱敏总结才进 `records/field/s4-simulation/`。
+- [x] 2026-10-14 只读采集工具/台账模板/证据包格式（[记录](records/2026-10-14_s0-s2-automation.md)）。
+- [x] 2026-10-14 C1 原理图审查、QinmoTech IMU 协议差异、15→14 训练合同、V1.12 引导回退（[记录](records/2026-10-14_s1-s3-review.md)）。
+- [x] 2026-10-15 上游 8 源 SHA 锁定同步（[记录](records/2026-10-15_upstream-sync.md)）；2026-10-27 推进 5 个锁。
+- [x] 2026-10-15/16 S4 BAM 评估与社区策略筛选（[S4 记录](records/field/s4-simulation/)）。
+- [x] 2026-10-27 实况同步、运维工具集、手册与快照（[记录](records/2026-10-27_duck-sync-and-manuals.md)）。

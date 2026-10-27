@@ -1,77 +1,67 @@
 # MicroDuck HD1910 复刻 Roadmap（滚动更新）
 
-**基线日期：2026-10-14** · 目标：飞特 HD1910 × 15（待逐只清点）、Radxa ZERO 3W RK3566。当前机械已装、舵机初步连线；HAT/IMU/电源尚未完成（依据使用者陈述，未见实测证据）。
+**基线日期：2026-10-27** · 硬件：飞特 HD1910 × 15 + Radxa ZERO 3W V1.12（rk3566）+ Pollen C1 HAT + 总线 ID200 IMU + 唯卓仕 F550。
+**当前实况：整机已组装、标定并运行**（kissqy R5 派生系统；机器人名 duck-a437），详见 [duck/README.md](duck/README.md)。
 
-## 总体依赖
+> **2026-10-27 门禁豁免决定**：S0–S3 的形式化验收证据（断电测量、备用卡、单舵机台架读回、IMU 四方向实测等）
+> 不再补做——整机已由团队线下完成装配/标定/通电并长期运行，继续要求这些证据没有意义。
+> 新的证据基线是 [duck/snapshots/ 实况快照](duck/snapshots/2026-10-27_runtime/README.md)（只读巡检、
+> 标定档案、运行时配置、策略 provenance）。豁免不等于"验证过"：下列历史风险（供电反灌、IMU 协议分支、
+> 第三方镜像标定）在**换件/换镜像/重新接线时重新生效**，届时必须重走对应检查。
+
+## 阶段总览（2026-10-27 重估）
 
 ```text
-S0 盘点与电气安全
-  ├── S1 Radxa USB-C 5V 独立刷机/SSH ───┐
-  ├── S2 单个 HD1910 读数/ID/零位 ────────┤
-  ├── S3 HAT/供电/IMU 逐级验收 ────────────┤→ S5 整机卸力上电 → S6 支架 HOME → S7 站立/低速
-  └── S4 HD1910 CPU 仿真 → GPU 短训/长训 ─┘                             │
-                                                      S8 Sim-to-Real 对比与迭代 → S9 自有 Policy
+S0 盘点 ─ S1 主板 ─ S2 舵机 ─ S3 电控/IMU ─ S5 整机上电 ─ S6 HOME ─ S7 站立/低速
+   └─（以上各阶段实践中已完成，形式化证据豁免，见上）─┘
+S4 仿真/训练 ═════════════════▶ S8 Sim-to-Real 对比 ──▶ S9 自有 Policy 闭环
+   （进行中：CPU 回放已通；      （未开始）            （部分达成：板上 6 个策略
+    CUDA/GPU 训练未开始）                              出自 kissqy 训练台，非本仓库管线）
 ```
 
-S1/S2/S3/S4 可在满足各自前提后并行；**S5 必须同时通过 S1/S2/S3**，**S6/S7 需要合规部署合同**，**S8 必须验证 S4 的 Policy 与真机观测/动作接口完全一致**。
+| 阶段 | 状态（2026-10-27） | 依据 |
+|---|---|---|
+| S0 盘点与风险隔离 | **实践完成**（型号齐全入 [hardware 档案](hardware/observed-2026-10-14.json)；断电测量等证据豁免） | 2026-10-14 照片审查 |
+| S1 主板独立 Bring-up | **实践完成**（Armbian 26.2.1 常驻运行，SSH/密钥体系就绪） | [快照 system/services](duck/snapshots/2026-10-27_runtime/) |
+| S2 单舵机台架 | **豁免**（标定经 kissqy 运行时整机完成，无逐只台架读回；标定档案已存 [snapshots/calibration](duck/snapshots/2026-10-27_runtime/calibration/)） | 本页豁免决定 |
+| S3 电控与 IMU | **实践完成**（整机供电长期运行，IMU `imu_mount_verified=true`，总线 IMU 正常上报） | robotd 日志/标定 |
+| S4 HD1910 仿真 | **进行中**：S4-2 CPU 数值回放通过、BAM M1–M6 CPU 对比完成；CUDA/GPU 训练与 GUI 回放未开始 | [S4 记录](records/field/s4-simulation/) |
+| S5 整机卸力上电 | **实践完成**（团队线下完成；形式化健康报告以 2026-10-27 快照补录） | duck/snapshots |
+| S6 受限 HOME | **实践完成**（15 关节零位标定，`calibrated=true`，含 .previous/.saved 历史档） | calibration 快照 |
+| S7 站立与低速 | **实践完成**（行走/坐站/翻滚/踢球/捡物可运行；安全 deadman 实测在工作） | 部署策略 + 手册 16 |
+| S8 Sim-to-Real 对比 | **未开始**（有价值：现有 6 策略出自社区训练台，与本仓库仿真可互相对照） | — |
+| S9 自有 Policy 迭代 | **部分达成**（已有自训策略部署闭环，但训练出自 kissqy training-console；本仓库自有 S4 管线到 ONNX 上机的闭环未打通） | provenance 快照 |
 
-| 阶段 | 建议顺序与目标 | 自动验证优先 | 人工必检 / 退出门槛 | 当前 |
-|---|---|---|---|---|
-| S0 清点与风险隔离 | 实物照片、型号/PCB Rev、舵机总数、HAT/IMU 类型、电源图 | 仓库清单、参考版本 SHA、文档链接检查 | 万用表量线序/短路；**型号不明则停止通电** | **进行中** |
-| S1 主板独立 Bring-up | microSD、Armbian、USB-C 5V 启动、SSH/日志/备份 | 只读 diagnose_radxa.py：架构/存储/网络/设备占用/启动日志，缺权限 BLOCKED | 确认 USB 5V 稳定、板无异常发热；**不接舵机母线** | 未开始 |
-| S2 单舵机台架 | 飞特 USB 适配器、只连一只、只读寄存器、ID/方向/零位计划 | validate_servos.py：15 只 CSV/JSON、独立映射、重复/缺失 ID、三类零位、原始寄存器 | 逐只确认接头极性、角度与限位，先断电再换线 | 未开始 |
-| S3 电控与 IMU | 按实际 HAT Rev 验证供电、总线电平、IMU 类型与协议 | 驱动探测日志、50 Hz 采样/超时统计、数据质量检查 | 断电通断/极性检查，限流供电，IMU 朝向实测 | 未开始 |
-| S4 HD1910 仿真 | 先纯 CPU 回放；GPU 64 env×5 iter；再长训与 ONNX | shape 61→14、数值有限、NaN/Inf、checkpoint、回放/视频 | 长训的步态质量需要观看回放；不能称“真机验证” | 未开始（官方 XL330 仿真已有历史记录） |
-| S5 整机卸力通电 | 仅系统/传感器/只读总线；确认全部 15 个 ID | 串口与 IMU 心跳、错误率、电压日志、健康报告 | 舵机 torque OFF、支架固定、急停就位、供电稳定 | 未开始 |
-| S6 受限 HOME | 逐关节限幅；方向/零位/端点；逐步上力 | 记录目标/实测位置、延迟、限位/超时、温度 | 人手现场监护；关节不得撞壳，错误即卸力断电 | 未开始 |
-| S7 原地站立与低速 | 姿态基准、零速、缓慢前进/转向、摔倒保护 | 自动记录 IMU 偏移、抖动、电压谷值、关节跟随误差 | 必须支架/防跌垫；无人监护禁止自动执行 | 未开始 |
-| S8 Sim-to-Real | 复现实测：映射/齿隙/时延/电压/阻尼；参数实验 | 轨迹比对、配置哈希、曲线报告、回归检查 | 一次只改一个变量；复核 P/D/转矩参数与温升 | 未开始 |
-| S9 自有 Policy 迭代 | 训练/导出/部署闭环，可复现版本与回滚 | 训练日志→checkpoint→ONNX→执行合同端到端验收 | 高风险动作单独验收，不直接上真机做翻滚/踢球 | 未开始 |
+## 当前工作流（代替原"最短路径"）
 
-## 现在的最短路径（未来两轮）
+三条并行线，优先级从高到低（与 [手册 17 优化清单](docs/manual/17-team-workflow.md) 一致）：
 
-**本轮（只做低风险工作）**
-1. 用 [00 教程](docs/00_START_HERE.md) 填写硬件清单、确认 HAT/IMU 是否与 kissqy 固件一致；先不要接主板与电池。
-2. 按 [01 教程](docs/01_BOARD_BOOT.md) 将 ZERO 3W **脱离 HAT/舵机**用 USB 5V 独立启动，并保存 SSH 只读检查记录。
-3. 用 [02 教程](docs/02_SERVO_IMU.md) 将**一只** HD1910 接飞特 USB 调试器，先只读并记录型号/ID/固件/工作模式。
-4. 原官方 `./play.sh walk` 可作为独立的软件回归；HD1910 仿真另走 [04 教程](docs/04_SIM_TRAINING.md)。
+1. **运维加固线（P0）**：处理 mediad 崩溃循环（NRestarts 497→重启后 17min +123）；
+   鸭子本体装 Tailscale 根治异地连通；板上无版本代码（zhangtong/shishaodong/voice 各目录）收进本仓库 `apps/`；
+   评审低电保护（`battery_empty_shutdown`/`limp_fall` 均 false）与 powerlog 数据。
+   P1：语音进程 systemd 化（`duck-voice.service` 已有未启用）、SSH 收敛纯密钥、journald 限容。
+2. **自有训练线（S4）**：等 GPU 条件完成 S4-3～S4-5（64×5 smoke → 长训 → ONNX 导出契约），
+   之后按手册 16 §5 流程上机，形成本仓库自己的 Policy 闭环（S9 完全体）。
+3. **语音线**：本地 ASR（sherpa-onnx int8）替代云端讯飞——密钥不再上板、断网可用；
+   唤醒词本地化；intent 规则库扩充。代码正本迁入仓库后一起版本化。
 
-**下轮（以证据作为输入，不提前承诺接线）**
-- 收到 HAT 正反面照片、PCB Rev、IMU 型号/固件、供电模块标签/说明书及实测供电极性，生成针对**你这套实物**的 pin-to-pin 表，配线和断电验收后才 S3。
-- 收到 S1 的系统/串口清单和 S2 的舵机寄存器基线后，确定运行时镜像及舵机配置迁移；如果选择 kissqy，确认固件版本与 IMU 形态匹配。
-- 在 CUDA GPU 或可控的云作业条件下跑 HD1910 5-iteration smoke test，先通过数值和导出契约，再考虑长训。
+## 不做的事（2026-10-27 修订）
 
-## 不做的事
+- 不把官方 XL330 的 10 份 ONNX 当作 HD1910 "开箱即可运动"的 Policy（板上是自训 + kissqy 系，不是官方权重）。
+- 不把 kissqy 镜像的**示例标定**当作本机标定——现在有自己的标定档案（snapshots/calibration），换镜像/换件后必须重新标定并存档。
+- 不绕过白名单直写鸭子系统路径（`/etc`、`/opt`）；推送只走 `push-duck.sh` 的 `~/microduck-tools/`。
+- 不在无人监护时远程触发行走/翻滚等策略动作；重启服务/鸭子前不打招呼。
+- 不把"脚本能连上""仿真回放正常"当作实机安全结论；实机安全以现场监护与急停为准。
+- 不以 Issues 驱动个人研发；优先持续维护本 Roadmap、CHECKLIST、duck/ 快照和小批次 commit。
 
-- 不把官方 XL330 的 10 份 ONNX 当作 HD1910 “开箱即可运动”的 Policy。
-- 不盲刷第三方系统镜像、不依靠其示例 ID/零位作为你的真机标定。
-- 不把开发板单独能 SSH 或 5 次 PPO iteration 通过当作“整机验证”。
-- 不把其他人的 P/D/IMU 四元数、供电压降、接线照片直接当作你的设备参数。
-- 不以 Issues 驱动个人研发；优先持续维护本 Roadmap、Checklist、证据记录和小批次 commit。
+**维护方式**：每次巡检后更新 [duck/README.md](duck/README.md) 一页纸状态并生成新快照；
+阶段状态变化更新本页与 [CHECKLIST.md](CHECKLIST.md)；第三方变动先
+`python3 scripts/sync_upstreams.py check`，完成自动审查后才引入。
 
-**维护方式**：每次阶段结束更新 [CHECKLIST.md](CHECKLIST.md) 的检查与证据链接、阶段状态、已知风险、下一步；第三方变动先 `python3 scripts/sync_upstreams.py check`，完成自动审查后才引入。
+## 历史记录（保留存档）
 
-## S0–S2 自动化准备交付（2026-10-14）
-
-工具与离线测试已落地：[自动化教程](docs/06_S0_S2_AUTOMATION.md) · [执行记录](records/2026-10-14_s0-s2-automation.md)。S2 本轮仅逐只只读基线/静态配置准备，不执行 ID 或标定写入；全总线只读连接移至 S3/S5。七个上游 HEAD 查询与锁一致，不更新依赖。软件验收不改变硬件阶段状态。
-
-下一轮最小任务：取得 H0 盘点、H1 主板诊断与第一只舵机 H2 原值，按实物 Rev 审查分支与缺口；未知引脚仍 BLOCKED，不提前生成最终接线表。
-
-## 2026-10-14 实物更新：目标系统分支已收敛
-
-根据照片/采购资料，确认 ZERO 3W PCB V1.12（用户补充 2GB、无 eMMC、有排针）、32GB SanDisk Ultra microSD、HD-1910-C001、FE-URT2-C001、**官方 Pollen C1 HAT（贴签 ASE01187-C1）**、唯卓仕 F550、第三方飞特/Dynamixel 双协议 ID200 IMU。已进行 ID/2048 操作，但没有独立读回与机械中位证据。详细见 [实物审查](records/2026-10-14_hardware-photo-review.md) / [针对性教程](docs/07_MY_HARDWARE_FIRST_STEPS.md)。
-
-**状态**：S0 实物型号盘点部分完成、断电电气确认未完成；S1 未启动验收；S2 曾进行人工 ID/2048 配置，但正确性未验收；S3–S9 不变。下一轮优先纯净 ZERO V1.12 独立刷机/SSH + FE-URT2 只读 15 ID + IMU VCC/FT6 身份/角速度合同。**不提前联合上电。**
-
-## 软件准备、操作者实测与证据验收：顺序约束
-
-- **A（Codex 现在可以做）**：版本同步、C1 原理图审查、IMU 协议/FT6 对齐、ZERO V1.12 镜像风险、离线测试、教程与证据工具；没有真机不阻塞这些工作。
-- **B（操作者按前置安全条件做）**：S0 断电清点、S1 ZERO 单独 5V 启动、S2 FE-URT2 单舵机只读；与 A 可以并行。B 的每项不依赖 A 全部结束，但要使用经过确认的准确规范。
-- **C（联合验收，依赖 B 的真实证据）**：原始记录 `.evidence/` 留在本地，脱敏摘要按 [分阶段索引](records/field/README.md) 提交 `records/field/`，Codex/ChatGPT 检查，再逐项更新 Checklist。
-- **D（实机风险动作）**：只有 C 中必要的电气、IMU、关节映射 Gate 完成，才能规划/执行后续 S3/S5 上电、使能、HOME 和站立。
-
-以上流程可反复循环多轮，不以某一次 Goal 的结束冒充硬件阶段结束。
-
-## 本轮 S1–S3 准备审查（2026-10-14）
-
-A–D离线工作完成，见[交付记录](records/2026-10-14_s1-s3-review.md)：C1原件/hash和电气候选表、QinmoTech v1.2与FT6差异、离线profile/保护测试、15→14训练合同和防串机只读检查、V1.12可回退启动方案。**S0电气/S1启动/S2机械校准/S3电气与IMU均未验收**。下一步按[最小教程](docs/12_MINIMAL_OPERATOR_STEPS.md)取得断电通断、备用卡独立启动、15只原始读回；vendor VCC/身份/年龄合同缺失前不接母线、不部署。
+- [2026-10-14 S0–S2 自动化准备](records/2026-10-14_s0-s2-automation.md)：只读采集工具、台账模板、证据包格式。
+- [2026-10-14 实物照片审查](records/2026-10-14_hardware-photo-review.md)：V1.12 / C1 HAT / HD-1910-C001 / ID200 型号确认。
+- [2026-10-14 S1–S3 兼容性审查](records/2026-10-14_s1-s3-review.md)：C1 电气候选表、QinmoTech IMU 差异、15→14 合同、V1.12 引导回退。
+- [2026-10-15 上游同步](records/2026-10-15_upstream-sync.md) · [S4 BAM 评估](records/field/s4-simulation/2026-10-15_s4-bam-evaluation.md) · [社区策略筛选](records/field/s4-simulation/2026-10-16_community-policy-evaluation.md)。
+- [2026-10-27 实况同步与手册](records/2026-10-27_duck-sync-and-manuals.md)：豁免决定的原始背景与本页依据。

@@ -4,19 +4,16 @@
 
 ## 现在先做什么
 
-**当前硬件阶段：S0 实物型号部分确认 → S1 主板独立启动 / S2 舵机只读复核；当前软件优先：S4 CPU 仿真与 PPO 分阶段学习。** 已有 ZERO 3W V1.12、Pollen C1 HAT、HD-1910-C001、FE-URT2-C001、第三方 ID200 IMU；**HAT、IMU、电源尚未完成电气验收。** 不要直接整机通电、使能全部舵机或执行行走 Policy。
+**2026-10-27 实况：整机已在运行。** 鸭子（duck-a437）完成组装与调零标定（15 关节全部 `calibrated = true`、`motion_enabled = true`），运行 kissqy R5 镜像派生系统，已部署 6 个 2026-10-01 自训策略（行走/坐站/捡物/踢球/翻滚），语音控制在研（讯飞 ASR + 意图解析常驻）。2026-10-27 起原 S0–S3 形式化验收证据（断电测量、单舵机台架读回等）**经决定豁免**，以 [duck/ 实况快照](duck/README.md) 作为新证据基线；安全边界从"上电前防错"转为"运行中防事故"。
 
-**推荐阅读与操作路径（以当前这套实物为起点）：**
+**推荐阅读与操作路径（2026-10-27 起）：**
 
-1. **先看 [07 · 我的硬件第一轮实操](docs/07_MY_HARDWARE_FIRST_STEPS.md)**：针对 ZERO 3W V1.12、C1 HAT、HD1910 和第三方 IMU 的当前任务与阻塞点。
-2. 对照 [00 · 实物盘点与安全](docs/00_START_HERE.md)，补齐供电、线序、PCB 版本等尚未确认的信息。
-3. 按 [01 · ZERO 3W 独立启动](docs/01_BOARD_BOOT.md) 刷机 / SSH；此时**不接 HAT、舵机、IMU 或 F550 电池**。
-4. 使用 [09 · 2048 中位复核](docs/09_HD1910_ZERO_REVIEW.md) 核查已有校准，再按 [02 · HD1910 舵机与 IMU](docs/02_SERVO_IMU.md) 补充单舵机只读台账；不要立即重写零位。
-5. 阅读 [08 · 第三方 IMU 兼容性](docs/08_VENDOR_IMU_COMPATIBILITY.md)，先确认供电范围、身份寄存器和角速度比例；用 [06 · S0–S2 自动化工具](docs/06_S0_S2_AUTOMATION.md) 保存诊断证据。
+1. **新人第一天：从 [docs/manual 实用手册](docs/manual/README.md) 入手**——14 连接鸭子、15 状态巡检、16 网页操控、17 多人协作与优化清单。
+2. 想了解鸭子当前物理/网络/运行时状态：[duck/README.md 一页纸状态](duck/README.md) 与 [duck/network.md 网络身份证](duck/network.md)；日常用 `scripts/duck/status-duck.sh` 只读巡检。
+3. 硬件文档（00–13）保留为**参考资料**：供电边界、IMU 协议、零位/关节映射的方法论仍然有效，但其"验收闸门"状态已被上面的豁免决定取代。
+4. **自有训练线（S4）继续**：从 [04 · 循序渐进仿真与强化学习教程](docs/04_SIM_TRAINING.md) 的 S4-0、S4-2 CPU 检查开始；2026-10-15 已验证 ONNX CPU 数值 rollout、完成 BAM M1–M6 CPU 敏感性对比；当前没有可用 CUDA GPU，GUI 回放和训练 Smoke 仍未完成（详见[脱敏记录](records/field/s4-simulation/2026-10-15_s4-bam-evaluation.md)）。板上现有 6 个策略出自 kissqy training-console，尚非本仓库 S4 管线产物。
 
-**软件先行（无需实物）：** 从 [04 · 循序渐进仿真与强化学习教程](docs/04_SIM_TRAINING.md) 的 S4-0、S4-2 CPU 检查开始，再单独研究 [13 · 厂商 HD1910 BAM](docs/13_FTSERVO_BAM_RESEARCH.md)。2026-10-15 已验证 ONNX CPU 数值 rollout、发现静止姿态测试失败并完成 BAM M1–M6 CPU 敏感性对比；当前没有可用 CUDA GPU，GUI 回放和训练 Smoke 仍未完成。详见[本轮脱敏记录](records/field/s4-simulation/2026-10-15_s4-bam-evaluation.md)。
-
-**后续阶段**：仅在前置电气验收通过后进入 [03 · 整机分级通电](docs/03_POWER_INTEGRATION.md)；[04 · HD1910 仿真与训练](docs/04_SIM_TRAINING.md) 可以作为独立软件工作流并行学习，不代表实机可安全运行 Policy。
+**当前优先级**（详见[手册 17 优化清单](docs/manual/17-team-workflow.md)）：P0 处理 mediad 崩溃循环、鸭子本体装 Tailscale、板上无版本代码收进本仓库、评审低电保护开关；P1 语音进程 systemd 化、SSH 收敛纯密钥；P2 本地 sherpa-onnx ASR。
 
 项目管理：[Roadmap](ROADMAP.md) · [逐项 Checklist](CHECKLIST.md) · [实物硬件档案](hardware/observed-2026-10-14.json) · [照片与协议审查记录](records/2026-10-14_hardware-photo-review.md)。
 
@@ -29,7 +26,7 @@
 
 ## 完整文档导航（docs/ 00–13，共 14 篇）
 
-> **文件编号是主题编号，不是强制执行顺序**。当前应从 **07** 入手；03 的通电操作需要先通过安全闸门。
+> **文件编号是主题编号，不是强制执行顺序**。日常操作看 **docs/manual（14–17）**；00–13 是硬件/仿真专题参考。
 
 | 编号 | 文档 | 适用阶段 / 主要用途 |
 |---|---|---|
@@ -40,7 +37,7 @@
 | 04 | [HD1910 仿真、PPO 训练与 ONNX](docs/04_SIM_TRAINING.md) | S4、S8–S9：CPU 回放、GPU Smoke Test、模型导出 |
 | 05 | [上游同步与验证证据](docs/05_EVIDENCE_AND_SOURCES.md) | 全阶段：来源可信度、固定 commit、更新审查 |
 | 06 | [S0–S2 自动诊断与现场验收卡](docs/06_S0_S2_AUTOMATION.md) | S0–S2：只读脚本、舵机台账、自动验证与证据采集 |
-| 07 | **[当前实物专用第一轮教程](docs/07_MY_HARDWARE_FIRST_STEPS.md)** | **当前优先**：V1.12 + C1 HAT + HD1910 的最短路径 |
+| 07 | [当前实物专用第一轮教程](docs/07_MY_HARDWARE_FIRST_STEPS.md) | 历史参考：V1.12 + C1 HAT + HD1910 的首轮路径 |
 | 08 | [第三方 ID200 IMU 协议与 FT6 兼容](docs/08_VENDOR_IMU_COMPATIBILITY.md) | S3 前置：供电、身份、帧数据、角速度比例 |
 | 09 | [HD1910 的 2048 中位校准复核](docs/09_HD1910_ZERO_REVIEW.md) | S2 前置：机械零位、编码器中位、训练 HOME 的区别 |
 | 10 | [C1 电气审查](docs/10_C1_ELECTRICAL_REVIEW.md) | 源码候选引脚与断电测量卡 |
@@ -48,11 +45,16 @@
 | 12 | [本轮最小操作教程](docs/12_MINIMAL_OPERATOR_STEPS.md) | 人工实验前提、命令、停止与证据 |
 | 13 | [飞特 HD1910 BAM 厂商模型评估](docs/13_FTSERVO_BAM_RESEARCH.md) | 7.4V M1–M6、注册表大小写与隔离对比，不直接替代已有模型 |
 
-## Codex 与人工操作的顺序、证据在哪里
+## 协作与证据流程（2026-10-27 起）
 
-**不需要先完成三项硬件操作才能运行上一轮 Codex Goal。** Codex 现在先执行 C1 HAT 原理图、第三方 IMU / FT6 合同、HD1910 零位/关节映射、ZERO 3W V1.12 引导条件的**离线审查与工具准备**；你可并行按 [07 实物教程](docs/07_MY_HARDWARE_FIRST_STEPS.md) 完成 S1 单板和 S2 舵机只读。只有 S3 实机验收/最终接线/运动控制需要等现场证据，不得由模拟结果越级宣称通过。
+多人异地同时开发，鸭子是共享实机。流程：代码正本放本仓库（新应用建议 `apps/`），经
+`scripts/duck/push-duck.sh` 白名单上板；板上改动收工前 `scripts/duck/pull-duck.sh` 存档到
+`duck/snapshots/`。**对运行时做任何动作（重启服务、robotctl 控制、重启鸭子）前先在群里打招呼**，
+重启前 `w` 看谁在线。
 
-**统一证据入口：[records/field/ 分阶段留存与交接](records/field/README.md)**。原始诊断/照片和个人舵机台账仍保存到被 Git 忽略的 `/.evidence/`、`/local/`；**本仓库是公开仓库**，仅在人工脱敏核对后把实验 Markdown 摘要提交 `records/field/<阶段>/`，以便云端 Codex/ChatGPT 可以审查。空目录或测试脚本 PASS 不是硬件 PASS。
+**统一证据入口**：实况以 [duck/](duck/README.md) 快照为准；原始诊断/照片和个人台账仍保存到被
+Git 忽略的 `/.evidence/`、`/local/`，**人工脱敏核对后**把实验 Markdown 摘要提交 `records/field/`。
+本仓库是公开仓库——凭据、WiFi 密码、`.env`、私钥永不入库。
 
 ## 目录与继承关系
 
@@ -76,17 +78,18 @@ S0–S2 新工具：[自动化教程与三张现场验收卡](docs/06_S0_S2_AUTO
 保留原有学习笔记：[快速上手](notes/00_快速上手.md) · [2026-10-12 官方同步记录](notes/01_同步记录_2026-10-12.md)。
 这些记录是**历史实测**，不代表 2026-10-14 已重新测试过本机环境。
 
-## 必须遵循的边界
+## 必须遵循的边界（运行中的实机版）
 
-- Radxa ZERO 3W **仅能输入 5V**。HD1910 的 2S 电池母线不能直接接板子；HAT 的 5V 输出必须先实测。
-- HAT、舵机、IMU 存在**不同硬件/协议分支**。无实物版本、可信原理图与引脚核对，不能照抄他人三针线序。
-- 初次启动不要同时给 HAT 和 USB-C 两路电源，除非确证该 HAT 的电源路径允许，且已测无反灌。
-- 没有实际电气测量、各舵机 ID/方向/限位和 IMU 的通过记录，不允许把软件健康状态等同于真机安全。
-- AI、CI、Coding Agent 可以做代码、文档、协议模拟和日志分析，**不能代替万用表测量/断电检查/现场急停**。
+- Radxa ZERO 3W **仅能输入 5V**。HD1910 的 2S 电池母线不能直接接板子；改接供电前必须实测 HAT 的 5V 输出。
+- **`motion_enabled = true`：一上电、给指令鸭子就会动。** 拿起/搬运前先在网页中控松开使能；测试时现场有人、周围清空、急停可达。
+- HAT、舵机、IMU 存在**不同硬件/协议分支**。换件/换镜像是新的电气事件，不能默认沿用现有标定与配置。
+- 改标定/robotd 配置/换策略属于**高危操作**：备份 toml、现场扶鸭、低增益先行，完成后 `pull-duck.sh` 重新存档。
+- 低电自动关机与 limp_fall 目前为**关闭**状态（见 `duck/snapshots/` 的 robotd 配置）：人离开前手动关机。
+- AI、CI、Coding Agent 可以做代码、文档、协议模拟和日志分析，**不能代替现场监护、急停与万用表**。
 
-本工作区以“自动审查优先、必须人手操作时逐项说明、每个阶段形成可复核证据”为原则。
+本工作区以"自动审查优先、必须人手操作时逐项说明、每个阶段形成可复核证据"为原则。
 
-本轮结果与限制：[2026-10-14 S0–S2 自动准备记录](records/2026-10-14_s0-s2-automation.md)。硬件阶段保持 S0 进行中，S1/S2 未验收。
+硬件阶段历史（S0–S3 形式化验收于 2026-10-27 决定豁免，整机已实际运行）：[S0–S2 自动准备记录](records/2026-10-14_s0-s2-automation.md) · [S1–S3 兼容性审查](records/2026-10-14_s1-s3-review.md) · [实况同步记录](records/2026-10-27_duck-sync-and-manuals.md)。
 
 ## 2026-10-14 S1–S3 兼容性审查交付
 

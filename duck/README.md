@@ -13,7 +13,7 @@
 | 网络 | WiFi `GL-MT3600BE-5e4`（信号 100），IP `192.168.8.161`（DHCP 名 `microduck`） | `ip addr`、路由器租约表 |
 | 运行时 | kissqy 镜像 R5 派生：robotd/padd/mediad/tofd/btd/configd/gamesir-xboxd/powerlog 全部 active | `systemctl` |
 | 标定 | **15 关节全部 `calibrated = true`，`motion_enabled = true`**，IMU 挂载已确认 | [snapshots 标定](snapshots/2026-10-27_runtime/calibration/hd1910-calibration.toml) |
-| 策略 | `/opt/robot/feetech-ft5-r5/models/` 下 6 个 hash 目录 + roller 技能；provenance 显示 2026-10-01 由 microduck-training-studio 训练部署 | [snapshots/models](snapshots/2026-10-27_runtime/models/provenance.txt) |
+| 策略 | `/opt/robot/feetech-ft5-r5/models/` 下 6 个 hash 目录 + roller 技能；provenance 显示 2026-10-01 由 microduck-training-studio 训练部署 | [snapshots/models](snapshots/2026-10-27_runtime/models/provenance-manifests.txt) |
 | 语音 | `voice_chat.py --wake-keep 20` 在跑（`~/zhangtong/duck-voice`，张同的 ASR 项目） | `ps aux` |
 | 网页中控 | `http://192.168.8.161:8080`（mediad 提供） | robotd/mediad 日志 |
 | 注意 | mediad 崩溃循环持续：重启前 NRestarts=497，14:53 重启后 17 分钟内又 +123（15:10 实测仍在 activating 循环）；当天 14:53 鸭子被重启过一次 | `systemctl show mediad`/uptime |
