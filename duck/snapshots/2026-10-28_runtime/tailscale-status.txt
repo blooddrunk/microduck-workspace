@@ -1,0 +1,56 @@
+# tailscale-status.txt —— 2026-10-28 鸭子本体 Tailscale 装机记录与实测（采集于 09:20–09:35 CST）
+
+## 安装与注册
+
+- 安装方式：官方脚本 `curl -fsSL https://tailscale.com/install.sh | sh`
+  （识别 debian trixie / aarch64，走 pkgs.tailscale.com apt 源；实测该源从鸭子网络 200/0.4s 可达）
+- 版本：tailscale 1.104.4（commit 9382131983ca16de1357091618fd903e35db3c4e）
+- `tailscaled.service`：enabled + active（开机自启；对这块会自发重启的板子是刚需）
+- 注册：`tailscale up --login-server https://hs-nosla.haoqi90.top --hostname microduck`
+  （管理员以 30 分钟一次性 preauth key 完成 headscale 侧注册，未走交互 URL）
+- headscale 侧：v0.29.3，命名空间 `home`，节点 ID 17，上线即 online
+- 地址：v4 `100.64.0.12` / v6 `fd7a:115c:a1e0::c`
+
+## 偏好项（tailscale debug prefs，装机后默认值，均有意保持）
+
+- WantRunning: true
+- CorpDNS: true（headscale 仅 magic_dns + search 域，不推公网 DNS、不覆盖本地解析；
+  实测 /etc/resolv.conf 仅增加 search `ts.hs-nosla.haoqi90.top`，nameserver 仍 127.0.0.53）
+- RouteOrSubnet(accept-routes): false —— 鸭子自身就在 GL 通告的 192.168.8.0/24 内，
+  接受该子网路由会成环，保持默认 false 是正确状态（`tailscale status` 的相应 health 提示可忽略）
+
+## 连通性实测（2026-10-28 09:31–09:33 CST）
+
+鸭子 → 各节点（tailscale ping，pong 路径）：
+- gl-mt3600be(100.64.0.8)：直连 via 172.17.50.238:41641，10ms
+- work-pc(100.64.0.4)：先 DERP(tokyo) 140ms，随后直连建立 via 192.168.10.139:41641，462ms
+- my-workspace-router(100.64.0.10)：DERP(tokyo) 318ms（直连未建立，走中继可用）
+
+GL 路由器 → 鸭子：
+- tailscale ping 直连 via 192.168.8.161:41641，50ms
+- `wget http://100.64.0.12:8080/` 经 tailnet 成功取回 mediad 网页中控 HTML（端到端验证）
+
+netcheck（鸭子侧）：
+- UDP: true；IPv4 出口 112.17.79.156:38790（校园网中国移动出口）
+- 最近 DERP：Bitsflow Tokyo (self-hosted)
+
+## 控制面瞬断观察（装机过程中实测，重要）
+
+- 从鸭子所在校园网出口访问 `https://hs-nosla.haoqi90.top` 偶发 SNI 级瞬断：
+  表现为带 SNI 的 HTTPS 连 TCP 都超时（纯 TCP 连 443 则通），约几分钟后自愈。
+  当天 09:19–09:27 观测到两轮，09:28 起恢复（HTTP 200, TLS 1.0s）。
+- 同校园网的 GL 路由器 tailnet 连接一直健康，说明链路整体可用，属间歇性干扰。
+- 影响：瞬断窗口内鸭子 tailscale 可能短暂 offline，tailscaled 会自动重连，无需人工处理；
+  期间退回 network.md 方式 B/C（跳板/隧道）。
+- 已登记进 network.md §5 排障表。
+- 装机当天另观测一次 09:38–09:45 整个 192.168.8.x 路径从工作机视角消失约 6 分钟（GL 路由器
+  22 口与鸭子 22 口同时不可达、普通互联网正常；恢复时两者同时回来）。期间鸭子本体**未重启**
+  （boot 恒为 09:22:56），恢复后 tailscaled 自动重连、无需登录——tailnet 侧韧性符合预期。
+  该事件更像 GL WiFi/宿主 WiFi 闪断而非鸭子问题。
+
+## 当日板子状态（背景，与 [2026-10-27_runtime](../2026-10-27_runtime/) 快照衔接）
+
+- 2026-10-28 上午自发重启两次：09:17:47、09:22:56（此时 media.source 已是 "test"，
+  证明重启风暴并非全由 mediad 崩溃诱发 → 电源/散热嫌疑上升；09:34 实测 thermal_zone0 59.4°C）
+- 09:34 快照时点：up ~11min、load ~0.5、内存 247Mi/1.9Gi、磁盘 36%（与前一日一致）
+- tailscaled 已 enable，重启后自动回 tailnet（本次 09:22 重启后注册状态保持，无需重新登录）

@@ -13,7 +13,7 @@
 3. 硬件文档（00–13）保留为**参考资料**：供电边界、IMU 协议、零位/关节映射的方法论仍然有效，但其"验收闸门"状态已被上面的豁免决定取代。
 4. **自有训练线（S4）继续**：从 [04 · 循序渐进仿真与强化学习教程](docs/04_SIM_TRAINING.md) 的 S4-0、S4-2 CPU 检查开始；2026-10-15 已验证 ONNX CPU 数值 rollout、完成 BAM M1–M6 CPU 敏感性对比；当前没有可用 CUDA GPU，GUI 回放和训练 Smoke 仍未完成（详见[脱敏记录](records/field/s4-simulation/2026-10-15_s4-bam-evaluation.md)）。板上现有 6 个策略出自 kissqy training-console，尚非本仓库 S4 管线产物。
 
-**当前优先级**（详见[手册 17 优化清单](docs/manual/17-team-workflow.md)）：P0 处理 mediad 崩溃循环、鸭子本体装 Tailscale、板上无版本代码收进本仓库、评审低电保护开关；P1 语音进程 systemd 化、SSH 收敛纯密钥；P2 本地 sherpa-onnx ASR。
+**当前优先级**（详见[手册 17 优化清单](docs/manual/17-team-workflow.md)）：P0 处理 mediad 崩溃循环、板上无版本代码收进本仓库、评审低电保护开关（鸭子本体装 Tailscale 已于 2026-10-28 完成，tailnet IP `100.64.0.12`）；P1 语音进程 systemd 化、SSH 收敛纯密钥；P2 本地 sherpa-onnx ASR。
 
 项目管理：[Roadmap](ROADMAP.md) · [逐项 Checklist](CHECKLIST.md) · [实物硬件档案](hardware/observed-2026-10-14.json) · [照片与协议审查记录](records/2026-10-14_hardware-photo-review.md)。
 

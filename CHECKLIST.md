@@ -23,7 +23,7 @@
 ## 运维加固待办（P0/P1，详见[手册 17](docs/manual/17-team-workflow.md)）
 
 - [ ] P0 mediad 崩溃循环：现场决策 disable 或定位修复（疑与语音进程抢音频相关；保留 8080 网页中控的需求要一并权衡）
-- [ ] P0 鸭子本体安装 Tailscale（装完异地直达，摆脱 GL 路由器中继）
+- [x] P0 鸭子本体安装 Tailscale（✅ 2026-10-28：v1.104.4 入 `hs-nosla.haoqi90.top` tailnet，IP `100.64.0.12`，异地直达，双向往返实测通过。→ [snapshots/2026-10-28_runtime](duck/snapshots/2026-10-28_runtime/)）
 - [ ] P0 板上无版本代码收编：`~/zhangtong/duck-voice`、`~/voice/microduck-voice`、`~/shishaodong/ultralytics-learn` 正本迁入本仓库 `apps/`（注意 `.env` 密钥不入库）
 - [ ] P0 评审并决定低电保护：`battery_empty_shutdown` / `limp_fall` 是否启用；结合 powerlog 掉电数据分析
 - [ ] P1 语音进程 systemd 化：评审 `duck-voice.service` 后 enable，配 `Restart=on-failure`
