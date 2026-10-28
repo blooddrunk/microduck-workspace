@@ -91,9 +91,9 @@ Type-C 连电脑，鸭子以 RNDIS 网卡出现，地址 `192.168.7.2`（ssh roo
 | IP 变了 | `find-duck.sh` 重扫；或登录路由器 100.64.0.8 看 `/tmp/dhcp.leases` |
 | 8080 打不开 | `journalctl -u mediad -n 30`（历史上它有崩溃重启循环，见手册 15） |
 | 8080 能开、页面报 8443 未应答 | 不是防火墙。板上 `ss -tln \| grep 8443` 为空 = mediad 崩溃循环没绑到 8443。根因（2026-10-27 抓到）：相机 overlay 不对，journal 报 `none has an imx219 entity … DUCK_CAMERA_OVERLAY may name the wrong module for this camera`。**已处置（2026-10-27 16:20）**：`media.source = "test"`（推 256x144@5 测试图样，管线照常起，8443 信令恢复，实测 WS 握手 101 + welcome）。注意 8443 说的是 `ws://`（明文 WebSocket），用 `https://` 探它会握手失败，别误判。恢复真相机：改回 `"camera"` 并修 overlay；改前配置备份在板上 `/etc/robot/robotd.toml.bak-20261027-camoff` |
-| 整机 ping 不通（路由器同 LAN 也不通） | 板子假死/掉电重启。2026-10-27 一小时内三次（15:37、约16:05、约16:11），疑似 mediad 崩溃风暴高载（load 18+）诱发。2026-10-27 16:20 已把 `media.source` 切到 `test` 止住风暴（load 回落到 ~1）。**但 2026-10-28 上午又两次（09:17、09:22，此时已是 test 源）**——自发重启另有原因，电源/散热嫌疑加大（09:34 实测板温 59°C、室温常载），持续观察；`tailscaled` 已设自启，重启后自动回 tailnet |
-| `100.64.0.12` 连不上/状态 offline（LAN 地址正常） | 鸭子本体 tailscale 不在线。先看板上 `tailscale status`；若卡在 NeedsLogin/offline，多半是控制面瞬断（下行）。也可看 §6 复装说明 |
-| 板上 curl `https://hs-nosla.haoqi90.top` 连接超时（几分钟后自愈） | 控制面在鸭子所在校园网出口偶发 SNI 级瞬断（2026-10-28 装机时实测：纯 TCP 连 443 通，带 SNI 的 HTTPS 会触发短暂黑洞、约几分钟自愈）。tailscaled 会自动重连，无需处理；期间用方式 B/C 兜底。同理 Tokyo DERP 也偶发抖动，属同链路特性 |
+| 整机 ping 不通（路由器同 LAN 也不通） | 板子假死/掉电重启。2026-10-27 一小时内三次（15:37、约16:05、约16:11），疑似 mediad 崩溃风暴高载（load 18+）诱发。2026-10-27 16:20 已把 `media.source` 切到 `test` 止住风暴（load 回落到 ~1）。**但 2026-10-28 上午仍四次（09:17、09:22、09:45、09:53，间隔 5–8 分钟，test 源下照发）**——自发重启与 mediad 风暴无直接关系，电源/散热嫌疑加大（09:34 实测板温 59°C）；09:53 后至 10:17 已稳定。`tailscaled` 已设自启，重启后自动回 tailnet（若撞上控制面黑洞窗口会延迟回网，见下一行） |
+| `100.64.0.12` 连不上/状态 offline（LAN 地址正常） | 鸭子本体 tailscale 不在线。先看板上 `tailscale status`；若卡在 NeedsLogin/offline，多半是控制面黑洞窗口（下行）。也可看 §6 复装说明 |
+| 板上 curl `https://hs-nosla.haoqi90.top` 超时（TCP 通但 TLS 挂起，或连 TCP 都超时） | **服务器 IP（82.139.215.223）从校园网出口（中国移动）被间歇性整 IP 黑洞**，2026-10-28 实测：同 IP 换域名也不通、GL 路由器新建连接同样超时、百度等正常（非 SNI 精准阻断、非鸭子问题、服务器本身健康）；窗口几分钟到 10+ 分钟，自愈。鸭子**不重启**时已建立的连接能熬过窗口（09:38–09:45 实测）；**重启落在窗口内**则要等窗口结束才自动重新登录（tailscaled 无限重试，无需人工处理）。窗口期用方式 B/C 兜底（走 GL 的既有连接）；本机（work-pc）因宿主 VPN 不受影响 |
 
 ## 6 建议但尚未实施（见 docs/manual/17 优化清单）
 

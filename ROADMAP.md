@@ -37,7 +37,9 @@ S4 仿真/训练 ═════════════════▶ S8 Sim-t
 三条并行线，优先级从高到低（与 [手册 17 优化清单](docs/manual/17-team-workflow.md) 一致）：
 
 1. **运维加固线（P0）**：处理 mediad 崩溃循环（NRestarts 497→重启后 17min +123）；
-   鸭子本体装 Tailscale 根治异地连通（✅ 2026-10-28 完成，tailnet IP 100.64.0.12）；板上无版本代码（zhangtong/shishaodong/voice 各目录）收进本仓库 `apps/`；
+   鸭子本体装 Tailscale 根治异地连通（✅ 2026-10-28 完成，tailnet IP 100.64.0.12）；
+   `apps/` 应用正本架构已就位（✅ 2026-10-28：约定 + `_template/` 模板 + 推送自动排除密钥），
+   板上个人开发子目录（zhangtong/shishaodong/voice）按同日决定**保持不变**，由各负责人自愿迁入；
    评审低电保护（`battery_empty_shutdown`/`limp_fall` 均 false）与 powerlog 数据。
    P1：语音进程 systemd 化（`duck-voice.service` 已有未启用）、SSH 收敛纯密钥、journald 限容。
 2. **自有训练线（S4）**：等 GPU 条件完成 S4-3～S4-5（64×5 smoke → 长训 → ONNX 导出契约），

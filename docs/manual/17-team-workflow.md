@@ -1,6 +1,6 @@
 # 17 · 多人协作、仓库结构与优化加固清单
 
-> 目标：多人同时在线开发时不互相踩脚；以及今天（2026-10-27 巡检）发现的可优化点。
+> 目标：多人同时在线开发时不互相踩脚；以及 2026-10-27/28 巡检发现的可优化点。
 
 ## 1 仓库结构地图（2026-10-27 起）
 
@@ -15,6 +15,7 @@ microduck/（本仓库，公开）
 ├── scripts/                                   只读诊断与验证（Python）
 ├── scripts/duck/                              ★ 鸭子运维工具集（bash，见其 README）
 │   └── remote/                                设计为"在鸭子上运行"的脚本（push 白名单）
+├── apps/                                      ★ 应用正本（新应用一律放这里，模板 _template/）
 ├── hardware/                                  硬件档案（servo 台账、合同）
 ├── policies/                                  官方 ONNX 清单（权重不入库）
 ├── records/                                   脱敏后的实验记录（field/ 分阶段）
@@ -26,14 +27,17 @@ microduck/（本仓库，公开）
 ```
 
 鸭子上的家目录目前是**按人命名的空间**（`~/zhangtong/duck-voice`、`~/shishaodong/ultralytics-learn`
-等）。约定：鸭子上的目录当"运行现场"，**代码的正本放本仓库**（建议今后新增应用放 `apps/<名字>/`），
+等）。约定：鸭子上的目录当"运行现场"，**代码的正本放本仓库**（新应用一律放
+[`apps/<名字>/`](../../apps/README.md)，从 `apps/_template/` 拷贝起步；2026-10-28 起 apps/ 架构
+已落地，板上个人开发子目录按同日决定保持不变，各负责人自愿迁入），
 改完经 `push-duck.sh` 上板。鸭子上直接改的东西，收工前 `pull-duck.sh` 拉回来存档。
 
 ## 2 每日开发循环（推荐流程）
 
 ```bash
 # 上手：连上 + 看状态 + 看谁在
-scripts/duck/tunnel-duck.sh &
+#（tailnet 成员最简：local/duck.env 的 DUCK_HOST 直接写 100.64.0.12 即可，无需隧道/跳板）
+scripts/duck/tunnel-duck.sh &            # 无 tailnet / 黑洞窗口期的兜底通道
 scripts/duck/status-duck.sh
 scripts/duck/ssh-duck.sh 'w'                 # 有别人在线时，重大操作先打招呼
 
@@ -63,20 +67,22 @@ scripts/duck/push-duck.sh --apply    # 确认后执行；只进 ~/microduck-tool
 
 | # | 问题 | 证据 | 建议 |
 |---|---|---|---|
-| 1 | **mediad 崩溃循环**：NRestarts=497，CPU 被 gst-plugin-scanner 吃到 load 3+，机身发热 | `systemctl show mediad -p NRestarts`；ps 里 91.8% CPU | 群里决策：不用相机/网页时 `systemctl disable --now mediad`；长期看查 `journalctl -u mediad` 定位（疑与 voice_chat 抢音频有关），或给单元加退避 `RestartSec=5` 而非立即重启 |
-| 2 | **异地连通性依赖单台路由器**：GL-MT3600BE 不通告子网路由、Tailscale 走东京中继且抖动 | 今天 14:45–14:50 多次连接超时 | 鸭子本体装 Tailscale（见 §4）＝根治；过渡期用 `tunnel-duck.sh` 自动重连 |
+| 1 | **mediad 崩溃循环**：NRestarts=497，CPU 被 gst-plugin-scanner 吃到 load 3+，机身发热 | `systemctl show mediad -p NRestarts`；ps 里 91.8% CPU | **已缓解（2026-10-27 16:20）**：`media.source` 切 `"test"` 后 load 回 ~1、8443 信令恢复（改前备份 `robotd.toml.bak-20261027-camoff`）。根因疑相机 overlay 不对 + 语音进程抢音频。恢复真相机：先修 overlay 再改回 `"camera"`。注意：崩溃止住后板子仍自发重启 → 见 #5 |
+| 2 | ~~异地连通性依赖单台路由器~~ ✅ **已解决（2026-10-27/28）**：GL 已通告子网路由 192.168.8.0/24；鸭子本体已装 Tailscale，tailnet IP `100.64.0.12` | `duck/network.md` §2/§6；[snapshots/2026-10-28_runtime](../../duck/snapshots/2026-10-28_runtime/) | 残留的窗口期可达性问题 → P1 #6 |
 | 3 | **低电保护关闭**：`battery_empty_shutdown=false`、`limp_fall=false` | `etc-robot/feetech-ft5_robotd.toml` 快照 | 讨论后按 kissqy 文档启用；启用前先复盘 powerlog 数据（团队已有掉电记录） |
-| 4 | **板上代码无版本管理**：zhangtong/shishaodong/voice 各目录没有 .git，靠手打 tar 包（duck-voice-20261027.tar.gz） | find 无 .git；家目录见 tar 包 | 代码正本迁入本仓库 `apps/`；板上一律部署副本（push-duck） |
+| 4 | **板上代码无版本管理**：zhangtong/shishaodong/voice 各目录没有 .git，靠手打 tar 包（duck-voice-20261027.tar.gz） | find 无 .git；家目录见 tar 包 | **2026-10-28：`apps/` 正本架构已建**（约定+模板+推送排密钥）；板上个人目录按决定保持不变，板上一律部署副本（push-duck），各负责人自愿迁入 |
+| 5 | **板子自发重启（2026-10-28 新登记）**：一上午 4 次（09:17/09:22/09:45/09:53，间隔 5–8 分钟；`media.source` 已是 test 仍照发 → 与 mediad 风暴无直接关系；09:53 后至 10:17 稳定） | uptime 启动时间序列；09:34 板温 59.4°C | 优先查电源（电池触点/线径/压降）与散热，复盘 powerlog 掉电记录；已装 tailscale，重启后自动回 tailnet（撞上控制面黑洞窗口会延迟回网，见 P1 #6） |
 
 ### P1 · 体验与稳健
 
 | # | 问题 | 建议 |
 |---|---|---|
-| 5 | SSH 仍是"共享密码 + 少量公钥" | 每人 `setup-key-duck.sh` 装自己钥匙；钥匙齐后改 `PasswordAuthentication no`（duck 和路由器都一样；路由器管理密码也应轮换，别再走聊天记录） |
-| 6 | voice_chat.py 从终端手工跑（pts/0），退出就没了 | 他们目录里已有 `duck-voice.service`——评审后 `systemctl enable` 它，配 `Restart=on-failure` |
-| 7 | eMMC 寿命与日志 | `journalctl --disk-usage` 看量，`/etc/systemd/journald.conf` 加 `SystemMaxUse=200M`；swap 已在用，训练类任务别放板上 |
-| 8 | 板上 5.7G 的 ultralytics-learn 数据集 | 数据集迁到开发机/NAS，板上只留推理产物 |
-| 9 | 找鸭子靠 IP 记忆 | `find-duck.sh` 已备；可选装 avahi 让 `microduck.local` 生效 |
+| 6 | **Headscale 控制面国内可达性（2026-10-28 新登记）**：服务器 IP 从校园网出口（中国移动）被间歇性整 IP 黑洞，窗口几分钟～20+ 分钟；鸭子重启撞上窗口会延迟回网，窗口结束自愈 | 需服务器管理员：给 `hs-nosla.haoqi90.top` 加对国内稳定的入口（CDN/前置域名/备用端口），或在离团队近处加自建 DERP；过渡期靠 GL 既有连接兜底（跳板/隧道）。详见 [duck/network.md §5](../../duck/network.md) |
+| 7 | SSH 仍是"共享密码 + 少量公钥"，且鸭子 sudo 密码还是镜像出厂默认（弱口令） | 每人 `setup-key-duck.sh` 装自己钥匙；钥匙齐后改 `PasswordAuthentication no` 并**轮换鸭子 sudo 密码**（duck 和路由器都一样；路由器管理密码也应轮换，别再走聊天记录） |
+| 8 | voice_chat.py 从终端手工跑（pts/0），退出就没了 | 他们目录里已有 `duck-voice.service`——评审后 `systemctl enable` 它，配 `Restart=on-failure` |
+| 9 | eMMC 寿命与日志 | `journalctl --disk-usage` 看量，`/etc/systemd/journald.conf` 加 `SystemMaxUse=200M`；swap 已在用，训练类任务别放板上 |
+| 10 | 板上 5.7G 的 ultralytics-learn 数据集 | 数据集迁到开发机/NAS，板上只留推理产物 |
+| 11 | 找鸭子靠 IP 记忆 | **已大头解决**：tailnet 固定 IP `100.64.0.12`（换 WiFi 不变）；LAN 扫描 `find-duck.sh` 已备；avahi（`microduck.local`）降为可选 |
 
 ### P2 · 功能演进（本地模型路线）
 
@@ -88,19 +94,23 @@ scripts/duck/push-duck.sh --apply    # 确认后执行；只进 ~/microduck-tool
 | 端侧 LLM 意图 | intent.py 规则式 | 板上不建议跑 LLM；规则+小分类器足够，复杂意图留给云端可选项 |
 | 自训策略闭环 | 已用 training-console 出 6 个策略 | 训练在开发机（本仓库 S4 线），产物按手册 16 §5 上板流程走 |
 
-## 4 给鸭子装 Tailscale 的建议步骤（待评审后执行）
+## 4 鸭子本体 Tailscale：✅ 已完成（2026-10-28）
 
-> 这是对多人异地协作收益最大的单项改动。需要现场或串口操作一次网络即可。
+> 原为"待评审后执行"的建议，2026-10-28 已装机并全链路验证，本节改为结果存档。
 
-```bash
-# 板上（约 30MB 磁盘，arm64）：
-curl -fsSL https://tailscale.com/install.sh | sh
-sudo tailscale up            # 会给出登录链接，任一队员在自己电脑上打开授权即可
-# 之后：ssh radxa@<鸭子100.64.x.x> 从任何 tailnet 机器直达，
-# 网页中控同理（本地端口转发不再需要 GL 路由器）。
-```
-
-注意：tailscale 常驻内存 ~50MB，对 2G 板子可接受；安装本身不动 robotd。
+- 版本 v1.104.4（pkgs.tailscale.com apt 源），`tailscaled` 开机自启，常驻内存实测 ~34MB
+  （此前估算 ~50MB，对 2G 板子可接受）。安装本身不动 robotd。
+- 加入团队自建 Headscale `hs-nosla.haoqi90.top`（`home` 命名空间，preauth key 注册，
+  headscale 节点 ID 17），hostname `microduck`，tailnet IP **`100.64.0.12`**（换 WiFi 不变）。
+- 从任何 tailnet 机器 `ssh radxa@100.64.0.12` / `http://100.64.0.12:8080` 直达，
+  不再依赖 GL 中继；GL↔鸭子实测 WireGuard 直连 2–10ms。
+- 有意保持默认 `--accept-routes=false`：鸭子自身在 GL 通告的 192.168.8.0/24 内，接受会成环。
+- **复装/新板警告：必须 `--login-server https://hs-nosla.haoqi90.top`，不要用 tailscale.com**
+  （会进另一个 tailnet、与所有现有节点互不可见，且国内难连其控制面）。
+- 已知限制：Headscale 服务器 IP 从校园网出口会被间歇黑洞（见 §3 P1 #6），鸭子重启若撞上
+  窗口会延迟回网、窗口结束自动恢复——2026-10-28 实证：约 21 分钟窗口后无人工干预自愈。
+- 完整档案：[duck/network.md](../../duck/network.md) 与
+  [duck/snapshots/2026-10-28_runtime](../../duck/snapshots/2026-10-28_runtime/)。
 
 ## 5 每次巡检后的例行更新
 

@@ -24,10 +24,13 @@
 
 - [ ] P0 mediad 崩溃循环：现场决策 disable 或定位修复（疑与语音进程抢音频相关；保留 8080 网页中控的需求要一并权衡）
 - [x] P0 鸭子本体安装 Tailscale（✅ 2026-10-28：v1.104.4 入 `hs-nosla.haoqi90.top` tailnet，IP `100.64.0.12`，异地直达，双向往返实测通过。→ [snapshots/2026-10-28_runtime](duck/snapshots/2026-10-28_runtime/)）
-- [ ] P0 板上无版本代码收编：`~/zhangtong/duck-voice`、`~/voice/microduck-voice`、`~/shishaodong/ultralytics-learn` 正本迁入本仓库 `apps/`（注意 `.env` 密钥不入库）
+- [ ] P0 排查板子自发重启：2026-10-28 上午 4 次（09:17/09:22/09:45/09:53，`media.source` 已是 test 仍发生，间隔 5–8 分钟）——电源/散热嫌疑，复盘 powerlog 掉电记录；详见[手册 17 §3 #5](docs/manual/17-team-workflow.md)
+- [x] P0 应用正本架构就位：`apps/` 目录契约 + [_template](apps/_template/README.md) 脚手架 + `.gitignore` 密钥红线 + push-duck 推送自动排除 `.env`（✅ 2026-10-28。→ [apps/README.md](apps/README.md)）
+- [ ] P0 个人开发子目录收编（暂缓）：`~/zhangtong/duck-voice`、`~/voice/microduck-voice`、`~/shishaodong/ultralytics-learn` 按 2026-10-28 决定**保持不变**；各负责人自愿迁入 `apps/` 时再执行（`.env` 密钥与大件不入库）
 - [ ] P0 评审并决定低电保护：`battery_empty_shutdown` / `limp_fall` 是否启用；结合 powerlog 掉电数据分析
 - [ ] P1 语音进程 systemd 化：评审 `duck-voice.service` 后 enable，配 `Restart=on-failure`
-- [ ] P1 SSH 收敛纯密钥：各队员 `setup-key-duck.sh` 装钥匙，齐后关密码登录（鸭子与 GL 路由器）；路由器管理密码轮换
+- [ ] P1 SSH 收敛纯密钥：各队员 `setup-key-duck.sh` 装钥匙，齐后关密码登录（鸭子与 GL 路由器）；路由器管理密码轮换；鸭子 sudo 密码仍为镜像出厂默认（弱口令），一并轮换
+- [ ] P1 Headscale 控制面国内可达性加固：服务器 IP 从校园网出口被间歇整 IP 黑洞（鸭子重启撞窗口会延迟回网，实测约 21 分钟窗口后自愈）；需管理员加对国内稳定入口（CDN/备用端口）或就近自建 DERP。详见 [duck/network.md §5](duck/network.md)
 - [ ] P1 journald 限容（`SystemMaxUse=200M`）与板上 5.7G 数据集外迁
 - [ ] P1 每次重标定/换策略后 `pull-duck.sh` 重新存档（写进操作习惯）
 

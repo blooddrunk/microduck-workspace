@@ -4,7 +4,7 @@
 > 怎么和团队协作开发。硬件验收/分级通电等安全流程仍以 [docs/00–13](../00_START_HERE.md) 为准；
 > 手册是日常操作层，不替代安全闸门。
 >
-> 最后更新：2026-10-27（基于当日只读巡检实测）。
+> 最后更新：2026-10-28（鸭子本体 Tailscale 装机、自发重启新登记；详见各手册）。
 
 ## 手册导航
 
@@ -18,14 +18,14 @@
 ## 30 秒版（老手直接抄）
 
 ```bash
-# 连接（隧道模式，异地可用）
-scripts/duck/tunnel-duck.sh &           # 一次，保持后台
-scripts/duck/ssh-duck.sh                # 登录
+# 连接（tailnet 成员最简；任何网络直达鸭子）
+DUCK_HOST=100.64.0.12 scripts/duck/ssh-duck.sh    # 或写进 local/duck.env 一劳永逸
 scripts/duck/status-duck.sh --save      # 只读巡检并留档
 scripts/duck/pull-duck.sh               # 快照拉回仓库 duck/snapshots/
+# 无 tailnet / 黑洞窗口期兜底：scripts/duck/tunnel-duck.sh & 后走 127.0.0.1:2222
 
 # 让鸭子动（现场、有人扶着）
-# 手机/电脑连 GL-MT3600BE-5e4 → 浏览器 http://192.168.8.161:8080 → 手柄/按钮控制
+# 浏览器 http://100.64.0.12:8080（tailnet）或连 GL-MT3600BE-5e4 后 http://192.168.8.161:8080
 ```
 
 ## 鸭子是谁（速记卡）

@@ -47,8 +47,8 @@
 
 ## 协作与证据流程（2026-10-27 起）
 
-多人异地同时开发，鸭子是共享实机。流程：代码正本放本仓库（新应用建议 `apps/`），经
-`scripts/duck/push-duck.sh` 白名单上板；板上改动收工前 `scripts/duck/pull-duck.sh` 存档到
+多人异地同时开发，鸭子是共享实机。流程：代码正本放本仓库（新应用一律放 [apps/](apps/README.md)，
+从 `apps/_template/` 起步），经 `scripts/duck/push-duck.sh` 白名单上板；板上改动收工前 `scripts/duck/pull-duck.sh` 存档到
 `duck/snapshots/`。**对运行时做任何动作（重启服务、robotctl 控制、重启鸭子）前先在群里打招呼**，
 重启前 `w` 看谁在线。
 
@@ -64,6 +64,7 @@ Git 忽略的 `/.evidence/`、`/local/`，**人工脱敏核对后**把实验 Mar
 | 实用手册（新人入口） | `docs/manual/14–17` | 连接/巡检/操控/协作的日常操作层 |
 | 鸭子实况档案 | `duck/` | 一页纸状态、网络身份证、sanitized 快照 |
 | 鸭子运维工具 | `scripts/duck/*.sh` | 只读巡检、拉取/推送白名单、隧道 |
+| 应用正本 | `apps/<名字>/` | 上板应用（语音/视觉等）的版本化正本；板上只留部署副本（2026-10-28 起，见 [apps/README](apps/README.md)） |
 | 官方 RL（本机已有，忽略 Git） | `microduck_rl/` | **XL330 官方基线**；不要当作 HD1910 实机驱动 |
 | 官方 Rust runtime（本机已有，忽略 Git） | `microduck/` | 官方 Dynamixel 路径；飞特需要匹配的总线适配 |
 | 官方 ONNX（本机已有，忽略 Git） | `policies/official/` | 对齐 61→14 观测/动作接口，不是 HD1910 上机许可 |

@@ -30,7 +30,8 @@ scripts/duck/status-duck.sh --save     # 同时留档到 .evidence/duck-status-<
 | IP 地址 | `ip -br address` | `wlan0 ... 192.168.8.161/24` 为正常 |
 | 网关/路由 | `ip route` | `default via 192.168.8.1` = GL 路由器 |
 | WiFi 名和信号 | `nmcli -t -f ACTIVE,SSID,SIGNAL dev wifi` | `yes:GL-MT3600BE-5e4:100`；信号 < 40 走路会掉线 |
-| 从外面测 | 本机 `scripts/duck/find-duck.sh 192.168.8` | 扫不到 = 不在线/换网 |
+| Tailscale | `tailscale status` / `tailscale ip` | 自身行显示 `100.64.0.12`；offline/登录报错见 [network.md §5](../../duck/network.md)（多为控制面黑洞窗口，会自愈） |
+| 从外面测 | 本机 `scripts/duck/find-duck.sh 192.168.8` | 扫不到 = 不在线/换网；tailnet 机器可直接 `ping 100.64.0.12` |
 
 > 深入：[duck/network.md](../../duck/network.md) 有完整拓扑和历史 IP 记录。
 
@@ -99,6 +100,12 @@ python3 -c "import tomllib; d=tomllib.load(open('/etc/robot/feetech-ft5/hd1910-c
 - 诊断：`journalctl -u mediad -n 50 --no-pager` 看崩在哪一步。
 - **临时缓解（需群里确认后做）**：不用摄像头/语音时 `sudo systemctl disable --now mediad`
   ——但网页中控 8080 也是它提供的，关了网页就没了。取舍见[手册 17 优化清单](17-team-workflow.md)。
+
+**2026-10-27/28 后续**：16:20 已把 `media.source` 切到 `"test"`（推测试图样），mediad 不再崩、
+load 回 ~1、8443 信令恢复（板上配置备份 `robotd.toml.bak-20261027-camoff`）；根因疑相机
+overlay 不对（journal 报 imx219 entity 找不到）。但**板子自发重启在 10-28 仍发生 4 次**
+（与 mediad 风暴无直接关系，电源/散热嫌疑，见手册 17 §3 #5）；完整排障表见
+[duck/network.md §5](../../duck/network.md)。
 
 ## 7 电源与电池
 

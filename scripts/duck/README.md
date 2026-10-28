@@ -11,7 +11,7 @@ ssh-keygen -t ed25519
 
 # 2) 建立本机配置（不入库）
 cp scripts/duck/duck.env.example local/duck.env
-$EDITOR local/duck.env          # 填 DUCK_HOST（连不上先用 find-duck.sh 扫）
+$EDITOR local/duck.env          # 填 DUCK_HOST：tailnet 成员可直接写 100.64.0.12；否则扫网段填 LAN IP
 
 # 3) 装公钥（输入一次鸭子密码）并验证
 scripts/duck/setup-key-duck.sh
@@ -28,9 +28,10 @@ scripts/duck/pull-duck.sh
 |---|---|---|---|
 | `find-duck.sh [网段]` | 本机 | 扫 22/8088 端口 + ARP 匹配 Radxa MAC 前缀，找到鸭子当前 IP | 无 |
 | `ssh-duck.sh [命令]` | 双向 | 登录或执行单条远程命令（自动带配置/跳板） | 无 |
+| `tunnel-duck.sh` | 本机 | 后台维持 127.0.0.1:2222 → 鸭子:22 的自动重连隧道（无 tailnet / 黑洞窗口期兜底；`DUCK_TUNNEL=1` 后所有工具自动走它） | 无 |
 | `status-duck.sh [--save]` | 拉 | 9 段只读巡检（系统/网络/服务/标定/设备/日志/电源…），`--save` 留档 `.evidence/` | 无 |
 | `pull-duck.sh [--code --policies]` | 拉 | sanitized 快照进 `duck/snapshots/`；`--code`/`--policies` 拉大件到不入库目录 | 无 |
-| `push-duck.sh [--apply]` | 推 | 白名单目录推到 `~/microduck-tools/`；默认 dry-run | 仅家目录白名单路径 |
+| `push-duck.sh [--apply]` | 推 | 白名单目录推到 `~/microduck-tools/`；默认 dry-run；自动排除 `.env*`/`.venv`/`__pycache__` | 仅家目录白名单路径 |
 | `setup-key-duck.sh` | 推 | 一次性安装本机公钥（之后全部免密） | 仅 `~/.ssh/authorized_keys` |
 
 ## 约定（多人协作的关键）
