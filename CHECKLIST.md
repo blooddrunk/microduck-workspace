@@ -34,6 +34,13 @@
 - [ ] P1 journald 限容（`SystemMaxUse=200M`）与板上 5.7G 数据集外迁
 - [ ] P1 每次重标定/换策略后 `pull-duck.sh` 重新存档（写进操作习惯）
 
+## 手柄线（2026-10-28 新增）
+
+- [x] Xbox 手柄兼容性预检（只读）：内核 xpad/hid-microsoft 在板、BlueZ 5.82、`robotctl pad pair` 官方支持 Xbox——**真 Xbox One S/Series 免装驱动即用**。→ [手册 18](docs/manual/18-xbox-gamepad.md) · [记录](records/2026-10-28_xbox-gamepad-preflight.md)
+- [ ] 现场 Xbox 手柄配对试驾：Sync 快闪 → `sudo robotctl pad pair` → 渐进试驾（需带手柄到现场，手册 18 §4）
+- [ ] 修正按键绑定错位（`a→ground_pick`、`dpad_down→sit_toggle` 本机无此技能；手册 18 §5）
+- [ ] GameSir Nova 2 Lite 重新配对（当前配对表无任何手柄），或决定统一用 Xbox 手柄
+
 ## 语音/本地模型待办（P2）
 
 - [ ] 本地 ASR 替代讯飞云端：sherpa-onnx int8 流式模型上板验证（内存/延迟/识别率），安装脚本走 `scripts/duck/remote/` 评审流程

@@ -42,6 +42,7 @@ S4 仿真/训练 ═════════════════▶ S8 Sim-t
    板上个人开发子目录（zhangtong/shishaodong/voice）按同日决定**保持不变**，由各负责人自愿迁入；
    评审低电保护（`battery_empty_shutdown`/`limp_fall` 均 false）与 powerlog 数据。
    P1：语音进程 systemd 化（`duck-voice.service` 已有未启用）、SSH 收敛纯密钥、journald 限容。
+   手柄线：Xbox 手柄接入预检与手册 18 就绪（✅ 2026-10-28，真 Xbox One S/Series 免装驱动即用），待现场配对试驾。
 2. **自有训练线（S4）**：等 GPU 条件完成 S4-3～S4-5（64×5 smoke → 长训 → ONNX 导出契约），
    之后按手册 16 §5 流程上机，形成本仓库自己的 Policy 闭环（S9 完全体）。
 3. **语音线**：本地 ASR（sherpa-onnx int8）替代云端讯飞——密钥不再上板、断网可用；

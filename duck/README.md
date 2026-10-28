@@ -16,6 +16,7 @@
 | 策略 | `/opt/robot/feetech-ft5-r5/models/` 下 6 个 hash 目录 + roller 技能；provenance 显示 2026-10-01 由 microduck-training-studio 训练部署 | [snapshots/models](snapshots/2026-10-27_runtime/models/provenance-manifests.txt) |
 | 语音 | `voice_chat.py --wake-keep 20` 在跑（`~/zhangtong/duck-voice`，张同的 ASR 项目） | `ps aux` |
 | 网页中控 | `http://192.168.8.161:8080`（现场/子网路由）或 `http://100.64.0.12:8080`（tailnet，异地首选） | robotd/mediad 日志 |
+| 手柄 | **当前无任何已配对手柄**（2026-10-28 预检，配对表只有一副耳机）；真 Xbox One S/Series **免装驱动即用**（内核 xpad/hid-microsoft 在板、BlueZ 5.82，`sudo robotctl pad pair` 即连） | [手册 18](../docs/manual/18-xbox-gamepad.md) · pad-preflight |
 | 注意 | mediad 崩溃已缓解（2026-10-27 16:20 `media.source="test"`，备份 `.bak-20261027-camoff`，8443 信令恢复）；**但 2026-10-28 上午板子自发重启 4 次**（09:17/09:22/09:45/09:53，与 mediad 无关，电源/散热嫌疑 → 手册 17 §3 #5）；tailscale 已装，重启自动回 tailnet | uptime 序列、[network.md §5](network.md) |
 
 **能力现状：组装完成、零位标定完成、可站立/行走/翻滚等（社区+自训策略），正在做语音控制；

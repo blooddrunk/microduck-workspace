@@ -8,3 +8,4 @@
 3. 涉及写系统（apt/系统路径）的脚本必须先在群里评审。
 
 命名建议：`<作用>-<对象>.sh`，例如 `install-sherpa-asr.sh`、`backup-calibration.sh`。
+现有脚本：`pad-preflight.sh`（手柄链路只读预检，2026-10-28 已上板实测，配 [手册 18](../../../docs/manual/18-xbox-gamepad.md)）。

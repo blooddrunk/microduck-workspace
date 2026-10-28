@@ -8,7 +8,7 @@
 
 **推荐阅读与操作路径（2026-10-27 起）：**
 
-1. **新人第一天：从 [docs/manual 实用手册](docs/manual/README.md) 入手**——14 连接鸭子、15 状态巡检、16 网页操控、17 多人协作与优化清单。
+1. **新人第一天：从 [docs/manual 实用手册](docs/manual/README.md) 入手**——14 连接鸭子、15 状态巡检、16 网页操控、17 多人协作与优化清单、18 Xbox 手柄连接。
 2. 想了解鸭子当前物理/网络/运行时状态：[duck/README.md 一页纸状态](duck/README.md) 与 [duck/network.md 网络身份证](duck/network.md)；日常用 `scripts/duck/status-duck.sh` 只读巡检。
 3. 硬件文档（00–13）保留为**参考资料**：供电边界、IMU 协议、零位/关节映射的方法论仍然有效，但其"验收闸门"状态已被上面的豁免决定取代。
 4. **自有训练线（S4）继续**：从 [04 · 循序渐进仿真与强化学习教程](docs/04_SIM_TRAINING.md) 的 S4-0、S4-2 CPU 检查开始；2026-10-15 已验证 ONNX CPU 数值 rollout、完成 BAM M1–M6 CPU 敏感性对比；当前没有可用 CUDA GPU，GUI 回放和训练 Smoke 仍未完成（详见[脱敏记录](records/field/s4-simulation/2026-10-15_s4-bam-evaluation.md)）。板上现有 6 个策略出自 kissqy training-console，尚非本仓库 S4 管线产物。
@@ -19,7 +19,7 @@
 
 ## 实况手册与鸭子运维（2026-10-27 新增）
 
-鸭子已完成组装、调零标定并能运行策略与语音控制。日常操作看 **[docs/manual/ 实用手册系列](docs/manual/README.md)**（14 连接 · 15 状态巡检 · 16 网页与策略 · 17 协作与优化），
+鸭子已完成组装、调零标定并能运行策略与语音控制。日常操作看 **[docs/manual/ 实用手册系列](docs/manual/README.md)**（14 连接 · 15 状态巡检 · 16 网页与策略 · 17 协作与优化 · 18 Xbox 手柄），
 当前实况看 **[duck/ 鸭子实况档案](duck/README.md)**（一页纸状态 + 网络身份证 + 每日快照），
 一键工具在 **[scripts/duck/](scripts/duck/README.md)**（`status-duck.sh` 只读巡检、`pull-duck.sh` 快照回仓、`push-duck.sh` 白名单上板、`tunnel-duck.sh` 异地隧道）。
 标定与运行时配置的最新存档：[duck/snapshots/2026-10-27_runtime/](duck/snapshots/2026-10-27_runtime/README.md)。

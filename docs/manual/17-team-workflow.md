@@ -8,7 +8,7 @@
 microduck/（本仓库，公开）
 ├── README.md / ROADMAP.md / CHECKLIST.md      项目导航与安全闸门
 ├── docs/00–13                                 硬件验收与仿真教程（原系列）
-├── docs/manual/14–17                          ★ 实用手册系列（本系列，日常操作层）
+├── docs/manual/14–18                          ★ 实用手册系列（本系列，日常操作层）
 ├── duck/                                      ★ 鸭子实况档案
 │   ├── README.md                              一页纸状态（每次巡检后更新）
 │   └── snapshots/<日期>_runtime/              sanitized 快照（标定/配置/服务/策略出处）
@@ -83,6 +83,7 @@ scripts/duck/push-duck.sh --apply    # 确认后执行；只进 ~/microduck-tool
 | 9 | eMMC 寿命与日志 | `journalctl --disk-usage` 看量，`/etc/systemd/journald.conf` 加 `SystemMaxUse=200M`；swap 已在用，训练类任务别放板上 |
 | 10 | 板上 5.7G 的 ultralytics-learn 数据集 | 数据集迁到开发机/NAS，板上只留推理产物 |
 | 11 | 找鸭子靠 IP 记忆 | **已大头解决**：tailnet 固定 IP `100.64.0.12`（换 WiFi 不变）；LAN 扫描 `find-duck.sh` 已备；avahi（`microduck.local`）降为可选 |
+| 12 | **手柄现状漂移**（2026-10-28 新登记）：鸭子配对表里没有任何手柄（手册 16 所述 GameSir 已不在配对表）；`pad bindings` 两处指向本机不存在的技能（a/ground_pick、dpad_down/sit_toggle） | 现场按[手册 18 §4](18-xbox-gamepad.md) 重新配对——真 Xbox One S/Series **免装驱动即用**（内核 xpad/hid-microsoft 在板）或 GameSir；错位绑定用 `robotctl pad bind` 修正 |
 
 ### P2 · 功能演进（本地模型路线）
 
