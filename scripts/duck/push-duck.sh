@@ -32,7 +32,10 @@ for d in "${DIRS[@]}"; do
   esac
   NAME="$(basename "$d")"
   echo ">>> rsync $FLAGS $( [[ $APPLY -eq 1 ]] && echo '[执行]' || echo '[演练]' ) $d -> 鸭子:~/microduck-tools/$NAME/"
-  rsync $FLAGS --info=stats1 -e "$RSYNC_RSH" "$SRC/" "$(duck_ssh_target):~/microduck-tools/$NAME/"
+  # 密钥与本机缓存默认不上板：apps/ 正本里的 .env 属于开发机，鸭子侧密钥在板上单独维护
+  rsync $FLAGS --info=stats1 \
+    --exclude='.env' --exclude='.env.*' --exclude='.venv/' --exclude='__pycache__/' \
+    -e "$RSYNC_RSH" "$SRC/" "$(duck_ssh_target):~/microduck-tools/$NAME/"
 done
 
 if [[ $APPLY -eq 0 ]]; then

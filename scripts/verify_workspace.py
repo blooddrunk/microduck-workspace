@@ -30,6 +30,7 @@ REQUIRED = [
     "docs/06_S0_S2_AUTOMATION.md", "templates/hd1910_inventory.csv",
     "templates/hd1910_mapping.json", "scripts/diagnose_radxa.py",
     "scripts/validate_servos.py", "scripts/run_checks.py",
+    "apps/README.md", "apps/_template/README.md", "apps/_template/requirements.txt",
 ]
 LINK_RE = re.compile(r"(?<!!)\[[^\]]+\]\(([^)]+)\)")
 

@@ -21,6 +21,11 @@ records/*.zip
 records/*.png
 records/*.jpg
 
+# apps/ 应用本地密钥与虚拟环境：正本入库，密钥永不入库
+/apps/*/.env
+/apps/*/.env.*
+/apps/*/.venv/
+
 # Private evidence bundles and operator inventory (never auto-publish)
 /.evidence/
 /local/
